@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.10.17)  15 DEC 2025 19:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.10.17)  9 AUG 2026 18:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1496,7 +1496,7 @@ LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 10
  (C:\Users\Pichau\AppData\Local\Programs\MiKTeX\tex/latex/base\t1cmtt.fd
 File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 ) [35] [36] [37] [38]) [39]
-runsystem(latexminted cleantemp  --timestamp 20251215195421 FAD58DE7366495DB4650CFEFAC2FCD61)...disabled (restricted).
+runsystem(latexminted cleantemp  --timestamp 20260809183219 FAD58DE7366495DB4650CFEFAC2FCD61)...disabled (restricted).
 
  (main.aux)
  ***********
