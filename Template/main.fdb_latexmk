@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1765839261.45377 "main.aux" "main.bbl" "main" 1786311144.41838 0
+["bibtex main"] 1788114556.39399 "main.aux" "main.bbl" "main" 1788114559.43059 0
   "./references.bib" 1765839252 31349 24ce79f1d92f64fdd42016c023645c09 ""
   "C:/Users/Pichau/AppData/Local/Programs/MiKTeX/bibtex/bst/natbib/plainnat.bst" 1284455456 26816 ffe5423d2019860bad9f54bc402fac15 ""
-  "main.aux" 1786311143 19186 7b6e2db5cd705c40347c1fd2205177c6 "pdflatex"
+  "main.aux" 1788114558 30718 7e89e9ffcc71f731c1251dc78da83963 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1786311139.42541 "c:/Users/Pichau/Downloads/TCC/Template/main.tex" "main.pdf" "main" 1786311144.41905 0
+["pdflatex"] 1788114556.66424 "c:/Users/Pichau/Downloads/TCC/Template/main.tex" "main.pdf" "main" 1788114559.43139 0
   "C:/Users/Pichau/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1760743538 82507 a9eef8696c92627b87e9975edea03b2a ""
   "C:/Users/Pichau/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ectt1200.pk" 1765152803 24152 8f2a0ec764d7ff8fc9910896cbf2ef88 ""
   "C:/Users/Pichau/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1760743342 24225519 b49991c67cbb3f99ed2988bb3883ef48 ""
@@ -257,7 +257,7 @@
   "capitulos/1 - Introducao.tex" 1786311137 7814 f41b29f16cbad416ea5cd003d15a4589 ""
   "capitulos/2 - Fundamentacao_teorica.tex" 1765839252 46741 289f9b6fc75243bb8e0cbb6368ae5641 ""
   "capitulos/3 - Revisao.tex" 1763240921 78 c3670c60b99657a870b225a04d8dfedc ""
-  "capitulos/4 - Proposta.tex" 1763240921 40 8f1025e389e42ce66a4b18e64f94cb1f ""
+  "capitulos/4 - Proposta.tex" 1788114546 46720 efaf7bc4b2183ddb62747c4ea638b3a5 ""
   "capitulos/5 - conclusao.tex" 1763240921 45 9da2a6fce8c6c8aaced6bcdaf4488237 ""
   "config/acronimos.tex" 1763240921 114 444fef5f250d7b57d112867e3d412d80 ""
   "config/comandos.tex" 1763240921 304 b8ee8bfb83b5c384ab419a6792749239 ""
@@ -265,13 +265,13 @@
   "config/cores.tex" 1763240921 281 eb1df5f462296740550727e4ac2d4792 ""
   "config/estilos.tex" 1763240921 2424 b2b2ccb4be517d58cdf1be08bf3dc4ba ""
   "config/pacotes.tex" 1763240921 553 ce69579a5589a42885a5c0ab7861f75d ""
-  "main.aux" 1786311143 19186 7b6e2db5cd705c40347c1fd2205177c6 "pdflatex"
-  "main.bbl" 1765839261 15714 c225a0cecbe303ccb0c892502e1dbeb1 "bibtex main"
-  "main.lof" 1786311143 143 e2c8f3d9ee9fb2c8d19c8f2ddc3e901f "pdflatex"
-  "main.lot" 1786311143 143 e2c8f3d9ee9fb2c8d19c8f2ddc3e901f "pdflatex"
-  "main.out" 1786311143 10437 1a0d0decaeb3a19fb5bdf0f4f08f9be7 "pdflatex"
+  "main.aux" 1788114558 30718 7e89e9ffcc71f731c1251dc78da83963 "pdflatex"
+  "main.bbl" 1788114556 15714 c225a0cecbe303ccb0c892502e1dbeb1 "bibtex main"
+  "main.lof" 1788114558 143 e2c8f3d9ee9fb2c8d19c8f2ddc3e901f "pdflatex"
+  "main.lot" 1788114558 143 e2c8f3d9ee9fb2c8d19c8f2ddc3e901f "pdflatex"
+  "main.out" 1788114558 18809 bf40a9a43a631e701394b361a9840ed2 "pdflatex"
   "main.tex" 1765765081 1538 3c16c27c00f68641e74d8c90f896e4aa ""
-  "main.toc" 1786311143 7399 5361ffed3de2928ea33cbbdd1125ee2e "pdflatex"
+  "main.toc" 1788114558 13695 400ade2ad002f2a1148da01eccf31cc6 "pdflatex"
   "pre-textuais/abstract.tex" 1763240921 68 75059ae0dd1dc89b713677d95333abac ""
   "pre-textuais/agradecimentos.tex" 1763240921 48 8f9a44c6615192281234bd592ff0eb16 ""
   "pre-textuais/dedicatoria.tex" 1763240921 55 9193911d2aa1d9be6e24c4df805467c1 ""
