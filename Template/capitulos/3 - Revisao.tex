@@ -1,2 +1,205 @@
 \chapter{Revisão da Literatura / Trabalhos Relacionados}
 \label{sec:revisao}
+
+Enquanto o Capítulo~\ref{sec:fundamentacao} apresentou os conceitos que sustentam o trabalho, este capítulo examina o que estudos já revelaram sobre a integração e a unificação de sistemas nas organizações. O objetivo é identificar resultados, métodos e lacunas que orientem a análise do InLight. A Seção~\ref{sec:rev-protocolo} descreve o protocolo de busca e seleção, a Seção~\ref{sec:rev-sintese} sintetiza os trabalhos selecionados, a Seção~\ref{sec:rev-discussao} relaciona esses resultados às questões de pesquisa, e a Seção~\ref{sec:rev-posicionamento} posiciona este trabalho em relação aos demais.
+
+\section{Protocolo da Revisão}
+\label{sec:rev-protocolo}
+
+\subsection{Questão Norteadora e Estratégia PICOC}
+
+A revisão foi guiada pela seguinte questão: \textit{quais benefícios, dificuldades e formas de avaliação são relatados na literatura sobre a integração ou unificação de sistemas de informação em organizações?} Para estruturar a busca, utilizou-se o framework PICOC (\textit{Population, Intervention, Comparison, Outcome, Context}), que decompõe a questão em cinco elementos e, a partir deles, em termos de busca. A Tabela~\ref{tab:picoc} apresenta os elementos definidos.
+
+\begin{table}[H]
+\centering
+\caption{Elementos do PICOC definidos para a revisão}
+\label{tab:picoc}
+\begin{tabularx}{\textwidth}{lXX}
+\toprule
+\textbf{Elemento} & \textbf{Definição} & \textbf{Termos de busca} \\ \midrule
+População & Organizações que utilizam sistemas de informação corporativos & \textit{organization*}, \textit{firm*}, \textit{utilit*} \\ \midrule
+Intervenção & Integração ou unificação de sistemas & \textit{system integration}, \textit{enterprise system*}, \textit{ERP}, \textit{legacy modernization} \\ \midrule
+Comparação & Sistemas fragmentados ou legados (opcional) & --- \\ \midrule
+Resultado & Benefícios, desempenho, fatores de sucesso e aceitação & \textit{benefit*}, \textit{performance}, \textit{success}, \textit{adoption} \\ \midrule
+Contexto & Ambiente corporativo, com interesse especial no setor elétrico & \textit{electricity}, \textit{energy} \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{table}
+
+A partir desses elementos, foi definida a seguinte \textit{string} de busca, no formato aceito pela base Scopus:
+
+\begin{quote}
+\shorthandoff{"}\raggedright\small\ttfamily
+TITLE-ABS-KEY(\\
+\quad ("system integration" OR "enterprise system*" OR "ERP" OR "legacy modernization")\\
+\quad AND ("benefit*" OR "performance" OR "success" OR "adoption")\\
+\quad AND ("organization*" OR "firm*" OR "utilit*" OR "electricity"))
+\end{quote}
+
+\subsection{Fontes, Critérios e Processo de Seleção}
+
+As buscas foram realizadas de forma exploratória em mecanismos de busca acadêmica e nas bibliotecas digitais. Os critérios adotados estão na Tabela~\ref{tab:criterios}.
+
+
+\begin{table}[H]
+\centering
+\caption{Critérios de inclusão e exclusão}
+\label{tab:criterios}
+\begin{tabularx}{\textwidth}{cX}
+\toprule
+\textbf{Tipo} & \textbf{Critério} \\ \midrule
+Inclusão & I1: Estudo empírico (caso, levantamento ou análise de dados) ou revisão sistemática sobre integração, unificação ou implantação de sistemas corporativos. \\ \midrule
+Inclusão & I2: Estudo que relate benefícios, dificuldades, fatores de sucesso ou formas de avaliação desses sistemas. \\ \midrule
+Inclusão & I3: Publicação em periódico revisado por pares, anais de conferência ou livro acadêmico. \\ \midrule
+Exclusão & E1: Trabalho exclusivamente técnico, sem análise de impactos organizacionais. \\ \midrule
+Exclusão & E2: Texto sem acesso ao conteúdo completo ou sem revisão por pares (por exemplo, material publicitário de fornecedores). \\ \midrule
+Exclusão & E3: Trabalho duplicado ou versão preliminar de estudo já incluído. \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{table}
+
+Como critério de qualidade, priorizaram-se periódicos de referência na área de Sistemas de Informação e Operações, como \textit{MIS Quarterly}, \textit{Information Systems Research}, \textit{Journal of Management Information Systems}, \textit{European Journal of Information Systems} e \textit{Journal of Operations Management}. A seleção seguiu as etapas apresentadas na Figura~\ref{fig:protocolo}: leitura dos títulos, leitura dos resumos e leitura completa dos trabalhos restantes, que foram então sintetizados.
+
+\begin{figure}[H]
+\centering
+\caption{Etapas do protocolo de revisão}
+\label{fig:protocolo}
+\begin{tikzpicture}[
+    node distance=0.45cm,
+    etapa/.style={rectangle, rounded corners=2pt, draw, thick, fill=gray!10,
+                  text width=3.6cm, minimum height=1.1cm, align=center, font=\small},
+    seta/.style={-{Stealth[length=2.5mm]}, thick}
+]
+\node[etapa] (picoc) {Definição do\\PICOC e da \textit{string}};
+\node[etapa, right=of picoc] (busca) {Busca nas fontes selecionadas};
+\node[etapa, right=of busca] (titulos) {Triagem por título (I1--I3, E1--E3)};
+\node[etapa, below=0.9cm of titulos] (resumos) {Triagem por resumo};
+\node[etapa, left=of resumos] (leitura) {Leitura completa};
+\node[etapa, left=of leitura] (sintese) {Extração e síntese dos resultados};
+\draw[seta] (picoc) -- (busca);
+\draw[seta] (busca) -- (titulos);
+\draw[seta] (titulos) -- (resumos);
+\draw[seta] (resumos) -- (leitura);
+\draw[seta] (leitura) -- (sintese);
+\end{tikzpicture}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{figure}
+
+Ao final do processo, foram selecionados os onze trabalhos sintetizados na próxima seção.
+
+\section{Síntese dos Trabalhos Selecionados}
+\label{sec:rev-sintese}
+
+Os trabalhos foram agrupados em quatro temas: (i) impactos de sistemas integrados no desempenho; (ii) implantação e fatores críticos de sucesso; (iii) avaliação do sucesso e aceitação pelos usuários; e (iv) automação de rotinas de \textit{back-office} e integração no setor elétrico. A Tabela~\ref{tab:sintese} resume cada estudo.
+
+\begin{table}[H]
+\centering
+\caption{Síntese dos trabalhos relacionados}
+\label{tab:sintese}
+\footnotesize
+\begin{tabularx}{\textwidth}{P{2.6cm}P{3.4cm}X}
+\toprule
+\textbf{Trabalho} & \textbf{Método} & \textbf{Principais resultados} \\ \midrule
+\multicolumn{3}{l}{\textit{Tema (i): impactos no desempenho}} \\ \midrule
+\citet{hitt2002} & Análise estatística de dados financeiros de várias empresas ao longo de vários anos & Empresas que adotaram ERP apresentaram desempenho superior em diversos indicadores financeiros; houve queda temporária de desempenho e produtividade logo após a implantação. \\ \midrule
+\citet{hendricks2007} & Análise do desempenho financeiro e do retorno das ações de empresas que implantaram ERP, SCM e CRM & Evidência de aumento da lucratividade das empresas que adotaram ERP, mas não do retorno de suas ações; adotantes de CRM não apresentaram ganhos. \\ \midrule
+\citet{gattiker2005} & Levantamento com 111 plantas industriais & O ERP é mais adequado quando a interdependência entre as unidades é alta e a diferenciação entre elas é baixa; customização e tempo desde a implantação influenciam os resultados. \\ \midrule
+\multicolumn{3}{l}{\textit{Tema (ii): implantação e fatores críticos de sucesso}} \\ \midrule
+\citet{markus2000learning} & Estudo dos problemas e resultados de projetos de ERP em empresas adotantes & O sucesso depende do momento em que é medido; as empresas enfrentaram problemas em todas as fases do ciclo de vida do sistema. \\ \midrule
+\citet{robey2002} & Estudo de caso comparativo com 13 empresas industriais & Identificou duas abordagens de implantação: incremental, com foco inicial na tecnologia, e conjunta, com mudanças de tecnologia e processos ao mesmo tempo. \\ \midrule
+\citet{finney2007} & Revisão de 45 artigos com análise de conteúdo & Gestão da mudança é um dos fatores mais citados, mas com pouca definição de táticas; falta pesquisa sob a perspectiva dos diferentes \textit{stakeholders}. \\ \midrule
+\citet{shaul2013} & Revisão da literatura da década anterior & Organiza os fatores críticos de sucesso ao longo de todo o ciclo de vida do ERP, da seleção ao uso. \\ \midrule
+\multicolumn{3}{l}{\textit{Tema (iii): avaliação do sucesso e aceitação}} \\ \midrule
+\citet{petter2008} & Revisão de 180 artigos (1992--2007), 90 deles empíricos & Resume as evidências sobre as relações entre as seis dimensões do modelo de DeLone e McLean. \\ \midrule
+\citet{wixom2005} & Levantamento com 465 usuários de sete organizações & Integra os modelos de satisfação do usuário e de aceitação de tecnologia, ligando características do sistema à intenção de uso. \\ \midrule
+\multicolumn{3}{l}{\textit{Tema (iv): automação de back-office e setor elétrico}} \\ \midrule
+\citet{lacity2016} & Estudo de caso na operadora Telefónica O2 & A automação robótica de processos tornou rotinas de \textit{back-office} mais rápidas e precisas, com retorno anual sobre o investimento de até 200\%. \\ \midrule
+\citet{uslar2012} & Livro técnico-científico sobre o padrão CIM & Apresenta o \textit{Common Information Model} (IEC 61968, 61970 e 62325), modelo de dados padronizado para integrar sistemas de empresas de energia, incluindo a comunicação de mercado. \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor com base nos trabalhos citados.}
+\end{table}
+
+\subsection{Impactos de Sistemas Integrados no Desempenho}
+
+Os estudos quantitativos indicam que sistemas integrados tendem a gerar ganhos, mas não de forma imediata nem uniforme. \citet{hitt2002} observarou que empresas que investiram em ERP apresentaram desempenho superior em diversos indicadores financeiros, embora tenham registrado queda de desempenho e de produtividade logo após a implantação. \citet{hendricks2007} encontraram evidências de aumento da lucratividade entre adotantes de ERP, mas não do retorno de suas ações, e nenhum ganho entre adotantes de CRM, o que mostra que o tipo de sistema e o contexto importam.
+
+\citet{gattiker2005} explicam parte dessa variação: os benefícios do ERP são maiores quando as unidades da organização dependem fortemente umas das outras e quando suas necessidades são parecidas. Esse resultado é coerente com o argumento de \citet{goodhue1992}, apresentado no Capítulo~\ref{sec:fundamentacao}, de que a integração compensa apenas em determinadas situações.
+
+\subsection{Implantação e Fatores Críticos de Sucesso}
+
+Os estudos sobre implantação mostram que os resultados dependem tanto do processo quanto da tecnologia. \citet{markus2000learning} verificaram que o sucesso de um projeto de ERP depende do momento em que é avaliado: um projeto bem-sucedido na entrega pode não gerar resultados no uso, e vice-versa. \citet{robey2002} mostraram que as empresas precisam superar barreiras de conhecimento tanto na configuração do sistema quanto na assimilação dos novos processos de trabalho. As revisões de \citet{finney2007} e \citet{shaul2013} consolidam os fatores críticos de sucesso e confirmam a importância da gestão da mudança, já destacada por \citet{nah2001}, embora apontem que a literatura descreve pouco como essa gestão deve ser feita na prática.
+
+\subsection{Avaliação do Sucesso e Aceitação pelos Usuários}
+
+\citet{petter2008} revisaram 180 artigos que aplicaram o modelo de DeLone e McLean e sintetizaram as evidências sobre as relações entre suas dimensões, oferecendo um repertório de medidas já testadas para cada uma. \citet{wixom2005} integraram duas linhas de pesquisa antes separadas, a de satisfação do usuário e a de aceitação de tecnologia, mostrando que as características do sistema e da informação influenciam a intenção de uso por meio das crenças sobre utilidade e facilidade de uso. Esses trabalhos indicam que a avaliação de um sistema unificado deve combinar medidas de qualidade do sistema e da informação com a percepção dos usuários.
+
+\subsection{Automação de Back-office e Integração no Setor Elétrico}
+
+O caso estudado por \citet{lacity2016} é próximo ao contexto deste trabalho por tratar de rotinas de \textit{back-office}: na Telefónica O2, a automação robótica de processos tornou essas rotinas mais rápidas e precisas. No setor elétrico, \citet{uslar2012} descrevem o \textit{Common Information Model} (CIM), conjunto de normas que define um modelo de dados comum para a troca de informações entre os sistemas de empresas de energia, inclusive na comunicação com o mercado. A existência desse padrão confirma que a integração de dados é um problema reconhecido no setor, embora seu foco esteja na interoperabilidade técnica entre sistemas, e não na experiência das equipes que operam os processos.
+
+\section{Discussão em Relação às Questões de Pesquisa}
+\label{sec:rev-discussao}
+
+A Tabela~\ref{tab:rev-questoes} relaciona as contribuições da literatura às questões de pesquisa definidas na Introdução.
+
+\begin{table}[H]
+\centering
+\caption{Contribuições da literatura para as questões de pesquisa}
+\label{tab:rev-questoes}
+\footnotesize
+\begin{tabularx}{\textwidth}{P{4.2cm}X}
+\toprule
+\textbf{Questão de pesquisa} & \textbf{O que a literatura indica} \\ \midrule
+Como sistemas fragmentados impactam a eficiência operacional? & A integração tende a melhorar o desempenho \citep{hitt2002,hendricks2007}, sobretudo quando as áreas são interdependentes \citep{gattiker2005}. \\ \midrule
+De que forma a unificação contribui para a integração de processos e o fluxo de informações? & Os ganhos dependem de mudar os processos junto com a tecnologia \citep{robey2002}; a automação de rotinas de \textit{back-office} aumenta velocidade e precisão \citep{lacity2016}. \\ \midrule
+Como observar e mensurar benefícios e limitações? & As dimensões de DeLone e McLean contam com medidas já testadas \citep{petter2008}; o momento da medição altera o resultado \citep{markus2000learning}, e há queda temporária de desempenho após a implantação \citep{hitt2002}. \\ \midrule
+Como a visão de usuários e gestores influencia a adoção? & Características do sistema afetam a intenção de uso por meio da utilidade e da facilidade percebidas \citep{wixom2005}; gestão da mudança e envolvimento dos \textit{stakeholders} são fatores críticos \citep{finney2007,shaul2013}. \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{table}
+
+Duas implicações orientam o restante deste trabalho. Primeiro, a avaliação do InLight não deve se limitar a um único momento: como os benefícios podem surgir apenas após um período de adaptação \citep{hitt2002,markus2000learning}, resultados obtidos logo após a implantação devem ser interpretados com cautela. Segundo, a avaliação deve combinar indicadores de processo com a percepção dos usuários \citep{petter2008,wixom2005}.
+
+\section{Posicionamento deste Trabalho}
+\label{sec:rev-posicionamento}
+
+A Tabela~\ref{tab:comparativo} compara os trabalhos selecionados com este estudo segundo cinco aspectos: análise de benefícios, análise da implantação, avaliação pela percepção dos usuários, contexto do setor elétrico e foco em rotinas de \textit{back-office}.
+
+\begin{table}[H]
+\centering
+\caption{Comparação entre os trabalhos relacionados e este estudo}
+\label{tab:comparativo}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Trabalho} & \textbf{Benefícios} & \textbf{Implantação} & \textbf{Usuários} & \textbf{Setor elétrico} & \textbf{Back-office} \\ \midrule
+\citet{hitt2002} & X & & & & \\ \midrule
+\citet{hendricks2007} & X & & & & \\ \midrule
+\citet{gattiker2005} & X & X & & & \\ \midrule
+\citet{markus2000learning} & X & X & & & \\ \midrule
+\citet{robey2002} & & X & & & \\ \midrule
+\citet{finney2007} & & X & & & \\ \midrule
+\citet{shaul2013} & & X & & & \\ \midrule
+\citet{petter2008} & X & & X & & \\ \midrule
+\citet{wixom2005} & & & X & & \\ \midrule
+\citet{lacity2016} & X & X & & & X \\ \midrule
+\citet{uslar2012} & & & & X & \\ \midrule
+\textbf{Este trabalho} & \textbf{X} & \textbf{X} & \textbf{X} & \textbf{X} & \textbf{X} \\ \bottomrule
+\end{tabular}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{table}
+
+A comparação evidencia uma lacuna. Os estudos sobre benefícios e implantação concentram-se em grandes pacotes de ERP, frequentemente em empresas industriais \citep{gattiker2005,robey2002}, enquanto os trabalhos do setor elétrico tratam a integração principalmente do ponto de vista técnico, por meio de padrões de dados \citep{uslar2012}. Não foram identificados, entre os trabalhos selecionados, estudos que analisem a unificação de informações em rotinas de \textit{back-office} de compra de energia no ambiente regulado brasileiro, combinando indicadores de processo e a percepção dos usuários. Este trabalho busca contribuir para preencher essa lacuna por meio do estudo de caso do aplicativo InLight, apresentado no Capítulo~\ref{sec:proposta}.

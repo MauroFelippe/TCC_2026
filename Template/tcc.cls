@@ -6,7 +6,7 @@
 %% Load additional packages and commands.
 \RequirePackage[a4paper, left=3cm, right=2cm, top=3cm, bottom=2cm]{geometry}
 \RequirePackage[utf8]{inputenc}
-\RequirePackage[square,authoryear]{natbib}
+% Citações e referências: biblatex-abnt, carregado em config/pacotes.tex
 \RequirePackage[dvipsnames,svgnames,table,xcdraw]{xcolor}
 \RequirePackage{amsmath}
 \RequirePackage{booktabs}
@@ -22,7 +22,10 @@
 \RequirePackage{multicol}
 \RequirePackage{multirow}
 \RequirePackage{ragged2e}
-\RequirePackage{sectsty}
+% sectsty removido: é incompatível com o núcleo atual do LaTeX e seus comandos
+% eram sobrescritos pelo titlesec. Mantidos como comandos vazios.
+\newcommand{\chapterfont}[1]{}
+\newcommand{\sectionfont}[1]{}
 \RequirePackage{setspace}
 \RequirePackage{titlesec}
 \RequirePackage{tocloft}
@@ -275,7 +278,7 @@
 \justifying
 \noindent
 #1
-\\[3em]
+\par\vspace{3em}
 
 \normalsize\noindent
 \textbf{Palavras-chaves}: #2
@@ -292,7 +295,7 @@
 	\justifying
 	\noindent
 	#1
-	\\[3em]
+	\par\vspace{3em}
 
 	\normalsize\noindent
 	\textbf{Keywords}: #2

@@ -1,609 +1,563 @@
-\chapter{Proposta}
+\chapter{Proposta: Estudo de Caso do Aplicativo InLight}
 \label{sec:proposta}
 
-Este capítulo tem como objetivo apresentar os conceitos, tencologias e práticas utilizadas no projeto. Irá ser abordado temas que se relacionam com o aplicativo InLight, com suas respectivas tecnologias, pontos positivos e negativos em práticas na implementação de unificação de sistemas e como deve ser realizado.
+Este capítulo apresenta o estudo de caso que constitui o Aplicativo InLight. A Seção~\ref{sec:metodologia} descreve a metodologia da pesquisa; a Seção~\ref{sec:contexto} apresenta o contexto do caso e o cenário atual de trabalho; a Seção~\ref{sec:inlight} descreve o aplicativo InLight, sua arquitetura e suas tecnologias; a Seção~\ref{sec:implantacao} propõe o processo com o aplicativo e um plano de implantação; a Seção~\ref{sec:avaliacao} define como a proposta será avaliada; e a Seção~\ref{sec:limitacoes} discute as limitações do estudo.
 
-\section{InLight}
+\section{Metodologia da Pesquisa}
+\label{sec:metodologia}
 
-O InLight é um aplicativo de unificação de sistemas, desenvolvido em TypeScript, que oferece diversas aplicações, visto que agrupa as principais informações dos principais sistemas utilizados não somente  no BackOffice ACR, mas como na LIGHT como um todo. É uma aplicação especifica para o mercado regulado podendo ser ampliado para o mercado livre.
+\subsection{Classificação da Pesquisa}
 
-Criado e desenvolvido para tratar informações da CCEE, Thunders e informações que só eram armazenadas em planilhas.
+Quanto à natureza, esta pesquisa é aplicada, pois busca gerar conhecimento para a solução de um problema concreto de uma organização. Quanto aos objetivos, é exploratória e descritiva: exploratória por tratar de um tema pouco estudado no contexto específico do ambiente regulado de energia, e descritiva por caracterizar o processo atual e a solução proposta \citep{gil2019}. A abordagem é mista, combinando dados qualitativos, como documentos e entrevistas, com dados quantitativos, como tempos de execução de tarefas e respostas a um questionário em escala.
 
-Ele foi estruturado em 3 principais módulos:
+Quanto ao procedimento, adota-se o estudo de caso único. Segundo \citet{yin2015}, o estudo de caso é adequado quando as questões de pesquisa são do tipo ``como'' e ``por que'', quando o pesquisador tem pouco controle sobre os eventos e quando o foco é um fenômeno contemporâneo em seu contexto real. As quatro questões de pesquisa deste trabalho atendem a essas condições.
 
-\begin{itemize}
-    \item Notas - agrupando contratos de quantidade, disponibilidade e cotas e todos os seus blocos, além de um contador na tela inicial para o próximo bloco.
-    \item Metas - de acordo com a nova demanda, se foi necessário criar uma tela para metas de uma forma bem dinâmica.
-    \item Obrigações - pagamentos chamados de especiais pelo modo que são tratados em seu pagamento.
-\end{itemize}
+\subsection{Fontes de Evidência e Triangulação}
 
-\section{Tecnologias}
-Abordando o desenvolvimento do aplicativo InLight, foi construído com um base de tecnologias que garantem modernidade e uma maior facilidade em alterações futuras. A partir deste ponto, irá ser apresentado as principais tecnologias utilizadas, organizadas de acordo com as suas funcionalidade e propósitos dentro do aplicativo.
-
-\subsection{Arquitetura da Aplicação}
-O InLight foi construído com uma arquitetura cliente-servidor, realizando assim uma boa divisão da interface do usuário (front-end) e a estrutura lógica de negócio (back-end). De acordo com, \cite{pressman2016}, realizando essa estrutura irá promover uma maior facilidade na manutenção e na escalabilidade, além de facilitar que equipes diferentes trabalhem no projeto.
-\subsection{Front-end: React Native}
-
-\subsubsection{React Native e TypeScript}
-
-Falando sobre o front-end do InLight, ele foi desenvolvido em React Native, que é um Framework JavaScript mantido pelo Facebook (Meta), esta tecnologia permite o desenvolvimento de aplicações mobile para Android e iOS a partir de uma única base de código \cite{eisenman2015}. Partindo deste viés, a escolha do React Native se justifica por:
+\citet{yin2015} identifica seis fontes de evidência para estudos de caso: documentação, registros em arquivo, entrevistas, observação direta, observação participante e artefatos físicos. Este estudo utiliza quatro delas:
 
 \begin{itemize}
-    \item \textbf{Desenvolvimento multiplataforma:} como não é necessário manter duas bases separadamente, reduz consideravelmente o tempo e custo de desenvolvimento
-    \item \textbf{Hot Reload:} permite visualizar atualizações no código em tempo real, assim tornando o processo de desenvolvimento mais rápido.
-    \item \textbf{Comunidade ativa:} Comunidade bastante engajada e boa diversidade de bibliotecas.
+    \item \textbf{Documentação:} documentos institucionais não confidenciais sobre o processo do BackOffice ACR;
+    \item \textbf{Observação direta:} acompanhamento da execução das tarefas, com registro de tempos e etapas;
+    \item \textbf{Questionário e entrevistas:} aplicados a usuários e gestores para captar sua percepção sobre o aplicativo;
+    \item \textbf{Artefato:} o próprio aplicativo InLight, analisado quanto às suas funcionalidades e à sua arquitetura.
 \end{itemize}
 
-Ademais, o projeto foi desenvolvido em TypeScript,  que acrescenta a tipagem estática opcional, já que o JavaScript é uma linguagem de tipagem dinâmica. Seguindo essa filosofia, proporciona uma maior segurança no desenvolvimento e facilitará a manutenção no código como mencionado por \cite{bierman2014}.
- Seguindo a análise de, \cite{microsoft2020}, a utilização da tipagem estática reduz a chance de ocorrer erros durante a execução e melhora a experiência de desenvolvimento através autocompletar e refatoração.
-\subsubsection{Gerenciamento de Estado e Navegação}
-Para o gerenciamento de estado global, o InLight utiliza a Context API do React, este recurso permite compartilhar dados entre componentes sem necessidade de passar propriedades manualmente através das árvores de componentes \cite{react2023}. O contexto de autenticação (AuthContext) é responsável no código por gerenciar informações do usuário logado, tokens de acesso e estado de autenticação.
-Abordando a troca entre telas, foi utilizado a biblioteca React Navigation, falando mais especificamente foi utilizado o padrão Stack Navigator. Essa biblioteca oferece navegação nativa, transições suaves e gerenciamento de histórico de navegação \cite{reactnavigation2023}.
-Na parte de locação de dados, como por exemplo tokens de autenticação, foi utilizado AsyncStorage, que fornece um sistema de armazenamento chave-valor assíncrono e não criptografado \cite{reactnative2023}.
-\subsubsection{Componentes e Interface de Usuário}
-A interface do usuário foi desenvolvida utilizando os componentes básicos do React Native (View, Text, TouchableOpacity, FlatList, ScrollView), complementados por bibliotecas mais específicas:
-\begin{itemize}
-    \item \textbf{@react-native-community/slider:} componente de controle deslizante para ajuste de progresso de metas, sendo bem dinâmica em todas as telas;
-    \item \textbf{@react-native-picker/picker:} seletor de opções para escolha de papéis de usuário;
-    \item \textbf{expo-document-picker:} seleção de documentos do dispositivo para funcionalidade de upload, utilizado na parte de pendências.
-\end{itemize}
-\subsection{Back-end: NestJS e Node.js}
+O uso de múltiplas fontes permite a triangulação dos dados, que, segundo \citet{yin2015}, fortalece a validade do estudo de caso, pois uma mesma conclusão passa a ser sustentada por evidências de origens diferentes. A Tabela~\ref{tab:matriz-questoes} relaciona cada questão de pesquisa às fontes de evidência e à base teórica que orienta sua análise.
 
-\subsubsection{Framework NestJS}
-O back-end do InLight é desenvolvido em NestJS, um framework progressivo para construção de aplicações server-side eficientes e escaláveis \cite{nestjs2023}. O NestJS é construído em Node.js e utiliza Typescript como linguagem padrão, garantindo uma boa conexão com o front-end.
-As principais características do NestJS que justificam sua adoção incluem:
-\begin{itemize}
-    \item \textbf{Arquitetura modular:} organização do código em módulos independentes e reutilizáveis;
-    \item \textbf{Injeção de dependências:} padrão que facilita testes e manutenção do código;
-    \item \textbf{Suporte a TypeScript:} aproveitamento o máximo dos benefícios da tipagem estática;
-    \item \textbf{Decorators:} metaprogramação que torna o código mais declarativo e legível;
-    \item \textbf{Estrutura baseada em Angular:} familiaridade para desenvolvedores que conhecem frameworks modernos.
-\end{itemize}
+\begin{table}[H]
+\centering
+\caption{Matriz de questões de pesquisa, fontes de evidência e base teórica}
+\label{tab:matriz-questoes}
+\footnotesize
+\begin{tabularx}{\textwidth}{P{4.3cm}XX}
+\toprule
+\textbf{Questão de pesquisa} & \textbf{Fontes de evidência} & \textbf{Base teórica} \\ \midrule
+QP1: Como sistemas fragmentados impactam a eficiência operacional da empresa? & Documentação; observação do processo atual & Fragmentação e redundância \citep{elmasri2016,laudon2020}; custos e benefícios da integração \citep{goodhue1992} \\ \midrule
+QP2: De que forma a unificação, por meio do InLight, contribui para a integração de processos e o fluxo de informações? & Artefato; comparação entre o processo atual e o proposto & Integração e unificação \citep{linthicum2000,hohpe2003}; reengenharia \citep{hammer1990} \\ \midrule
+QP3: Como observar e mensurar os benefícios e as limitações da unificação? & Indicadores de processo; questionário & Dimensões de desempenho \citep{dumas2018}; sucesso de SI \citep{delone2003}; benefícios \citep{shang2002} \\ \midrule
+QP4: Como a visão de usuários e gestores influencia a adoção de sistemas unificados? & Questionário; entrevistas com gestores & TAM \citep{davis1989}; UTAUT \citep{venkatesh2003}; fatores críticos \citep{nah2001} \\ \bottomrule
+\end{tabularx}
 
-\subsubsection{Arquitetura em Camadas}
-O back-end segue uma arquitetura em três camadas bem definidas, conforme recomendado por \cite{fowler2002}:
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{table}
+
+\subsection{Etapas da Pesquisa}
+
+A pesquisa foi organizada nas etapas apresentadas na Figura~\ref{fig:etapas-pesquisa}. As duas primeiras correspondem aos Capítulos~\ref{sec:fundamentacao} e~\ref{sec:revisao}, as demais são desenvolvidas neste capítulo.
+
+\begin{figure}[H]
+\centering
+\caption{Etapas da pesquisa}
+\label{fig:etapas-pesquisa}
+\begin{tikzpicture}[
+    node distance=0.4cm,
+    etapa/.style={rectangle, rounded corners=2pt, draw, thick, fill=gray!10,
+                  text width=3.8cm, minimum height=1.1cm, align=center, font=\small},
+    seta/.style={-{Stealth[length=2.5mm]}, thick}
+]
+\node[etapa] (e1) {1. Fundamentação\\teórica};
+\node[etapa, right=of e1] (e2) {2. Revisão\\da literatura};
+\node[etapa, right=of e2] (e3) {3. Diagnóstico\\do cenário atual};
+\node[etapa, below=0.8cm of e3] (e4) {4. Descrição\\do InLight};
+\node[etapa, left=of e4] (e5) {5. Processo proposto\\e plano de implantação};
+\node[etapa, left=of e5] (e6) {6. Avaliação:\\indicadores e percepção};
+\node[etapa, below=0.8cm of e6] (e7) {7. Análise\\e conclusões};
+\draw[seta] (e1) -- (e2);
+\draw[seta] (e2) -- (e3);
+\draw[seta] (e3) -- (e4);
+\draw[seta] (e4) -- (e5);
+\draw[seta] (e5) -- (e6);
+\draw[seta] (e6) -- (e7);
+\end{tikzpicture}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{figure}
+
+\subsection{Aspectos Éticos}
+
+A coleta de dados utiliza apenas documentos institucionais disponibilizados para a pesquisa, sem acesso a informações confidenciais. A participação no questionário e nas entrevistas é voluntária, e as respostas são tratadas de forma anônima e agregada, de modo que nenhum participante possa ser identificado \citep{gil2019}.
+
+\section{Contexto do Caso}
+\label{sec:contexto}
+
+\subsection{A Organização e a Área Estudada}
+
+A Light é uma concessionária de distribuição de energia elétrica que atua no estado do Rio de Janeiro. Como distribuidora, adquire no Ambiente de Contratação Regulada a energia destinada ao atendimento de seus consumidores cativos, por meio dos contratos descritos na Seção~\ref{sec:setor}.
+
+Segundo as informações financeiras intermediárias do segundo trimestre de 2026, divulgadas ao mercado \citep{light2026itr}, a Light Serviços de Eletricidade S.A. (Light SESA) é uma sociedade por ações de capital aberto, com sede na cidade do Rio de Janeiro, integralmente controlada pela Light S.A. Sua concessão de distribuição foi efetivada em julho de 1996 e, com o 8º Termo Aditivo, assinado em 6 de maio de 2026, foi prorrogada até 4 de junho de 2056. A área de concessão abrange 31 municípios do estado, incluindo a capital, com cerca de 4,2 milhões de unidades consumidoras faturadas, correspondentes a uma população de cerca de 10 milhões de pessoas. A energia destinada a esse mercado é adquirida de Itaipu Binacional, por meio de seu agente comercializador, a ENBPar, em leilões de energia existente, da CCEE e do Programa de Incentivo às Fontes Alternativas de Energia Elétrica (PROINFA).
+
+A mesma fonte evidencia a relevância da compra de energia para a distribuidora. No primeiro semestre de 2026, os custos com energia elétrica somaram cerca de R\$~4,6 bilhões, dos quais cerca de R\$~2,1 bilhões referem-se a energia de leilões, frente a uma receita operacional líquida de cerca de R\$~6,9 bilhões. A companhia informa ainda compromissos de compra de energia em contratos de longo prazo superiores a R\$~6 bilhões por ano entre 2027 e 2031 e uma estratégia de contratação que busca manter o nível contratado entre 100\% e 105\% da energia requerida pelo mercado cativo, faixa associada ao limite regulatório para repasse da sobrecontratação às tarifas \citep{light2026itr}.
+
+O estudo concentra-se no BackOffice de compra de energia do ACR, área responsável pelo acompanhamento dos contratos de compra de energia da distribuidora. Entre suas atividades estão o controle das notas dos contratos por quantidade, por disponibilidade e de cotas, com seus respectivos blocos; o acompanhamento de metas da área; e o tratamento de pagamentos que, pela forma como são processados, são denominados especiais. Atualmente, a equipe é composta de 5 integrantes: 1 coordenador, 3 analistas e 1 estagiário, este grupo é responsável pela administração de 522 contratos regulados, que se dividem em três blocos, além das Obrigações Setoriais que as distribuidoras tem que possuir e administrar.
+
+\subsection{Cenário Atual}
+
+No cenário anterior ao InLight, as informações necessárias a essas atividades estão distribuídas entre diferentes fontes: os sistemas da CCEE, a plataforma Thunders, um sistema de lançamento de notas cuja base de dados não é automatizada de forma completa aos demais sistemas corporativos, e controles mantidos em planilhas. A Figura~\ref{fig:as-is} representa, de forma simplificada, esse cenário: o analista precisa consultar cada fonte separadamente e consolidar as informações manualmente.
+
+\begin{figure}[H]
+\centering
+\caption{Representação simplificada do cenário atual}
+\label{fig:as-is}
+\begin{tikzpicture}[
+    fonte/.style={rectangle, rounded corners=2pt, draw, thick, fill=gray!10,
+                  text width=2.8cm, minimum height=1cm, align=center, font=\small},
+    ator/.style={ellipse, draw, thick, fill=blue!8, minimum width=2.6cm,
+                 minimum height=1cm, align=center, font=\small},
+    seta/.style={{Stealth[length=2.5mm]}-{Stealth[length=2.5mm]}, thick}
+]
+\node[ator] (analista) at (0,0) {Analista do\\BackOffice ACR};
+\node[fonte] (ccee) at (-4.5,1.6) {Sistemas da CCEE};
+\node[fonte] (thunders) at (4.5,1.6) {Plataforma Thunders};
+\node[fonte] (notas) at (-4.5,-1.6) {Sistema de lançamento de notas};
+\node[fonte] (planilhas) at (4.5,-1.6) {Planilhas de controle};
+\node[fonte, fill=orange!15, text width=4.2cm] (consol) at (0,-3.2) {Consolidação manual\\(conferência e redigitação)};
+\draw[seta] (analista) -- (ccee);
+\draw[seta] (analista) -- (thunders);
+\draw[seta] (analista) -- (notas);
+\draw[seta] (analista) -- (planilhas);
+\draw[-{Stealth[length=2.5mm]}, thick, dashed] (analista) -- (consol);
+\end{tikzpicture}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{figure}
+
+Na perspectiva da fundamentação teórica, apresenta as condições típicas da fragmentação de sistemas discutidas na Seção~\ref{sec:legados}. A Tabela~\ref{tab:problemas} relaciona os problemas descritos na literatura à forma como podem se manifestar no BackOffice ACR. Essas manifestações são tratadas como hipóteses a serem confirmadas pela análise documental e pela observação do processo.
+
+\begin{table}[H]
+\centering
+\caption{Problemas da fragmentação e sua possível manifestação no caso}
+\label{tab:problemas}
+\footnotesize
+\begin{tabularx}{\textwidth}{P{3.2cm}XP{3.2cm}}
+\toprule
+\textbf{Problema} & \textbf{Possível manifestação no BackOffice ACR} & \textbf{Base teórica} \\ \midrule
+Redundância e inconsistência de dados & Dados de um mesmo contrato registrados em mais de uma fonte, com risco de versões divergentes & \citet{elmasri2016} \\ \midrule
+Retrabalho e redigitação & Transcrição manual de informações da CCEE e da Thunders para planilhas e para o sistema de notas & \citet{stair2018}; \citet{hammer1990} \\ \midrule
+Ausência de visão consolidada & Necessidade de reunir várias fontes para saber a situação dos contratos e dos próximos blocos & \citet{power2002}; \citet{sharda2014} \\ \midrule
+Risco de descumprimento de prazos & Dependência de controles manuais para acompanhar vencimentos e pagamentos especiais & \citet{brasil2004decreto} \\ \midrule
+Controle de acesso heterogêneo & Planilhas compartilhadas sem controle de permissões por perfil & \citet{whitman2018} \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{table}
+
+\section{O Aplicativo InLight}
+\label{sec:inlight}
+
+\subsection{Objetivo e Escopo}
+
+O InLight é um aplicativo de unificação de sistemas desenvolvido para o BackOffice de compra de energia do ACR da Light. Seu objetivo é reunir em uma única aplicação as principais informações hoje distribuídas entre a CCEE, a plataforma Thunders e controles mantidos em planilhas. Embora tenha sido concebido para o mercado regulado, sua estrutura permite a ampliação para o mercado livre.
+
+Em relação às estratégias descritas por \citet{bisbal1999}, o InLight não redesenvolve nem migra os sistemas existentes: estes continuam em operação e o aplicativo acrescenta uma nova camada que consolida as informações de que a área precisa. Na visão de \citet{linthicum2000}, trata-se de uma unificação nos níveis de dados e de interface do usuário, já que cria uma base de dados própria e uma interface única para as informações antes dispersas.
+
+\subsection{Módulos}
+
+O aplicativo está organizado em três módulos, descritos na Tabela~\ref{tab:modulos}, que também relaciona cada módulo aos problemas da Tabela~\ref{tab:problemas}.
+
+\begin{table}[H]
+\centering
+\caption{Módulos do InLight}
+\label{tab:modulos}
+\footnotesize
+\begin{tabularx}{\textwidth}{P{2cm}XX}
+\toprule
+\textbf{Módulo} & \textbf{Funcionalidades} & \textbf{Problemas endereçados} \\ \midrule
+Notas & Agrupa os contratos por quantidade, por disponibilidade e de cotas, com todos os seus blocos; exibe na tela inicial um contador para o próximo bloco & Ausência de visão consolidada; risco de descumprimento de prazos; redundância de dados \\ \midrule
+Metas & Permite o acompanhamento dinâmico de metas da área, com ajuste do progresso pelo usuário & Controles paralelos em planilhas; ausência de visão consolidada \\ \midrule
+Obrigações & Trata os pagamentos especiais e permite importar obrigações futuras a partir de planilhas Excel, com validação dos dados & Retrabalho e redigitação; risco de descumprimento de prazos \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{table}
+
+As Figuras~\ref{fig:telas-acesso} a~\ref{fig:telas-metas} apresentam as telas principais do aplicativo, capturadas em ambiente de teste com dados fictícios. O acesso é feito por \textit{e-mail} e senha (Figura~\ref{fig:tela-login}); após a autenticação, o menu exibe um contador regressivo para o próximo vencimento e dá acesso à lista de pagamentos futuros, às notas, às metas e, no perfil de administrador, ao cadastro de usuários (Figura~\ref{fig:tela-menu}).
+
+\begin{figure}[H]
+    \centering
+    \caption{Telas de acesso do InLight}
+    \label{fig:telas-acesso}
+    \subfloat[Tela de \textit{login}\label{fig:tela-login}]{\includegraphics[width=0.38\textwidth]{Tela de Login.png}}
+    \hspace{0.06\textwidth}
+    \subfloat[Menu do administrador\label{fig:tela-menu}]{\includegraphics[width=0.38\textwidth]{Tela de Menu.png}}
+
+    \vspace{0.2cm}
+    {\footnotesize Fonte: elaborado pelo autor.}
+\end{figure}
+
+A Figura~\ref{fig:tela-pagamentos} mostra a lista de pagamentos futuros do módulo Obrigações. Cada obrigação apresenta a data de vencimento, a data de divulgação e os lembretes associados, e o botão ``Importar Excel'' permite carregar novas obrigações a partir de planilhas.
+
+\begin{figure}[H]
+    \centering
+    \caption{Lista de pagamentos futuros do módulo Obrigações}
+    \label{fig:tela-pagamentos}
+    \includegraphics[width=0.38\textwidth]{Tela de Contratos.png}
+
+    \vspace{0.2cm}
+    {\footnotesize Fonte: elaborado pelo autor.}
+\end{figure}
+
+No módulo Metas, a equipe visualiza as metas cadastradas com seu percentual de conclusão (Figura~\ref{fig:tela-metas}) e, ao selecionar uma delas, consulta o criador, os responsáveis e o progresso, que pode ser ajustado pelo usuário (Figura~\ref{fig:tela-meta-detalhe}).
+
+\begin{figure}[H]
+    \centering
+    \caption{Telas do módulo Metas}
+    \label{fig:telas-metas}
+    \subfloat[Lista de metas\label{fig:tela-metas}]{\includegraphics[width=0.38\textwidth]{Tela de Metas.png}}
+    \hspace{0.06\textwidth}
+    \subfloat[Detalhes de uma meta\label{fig:tela-meta-detalhe}]{\includegraphics[width=0.38\textwidth]{Visao dentro de metas.png}}
+
+    \vspace{0.2cm}
+    {\footnotesize Fonte: elaborado pelo autor.}
+\end{figure}
+
+\subsection{Arquitetura}
+
+O InLight adota uma arquitetura cliente-servidor, que separa a interface do usuário (\textit{front-end}) da lógica de negócio e do acesso a dados (\textit{back-end}). Segundo \citet{pressman2016}, essa separação facilita a manutenção e a escalabilidade e permite que equipes diferentes trabalhem em cada parte. A comunicação ocorre por meio de uma API que segue os princípios REST definidos por \citet{fielding2000}: separação entre cliente e servidor, ausência de estado entre requisições (\textit{stateless}), possibilidade de armazenamento em cache, interface uniforme e sistema em camadas. A Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
+
+\begin{figure}[H]
+\centering
+\caption{Visão geral da arquitetura do InLight}
+\label{fig:arquitetura}
+\begin{tikzpicture}[
+    caixa/.style={rectangle, rounded corners=2pt, draw, thick, fill=gray!10,
+                  text width=3.6cm, minimum height=0.9cm, align=center, font=\small},
+    camada/.style={rectangle, draw, thick, fill=white,
+                   text width=3.4cm, minimum height=0.75cm, align=center, font=\small},
+    seta/.style={-{Stealth[length=2.5mm]}, thick},
+    rotulo/.style={font=\scriptsize, align=center}
+]
+% Cliente
+\node[caixa, fill=blue!8, text width=3.4cm, minimum height=2.4cm] (app) at (0,0)
+    {\textbf{Aplicativo móvel}\\React Native + TypeScript\\[2pt]\scriptsize Context API, React Navigation, AsyncStorage};
+% Servidor
+\node[camada] (ctrl) at (6.2,1.1) {\textit{Controllers}};
+\node[camada] (serv) at (6.2,0) {\textit{Services}};
+\node[camada] (repo) at (6.2,-1.1) {\textit{Repositories} (TypeORM)};
+\node[draw, thick, dashed, rounded corners=3pt, inner sep=6pt,
+      fit=(ctrl)(serv)(repo), label={[font=\small\bfseries]above:API NestJS (Node.js)}] (api) {};
+% Banco
+\node[cylinder, shape border rotate=90, aspect=0.25, draw, thick, fill=gray!10,
+      minimum width=2.4cm, minimum height=1.4cm, align=center, font=\small] (db) at (6.2,-3.5) {PostgreSQL};
+% Planilhas
+\node[caixa, text width=2.6cm] (xlsx) at (0,-3.5) {Planilhas (.xlsx)};
+% Setas
+\draw[seta] (app.east |- ctrl) -- node[rotulo, above] {HTTP/REST\\+ token JWT} (ctrl.west);
+\draw[seta] (ctrl) -- (serv);
+\draw[seta] (serv) -- (repo);
+\draw[seta] (api.south) -- (db.north);
+\draw[seta, dashed] (xlsx.north) -- node[rotulo, left] {importação} (app.south);
+\end{tikzpicture}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{figure}
+
+\subsection{Tecnologias Utilizadas}
+
+A Tabela~\ref{tab:stack} resume as tecnologias empregadas, que são detalhadas a seguir.
+
+\begin{table}[H]
+\centering
+\caption{Tecnologias utilizadas no InLight}
+\label{tab:stack}
+\footnotesize
+\begin{tabularx}{\textwidth}{P{2.6cm}P{3.6cm}X}
+\toprule
+\textbf{Camada} & \textbf{Tecnologia} & \textbf{Função} \\ \midrule
+Interface & React Native, TypeScript & Aplicativo multiplataforma (Android e iOS) com tipagem estática \\ \midrule
+Servidor & NestJS, Node.js & API REST organizada em módulos e camadas \\ \midrule
+Persistência & PostgreSQL, TypeORM & Armazenamento relacional e mapeamento objeto-relacional \\ \midrule
+Segurança & JWT, Passport.js, bcrypt, RBAC & Autenticação, armazenamento seguro de senhas e controle de acesso por perfil \\ \midrule
+Qualidade & \textit{class-validator}, Jest & Validação de dados de entrada e testes automatizados \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{table}
+
+\subsubsection{Front-end: React Native e TypeScript}
+
+O \textit{front-end} foi desenvolvido em React Native, framework mantido pela Meta que permite criar aplicações para Android e iOS a partir de uma única base de código \citep{eisenman2015}. A escolha se justifica pelo desenvolvimento multiplataforma, que reduz tempo e custo, pelo recarregamento rápido do código durante o desenvolvimento e pela comunidade ativa, com ampla oferta de bibliotecas.
+
+Todo o projeto utiliza TypeScript, linguagem que acrescenta tipagem estática opcional ao JavaScript. Segundo \citet{bierman2014}, essa tipagem permite detectar erros ainda durante o desenvolvimento e melhora o suporte das ferramentas, como o autocompletar e a refatoração \citep{microsoft2020}.
+
+Para o estado global, utiliza-se a Context API do React, que compartilha dados entre componentes sem a necessidade de repassá-los manualmente por toda a árvore de componentes \citep{react2023}, o contexto de autenticação (AuthContext) gerencia o usuário conectado e seus tokens de acesso. A navegação entre telas usa a biblioteca React Navigation, no padrão \textit{Stack Navigator} \citep{reactnavigation2023}, e o armazenamento local de dados, como os tokens, usa o AsyncStorage, um armazenamento chave-valor assíncrono e não criptografado \citep{reactnative2023}. A interface é composta pelos componentes básicos do React Native, complementados por bibliotecas como \textit{@react-native-community/slider} (ajuste do progresso de metas), \textit{@react-native-picker/picker} (seleção de perfis de usuário) e \textit{expo-document-picker} (seleção de arquivos para \textit{upload}).
+
+\subsubsection{Back-end: NestJS e Node.js}
+
+O \textit{back-end} é desenvolvido em NestJS, framework para aplicações de servidor construído sobre o Node.js e que utiliza TypeScript como linguagem padrão, mantendo a mesma linguagem em toda a aplicação \citep{nestjs2023}. O NestJS oferece arquitetura modular, injeção de dependências e uso de \textit{decorators}, recursos que tornam o código mais organizado e testável.
+
+O código segue uma arquitetura em camadas, conforme os padrões descritos por \citet{fowler2002}:
+
 \begin{enumerate}
-    \item \textbf{Camada de Apresentação (Controllers):} responsável por receber requisições HTTP, validar entradas e retornar respostas adequadas. Utiliza em seu código decorators como por exemplo: @Controller, @Get, @Post, @Patch e @Delete para definir rotas e métodos HTTP;
-    
-    \item \textbf{Camada de Negócio (Services):} contém a lógica de negócio do aplicativo, implementando regras, validações e orquestrando operações entre diferentes entidades;
-    
-    \item \textbf{Camada de Dados (Repositories):} responsável pela comunicação com o banco de dados, abstraindo detalhes de persistência através do padrão Repository.
-\end{enumerate}
-Esta separação promove o princípio da responsabilidade única (Single Responsibility Principle) do SOLID \cite{martin2008}, facilitando manutenção, testes e evolução do sistema.
-\subsection{Banco de Dados e Persistência}
-
-\subsubsection{PostgreSQL}
-O InLight utiliza PostgreSQL como sistema gerenciador de banco de dados. Este banco dados é um open-source robusto, conhecido por sua confiabilidade, integridade de dados e conformidade com padrões SQL \cite{postgresql2023}. Segundo \cite{obe2017}, PostgreSQL oferece recursos avançados como:
-\begin{itemize}
-    \item Suporte completo a transações ACID (Atomicidade, Consistência, Isolamento, Durabilidade);
-    \item Tipos de dados complexos e extensíveis;
-    \item Índices avançados para otimização de consultas;
-    \item Suporte a JSON e dados semi-estruturados;
-    \item Replicação e alta disponibilidade.
-\end{itemize}
-\subsubsection{TypeORM}
-Para a comunicação entre a aplicação e o banco de dados, utiliza-se TypeORM, um Object-Relational Mapping (ORM) que permite trabalhar com entidades de banco de dados como objetos TypeScript \cite{typeorm2023}. O TypeORM oferece:
-
-\begin{itemize}
-    \item \textbf{Query Builder:} construção de consultas complexas de forma programática e type-safe;
-    \item \textbf{Migrations:} versionamento e controle de mudanças no schema do banco;
-    \item \textbf{Relacionamentos:} definição declarativa de relações entre entidades (OneToMany, ManyToOne, ManyToMany);
-    \item \textbf{Lazy Loading e Eager Loading:} estratégias de carregamento de relacionamentos.
-\end{itemize}
-O uso de ORM reduz significativamente a quantidade de código SQL escrito manualmente, previne vulnerabilidades como SQL Injection e facilita a portabilidade entre diferentes SGBDs \cite{ambler2003}.
-
-\subsection{Autenticação e Segurança}
-
-\subsubsection{JSON Web Tokens (JWT)}
-O sistema de autenticação do InLight baseia-se em JSON Web Tokens (JWT), um padrão aberto (RFC 7519) para transmissão segura de informações entre partes como um objeto JSON \cite{jones2015}. O fluxo de autenticação funciona da seguinte forma:
-\begin{enumerate}
-    \item Usuário envia credenciais (email e senha) para o endpoint de login;
-    \item Servidor valida as credenciais e, se válidas, gera um token JWT contendo informações do usuário;
-    \item Cliente armazena o token localmente e o envia no header Authorization de requisições subsequentes;
-    \item Servidor valida o token em cada requisição protegida.
+    \item \textbf{Apresentação (\textit{Controllers}):} recebe as requisições HTTP, valida as entradas e devolve as respostas, com rotas definidas por \textit{decorators} como @Get, @Post, @Patch e @Delete;
+    \item \textbf{Negócio (\textit{Services}):} concentra as regras e validações do negócio e coordena as operações entre entidades;
+    \item \textbf{Dados (\textit{Repositories}):} realiza a comunicação com o banco de dados, isolando os detalhes de persistência por meio do padrão \textit{Repository}.
 \end{enumerate}
 
-Os benefícios do JWT incluem:
+Essa separação aplica o princípio da responsabilidade única \citep{martin2008}. Os dados trafegam entre as camadas por meio de \textit{Data Transfer Objects} (DTOs), objetos simples que transportam dados sem conter lógica de negócio \citep{fowler2002}. A validação das entradas usa a biblioteca \textit{class-validator} em conjunto com o \textit{ValidationPipe} do NestJS, configurado para descartar propriedades não previstas no DTO, rejeitar requisições com campos extras e converter automaticamente os tipos primitivos. As respostas e os erros da API são padronizados por um \textit{ResponseInterceptor} e por um \textit{HttpExceptionFilter}, o que facilita o tratamento no \textit{front-end} \citep{nestjs2023}.
+
+A importação de obrigações a partir de arquivos Excel (.xlsx) é feita por envio no formato \textit{multipart/\allowbreak form-data}. Nesse processo, as datas, que o Excel armazena como números seriais, são convertidas para o formato padrão, e os dados são validados antes de serem gravados, com retorno ao usuário sobre o sucesso ou os erros encontrados. Essa funcionalidade contribui para o princípio de capturar a informação uma única vez, defendido por \citet{hammer1990}, ao substituir a redigitação dos dados pela importação validada.
+
+\subsubsection{Banco de Dados e Persistência}
+
+O sistema gerenciador de banco de dados adotado é o PostgreSQL, de código aberto e conhecido pela confiabilidade e pela conformidade com o padrão SQL \citep{postgresql2023}. Segundo \citet{obe2017}, ele oferece suporte completo a transações ACID, tipos de dados extensíveis, índices avançados e suporte a dados em JSON.
+
+O acesso ao banco é feito pelo TypeORM, ferramenta de mapeamento objeto-relacional (ORM) que permite manipular as tabelas como classes TypeScript e oferece construção de consultas, controle de versões do esquema (\textit{migrations}) e definição declarativa de relacionamentos \citep{typeorm2023}. O uso de um ORM reduz a quantidade de SQL escrito manualmente e facilita a portabilidade entre bancos de dados \citep{ambler2003}.
+
+\subsubsection{Autenticação e Segurança}
+
+A autenticação utiliza JSON Web Tokens (JWT), padrão aberto definido na RFC 7519 para a transmissão de informações entre as partes na forma de um objeto JSON assinado digitalmente \citep{jones2015}. O usuário envia suas credenciais, o servidor as valida e devolve um token, que o aplicativo armazena e envia nas requisições seguintes; como o token contém as informações necessárias, o servidor não precisa manter sessões. A validação do token é feita com a biblioteca Passport.js e sua estratégia \textit{passport-jwt}, integradas ao NestJS por meio de \textit{Guards} que protegem as rotas \citep{passport2023}.
+
+As senhas são armazenadas com o algoritmo bcrypt, que aplica um \textit{salt} único a cada senha e possui custo computacional ajustável, o que dificulta ataques por tabelas pré-computadas e por força bruta \citep{provos1999}. Como o aplicativo e a API operam em origens diferentes, o \textit{back-end} também configura o CORS (\textit{Cross-Origin Resource Sharing}), definindo as origens e os métodos HTTP autorizados \citep{w3c2014}.
+
+O controle de acesso segue o modelo baseado em papéis (RBAC), que, segundo \citet{ferraiolo2001}, simplifica a administração de permissões ao associá-las a papéis, e não a cada usuário individualmente. A Tabela~\ref{tab:perfis} apresenta os papéis definidos no InLight. Em comparação com planilhas compartilhadas, esse modelo permite aplicar uma política de acesso uniforme às informações da área \citep{whitman2018}.
+
+\begin{table}[H]
+\centering
+\caption{Perfis de acesso do InLight}
+\label{tab:perfis}
+\footnotesize
+\begin{tabularx}{\textwidth}{P{2.2cm}X}
+\toprule
+\textbf{Perfil} & \textbf{Permissões} \\ \midrule
+Admin & Acesso total, incluindo o cadastro de usuários e a importação de dados \\ \midrule
+Manager & Permissões de gestão sobre as informações da área \\ \midrule
+User & Acesso às funcionalidades essenciais de consulta e acompanhamento \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{table}
+
+\subsubsection{Testes Automatizados}
+
+Os testes utilizam o framework Jest, que permite escrever testes unitários e de integração, simular dependências externas (\textit{mocking}) e gerar relatórios de cobertura de código. O pacote \textit{@nestjs/testing} complementa o Jest ao facilitar a criação de módulos de teste com injeção de dependências \citep{nestjs2023}.
+
+\section{Processo Proposto e Plano de Implantação}
+\label{sec:implantacao}
+
+\subsection{Processo com o InLight}
+
+Com o InLight, o analista passa a consultar as informações dos contratos, metas e obrigações em uma única aplicação, como representado na Figura~\ref{fig:to-be}. As informações provenientes das fontes externas são registradas ou importadas uma vez no aplicativo, com validação na entrada, e passam a ser compartilhadas por toda a equipe conforme o perfil de acesso de cada usuário.
+
+Na versão atual, o InLight não possui integração automática com os sistemas da CCEE nem com a plataforma Thunders. Os dados entram no aplicativo por registro ou por importação de planilhas no formato .xlsx, validadas antes da gravação. A integração por meio de API com essas duas fontes está prevista para versões futuras e depende da disponibilização das respectivas interfaces, que se encontra em andamento. Quando implementada, essa integração eliminará a etapa de importação manual e aproximará o InLight da integração no nível de interface de aplicação descrita por \citet{linthicum2000}.
+
+\begin{figure}[H]
+\centering
+\caption{Representação simplificada do processo com o InLight}
+\label{fig:to-be}
+\begin{tikzpicture}[
+    fonte/.style={rectangle, rounded corners=2pt, draw, thick, fill=gray!10,
+                  text width=2.6cm, minimum height=0.9cm, align=center, font=\small},
+    ator/.style={ellipse, draw, thick, fill=blue!8, minimum width=2.4cm,
+                 minimum height=0.9cm, align=center, font=\small},
+    seta/.style={-{Stealth[length=2.5mm]}, thick}
+]
+\node[rectangle, rounded corners=3pt, draw, very thick, fill=green!8,
+      text width=3.4cm, minimum height=3.4cm, align=center, font=\small] (inlight) at (0,0)
+      {\textbf{InLight}\\[4pt]Notas\\Metas\\Obrigações\\[4pt]\scriptsize base de dados única};
+\node[fonte] (ccee) at (-6,1.2) {Sistemas da CCEE};
+\node[fonte] (thunders) at (-6,0) {Plataforma Thunders};
+\node[fonte] (planilhas) at (-6,-1.2) {Planilhas};
+\node[ator] (analista) at (4.6,0.8) {Analista};
+\node[ator] (gestor) at (4.6,-0.8) {Gestor};
+\draw[seta, dashed] (ccee.east) -- (inlight.west |- ccee.east);
+\draw[seta, dashed] (thunders.east) -- (inlight.west);
+\draw[seta, dashed] (planilhas.east) -- (inlight.west |- planilhas.east);
+\node[font=\scriptsize, align=center, above=0.1cm of ccee.north east, xshift=1.35cm] {registro ou\\importação (.xlsx)};
+\node[font=\scriptsize, align=center, below=0.3cm of planilhas.south] {CCEE e Thunders: integração\\por API prevista};
+\draw[{Stealth[length=2.5mm]}-{Stealth[length=2.5mm]}, thick] (inlight.east |- analista) -- (analista.west);
+\draw[{Stealth[length=2.5mm]}-{Stealth[length=2.5mm]}, thick] (inlight.east |- gestor) -- (gestor.west);
+\end{tikzpicture}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{figure}
+
+Seguindo \citet{hammer1990} e \citet{dumas2018}, a mudança não deve se limitar a transferir os passos atuais para o aplicativo. Recomenda-se, na implantação, revisar o processo para eliminar etapas que deixam de ser necessárias, como a conferência de uma mesma informação em várias fontes e a manutenção de planilhas paralelas às informações registradas no InLight.
+
+\subsection{Plano de Implantação}
+
+O plano de implantação proposto segue as fases do ciclo de vida de sistemas corporativos definidas por \citet{markus2000}: concepção (\textit{chartering}), projeto (\textit{project}), estabilização (\textit{shakedown}) e evolução (\textit{onward and upward}). A Tabela~\ref{tab:plano} apresenta as atividades propostas para cada fase e os fatores críticos de sucesso de \citet{nah2001} a que elas respondem.
+
+\begin{table}[H]
+\centering
+\caption{Plano de implantação proposto para o InLight}
+\label{tab:plano}
+\footnotesize
+\begin{tabularx}{\textwidth}{P{2.5cm}XP{4cm}}
+\toprule
+\textbf{Fase} & \textbf{Atividades propostas} & \textbf{Fatores críticos relacionados} \\ \midrule
+Concepção & Definir objetivos e indicadores; mapear o processo atual & Apoio da alta direção; plano e visão de negócio \\ \midrule
+Projeto & Validar os módulos com os usuários-chave; carregar e conferir os dados iniciais; redesenhar o processo; capacitar a equipe & Composição da equipe; redesenho de processos; testes; comunicação eficaz \\ \midrule
+Estabilização & Operar com acompanhamento próximo; registrar e corrigir problemas; desativar gradualmente as planilhas paralelas & Gestão da mudança; monitoramento e avaliação de desempenho \\ \midrule
+Evolução & Medir os indicadores após o período de adaptação; priorizar melhorias; avaliar a extensão ao mercado livre & Monitoramento e avaliação de desempenho; defensor do projeto \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor com base em \citet{markus2000} e \citet{nah2001}.}
+\end{table}
+
+Para a gestão da mudança, adotam-se como referência as recomendações de \citet{kotter1996}, em especial criar senso de urgência, comunicar com clareza a visão da mudança e gerar ganhos de curto prazo visíveis. No caso do InLight, um ganho de curto prazo pode ser a substituição de um controle em planilha que hoje exige mais esforço da equipe, cujo resultado seja percebido rapidamente pelos usuários.
+
+\section{Avaliação da Proposta}
+\label{sec:avaliacao}
+
+\subsection{Desenho da Avaliação}
+
+A avaliação combina duas perspectivas, conforme recomendado pela literatura revisada no Capítulo~\ref{sec:revisao} \citep{petter2008,wixom2005}: (i) indicadores de processo, que comparam o cenário atual com o cenário com o InLight e (ii) a percepção de usuários e gestores. Os resultados são, então, organizados segundo as dimensões de benefícios de \citet{shang2002}.
+
+Como os benefícios de sistemas integrados podem demorar a aparecer e o desempenho pode cair logo após a implantação \citep{hitt2002,markus2000learning}, propõe-se medir os indicadores em dois momentos após a implantação: ao final da fase de estabilização e após um período de uso regular.
+
+\subsection{Indicadores de Processo}
+
+Os indicadores foram definidos a partir das quatro dimensões de desempenho de \citet{dumas2018}: tempo, custo, qualidade e flexibilidade. Para cada indicador, devem ser selecionadas tarefas representativas do BackOffice, executadas no cenário atual e com o InLight. A Tabela~\ref{tab:indicadores} apresenta os indicadores propostos.
+
+\begin{table}[H]
+\centering
+\caption{Indicadores de processo propostos}
+\label{tab:indicadores}
+\footnotesize
+\begin{tabularx}{\textwidth}{P{3.4cm}XP{1.9cm}P{2.6cm}}
+\toprule
+\textbf{Indicador} & \textbf{Definição operacional} & \textbf{Dimensão} & \textbf{Coleta} \\ \midrule
+Tempo de consolidação & Tempo para reunir as informações necessárias sobre a situação de um contrato ou bloco & Tempo & Observação direta (cronometragem) \\ \midrule
+Fontes consultadas & Número de sistemas e arquivos consultados para concluir uma tarefa & Tempo & Observação direta \\ \midrule
+Redigitações & Número de vezes que um mesmo dado é digitado em fontes diferentes & Custo & Observação e documentação \\ \midrule
+Inconsistências & Número de divergências encontradas entre fontes em uma conferência & Qualidade & Documentação \\ \midrule
+Cumprimento de prazos & Proporção de obrigações e pagamentos especiais tratados dentro do prazo & Qualidade & Registros da área \\ \midrule
+Erros de importação & Proporção de registros rejeitados pela validação na importação de planilhas & Qualidade & Registros do InLight \\ \midrule
+Adaptação a novas demandas & Tempo para disponibilizar uma nova funcionalidade solicitada pela área & Flexibilidade & Histórico do projeto \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor com base em \citet{dumas2018}.}
+\end{table}
+
+\subsection{Percepção dos Usuários}
+
+A percepção dos usuários será medida por um questionário aplicado a todos os usuários do InLight no BackOffice ACR. Os itens de utilidade percebida e de facilidade de uso percebida foram adaptados do instrumento validado por \citet{davis1989}; os itens de qualidade da informação e de satisfação foram elaborados com base nas dimensões de \citet{delone2003}. As respostas serão coletadas em escala de sete pontos, de ``discordo totalmente'' a ``concordo totalmente''. A Tabela~\ref{tab:questionario} apresenta os itens.
+
+\begin{table}[H]
+\centering
+\caption{Itens do questionário de percepção dos usuários}
+\label{tab:questionario}
+\footnotesize
+\begin{tabularx}{\textwidth}{P{1.2cm}X}
+\toprule
+\textbf{Código} & \textbf{Item} \\ \midrule
+\multicolumn{2}{l}{\textit{Utilidade percebida, adaptado de \citet{davis1989}}} \\ \midrule
+UP1 & Usar o InLight me permite realizar minhas tarefas mais rapidamente. \\ \midrule
+UP2 & Usar o InLight melhora meu desempenho no trabalho. \\ \midrule
+UP3 & Usar o InLight aumenta minha produtividade. \\ \midrule
+UP4 & Usar o InLight aumenta minha eficácia no trabalho. \\ \midrule
+UP5 & Usar o InLight torna meu trabalho mais fácil. \\ \midrule
+UP6 & Considero o InLight útil no meu trabalho. \\ \midrule
+\multicolumn{2}{l}{\textit{Facilidade de uso percebida, adaptado de \citet{davis1989}}} \\ \midrule
+FU1 & Aprender a operar o InLight foi fácil para mim. \\ \midrule
+FU2 & Acho fácil fazer o InLight realizar o que preciso. \\ \midrule
+FU3 & Minha interação com o InLight é clara e compreensível. \\ \midrule
+FU4 & Considero o InLight flexível para interagir. \\ \midrule
+FU5 & Foi fácil tornar-me habilidoso no uso do InLight. \\ \midrule
+FU6 & Considero o InLight fácil de usar. \\ \midrule
+\multicolumn{2}{l}{\textit{Qualidade da informação e satisfação, com base em \citet{delone2003}}} \\ \midrule
+QI1 & As informações apresentadas pelo InLight são precisas. \\ \midrule
+QI2 & As informações apresentadas pelo InLight estão atualizadas. \\ \midrule
+QI3 & O InLight reúne as informações de que preciso sem que eu tenha de consultar outras fontes. \\ \midrule
+SU1 & De modo geral, estou satisfeito com o InLight. \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor, com itens adaptados de \citet{davis1989}.}
+\end{table}
+
+Para captar a visão dos gestores, propõe-se uma entrevista semiestruturada baseada nos determinantes da UTAUT \citep{venkatesh2003} e nos fatores críticos de \citet{nah2001}, com as perguntas da Tabela~\ref{tab:roteiro}.
+
+\begin{table}[H]
+\centering
+\caption{Roteiro de entrevista com gestores}
+\label{tab:roteiro}
+\footnotesize
+\begin{tabularx}{\textwidth}{P{3.6cm}X}
+\toprule
+\textbf{Construto} & \textbf{Pergunta} \\ \midrule
+Expectativa de desempenho & Que ganhos o senhor ou a senhora espera, ou já percebe, no trabalho da equipe com o InLight? \\ \midrule
+Expectativa de esforço & Quais dificuldades a equipe encontrou ou pode encontrar para usar o aplicativo? \\ \midrule
+Influência social & De que forma a gestão incentiva o uso do InLight no lugar das planilhas? \\ \midrule
+Condições facilitadoras & Que recursos, como treinamento, suporte e infraestrutura, estão disponíveis para apoiar o uso? \\ \midrule
+Apoio da alta direção & Como a direção da área acompanha e apoia a implantação? \\ \midrule
+Benefícios e limitações & Que benefícios e que limitações o senhor ou a senhora identifica na unificação das informações? \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor com base em \citet{venkatesh2003} e \citet{nah2001}.}
+\end{table}
+
+\subsection{Benefícios Esperados por Dimensão}
+
+A Tabela~\ref{tab:beneficios} organiza os benefícios esperados com o InLight segundo as dimensões de \citet{shang2002} e indica como cada um será verificado. Trata-se de hipóteses de trabalho, que serão confirmadas ou refutadas pelos resultados.
+
+\begin{table}[H]
+\centering
+\caption{Benefícios esperados com o InLight por dimensão}
+\label{tab:beneficios}
+\footnotesize
+\begin{tabularx}{\textwidth}{P{2.6cm}XP{3.6cm}}
+\toprule
+\textbf{Dimensão} & \textbf{Benefício esperado} & \textbf{Como verificar} \\ \midrule
+Operacional & Redução do tempo de consolidação e do retrabalho & Tempo de consolidação; redigitações \\ \midrule
+Gerencial & Visão consolidada dos contratos, metas e obrigações para a tomada de decisão & Entrevistas com gestores; item QI3 \\ \midrule
+Estratégica & Base para a extensão ao mercado livre & Entrevistas com gestores \\ \midrule
+Infraestrutura de TI & Plataforma modular, com controle de acesso uniforme & Análise do artefato; tempo de adaptação a novas demandas \\ \midrule
+Organizacional & Redução da dependência de controles individuais em planilhas & Questionário; entrevistas \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor com base em \citet{shang2002}.}
+\end{table}
+
+\subsection{Resultados}
+
+Até a conclusão desta etapa do trabalho, o InLight ainda não foi implantado no BackOffice ACR. Por esse motivo, os indicadores da Tabela~\ref{tab:indicadores} não foram medidos, e o questionário e as entrevistas ainda não foram aplicados. A Tabela~\ref{tab:resultados} apresenta a estrutura em que os resultados serão registrados, comparando o cenário atual com o cenário com o InLight. Os benefícios da Tabela~\ref{tab:beneficios} permanecem, portanto, como hipóteses de trabalho, a serem confirmadas ou refutadas após a implantação, nos momentos de medição definidos no desenho da avaliação.
+
+
+\begin{table}[H]
+\centering
+\caption{Resultados dos indicadores de processo}
+\label{tab:resultados}
+\footnotesize
+\begin{tabularx}{\textwidth}{Xccc}
+\toprule
+\textbf{Indicador} & \textbf{Cenário atual} & \textbf{Com o InLight} & \textbf{Variação} \\ \midrule
+Tempo de consolidação & --- & --- & --- \\ \midrule
+Fontes consultadas & --- & --- & --- \\ \midrule
+Redigitações & --- & --- & --- \\ \midrule
+Inconsistências & --- & --- & --- \\ \midrule
+Cumprimento de prazos & --- & --- & --- \\ \midrule
+Erros de importação & --- & --- & --- \\ \midrule
+Adaptação a novas demandas & --- & --- & --- \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: dados da pesquisa.}
+\end{table}
+
+\section{Limitações e Ameaças à Validade}
+\label{sec:limitacoes}
+
+Este estudo apresenta limitações que devem ser consideradas na interpretação dos resultados:
 
 \begin{itemize}
-    \item \textbf{Stateless:} servidor não precisa armazenar sessões, facilitando escalabilidade;
-    \item \textbf{Autocontido:} token contém todas as informações necessárias para autenticação;
-    \item \textbf{Compacto:} pode ser transmitido via URL, POST ou HTTP header;
-    \item \textbf{Seguro:} pode ser assinado digitalmente garantindo integridade.
+    \item \textbf{Caso único:} os resultados não podem ser generalizados estatisticamente para outras organizações. Segundo \citet{yin2015}, estudos de caso permitem generalização analítica, isto é, a comparação dos resultados com a teoria, e não a extrapolação para uma população;
+    \item \textbf{Momento da avaliação:} como o InLight ainda não foi implantado, os resultados dependem de medições futuras;
+    \item \textbf{Número de participantes:} os respondentes se restringem aos usuários do InLight na área estudada, o que pode limitar o uso de técnicas estatísticas mais robustas na análise do questionário;
+    \item \textbf{Proximidade do pesquisador:} o eventual envolvimento do pesquisador com a área ou com o desenvolvimento do aplicativo pode influenciar a coleta e a interpretação dos dados; para reduzir esse risco, utilizam-se múltiplas fontes de evidência e a triangulação \citep{yin2015};
+    \item \textbf{Restrição de dados:} por não utilizar informações confidenciais, o estudo não analisa valores financeiros dos contratos.
 \end{itemize}
-
-\subsubsection{Passport.js e Estratégias de Autenticação}
-A implementação da autenticação utiliza Passport.js, um middleware de autenticação flexível e modular para Node.js \cite{passport2023}.
-É aplicado passport-jwt para validação de tokens JWT. O NestJS integra o Passport através do modulo @nestjs/passport, fornecendo Guards que protegem rotas específicas.
-\subsubsection{Criptografia de Senhas}
-
-Para o armazenamento seguro de senhas, utiliza-se a biblioteca bcrypt, que implementa o algoritmo de hashing bcrypt baseado no Blowfish cipher \cite{provos1999}. Características importantes:
-
-\begin{itemize}
-    \item \textbf{Hash com salt:} cada senha recebe um salt único, prevenindo ataques de rainbow table;
-    \item \textbf{Função de custo adaptável:} permite aumentar a complexidade computacional ao longo do tempo;
-    \item \textbf{Resistente a ataques de força bruta:} custo computacional alto, porém dificulta quebrar senhas.
-\end{itemize}
-
-\subsubsection{Controle de Acesso Baseado em Papéis (RBAC)}
-
-O InLight implementa RBAC (Role-Based Access Control) com três níveis de acesso:
-
-\begin{itemize}
-    \item \textbf{Admin:} acesso total ao sistema, incluindo cadastro de usuários e importação de dados;
-    \item \textbf{Manager:} acesso intermediário com permissões de gestão;
-    \item \textbf{User:} acesso básico às funcionalidades essenciais.
-\end{itemize}
-
-Segundo \cite{ferraiolo2001}, RBAC simplifica a administração de permissões e garante conformidade com políticas de segurança organizacionais.
-
-\subsection{Validação e Tratamento de Dados}
-
-\subsubsection{Data Transfer Objects (DTOs)}
-No aplicativo InLight o padrão DTO é utilizado para transferência de dados entre camadas \cite{fowler2002}. DTOs são objetos simples que transportam dados, sem conter lógica de negócio, que é principalmente no service. No contexto do projeto, existem DTOs específicos para:
-
-\begin{itemize}
-    \item \textbf{CreateDTO:} dados necessários para criação de entidades;
-    \item \textbf{UpdateDTO:} dados para atualização (geralmente PartialType do CreateDTO);
-    \item \textbf{FilterDTO:} parâmetros de filtro para consultas;
-    \item \textbf{ResponseDTO:} formatação de respostas da API.
-\end{itemize}
-
-\subsubsection{Class-validator}
-A validação de dados de entrada é realizada através da biblioteca class-validator, que utiliza decorators TypeScript para definir regras de validação. Exemplos de decorators utilizados:
-\begin{itemize}
-    \item @IsNotEmpty: campo obrigatório;
-    \item @IsEmail: validação de formato de email;
-    \item @IsDateString: validação de formato de data;
-    \item @IsNumber: validação de tipo numérico;
-    \item @IsString: validação de tipo string.
-\end{itemize}
-\subsubsection{ValidationPipe}
-O NestJS fornece o recurso ValidationPipe, um pipe global que automaticamente valida payloads de requisições nos DTOs definidos. Configurado no arquivo main.ts com as opções:
-
-\begin{itemize}
-    \item \textbf{whitelist: true} - remove propriedades não definidas no DTO;
-    \item \textbf{forbidNonWhitelisted: true} - rejeita requisições com propriedades extras;
-    \item \textbf{transform: true} - converte automaticamente tipos primitivos.
-\end{itemize}
-Essa abordagem garante que apenas dados válidos cheguem às camadas de negócio e dados.
-\subsection{Interceptors e Exception Filters}
-
-\subsubsection{Response Interceptor}
-
-O ResponseInterceptor padroniza o formato de todas as respostas da API, encapsulando dados em uma estrutura consistente. Isso facilita o tratamento no front-end e melhora a experiência do desenvolvedor \cite{nestjs2023}.
-\subsubsection{HttpExceptionFilter}
-O HttpExceptionFilter customizado captura exceções HTTP e formata respostas de erro de maneira uniforme, incluindo:
-
-\begin{itemize}
-    \item Código de status HTTP apropriado;
-    \item Mensagem de erro descritiva;
-    \item Timestamp da ocorrência;
-    \item Path da requisição;
-    \item Detalhes adicionais quando apropriado.
-\end{itemize}
-
-Segundo \cite{pressman2016}, tratamento adequado de exceções é fundamental para robustez e manutenibilidade de sistemas.
-
-\subsection{Processamento de Arquivos Excel}
-Uma funcionalidade muito importante do InLight é a importação de através de arquivos Excel (.xlsx), especialmente para obrigações futuras. O processo inclui:
-
-\begin{itemize}
-    \item \textbf{Upload via FormData:} suporte a multipart/form-data;
-    \item \textbf{Conversão de datas seriais:} Excel armazena datas como números seriais desde 1900-01-01, exigindo conversão para formato padrão;
-    \item \textbf{Validação de dados:} verificação de formato e integridade antes de persistir;
-    \item \textbf{Feedback ao usuário:} notificação de sucesso ou erro detalhado.
-\end{itemize}
-
-\subsection{Comunicação HTTP e CORS}
-
-\subsubsection{RESTful API}
-
-A API do InLight segue os princípios REST (Representational State Transfer) definidos por \cite{fielding2000}:
-
-\begin{itemize}
-    \item \textbf{Cliente-Servidor:} separação clara de responsabilidades;
-    \item \textbf{Stateless:} cada requisição contém todas as informações necessárias;
-    \item \textbf{Cacheable:} respostas podem ser cacheadas quando apropriado;
-    \item \textbf{Interface uniforme:} uso consistente de métodos HTTP;
-    \item \textbf{Sistema em camadas:} arquitetura pode incluir intermediários.
-\end{itemize}
-
-\subsubsection{CORS (Cross-Origin Resource Sharing)}
-
-O back-end habilita CORS para permitir que o aplicativo mobile acesse a API. A configuração no main.ts especifica:
-
-\begin{itemize}
-    \item Origins permitidas;
-    \item Métodos HTTP aceitos (GET, POST, PATCH, DELETE);
-    \item Suporte a credenciais;
-\end{itemize}
-
-Essa configuração é essencial para comunicação segura entre diferentes origens \cite{w3c2014}.
-\subsection{Testes Automatizados}
-O aplicativo utiliza Jest como framework de testes, permitindo:
-
-\begin{itemize}
-    \item \textbf{Testes unitários:} validação de componentes isolados;
-    \item \textbf{Testes de integração:} verificação de interação entre módulos;
-    \item \textbf{Mocking:} simulação de dependências externas;
-    \item \textbf{Coverage reports:} análise de cobertura de código.
-\end{itemize}
-
-O NestJS fornece @nestjs/testing, que facilita a criação de módulos de teste com injeção de dependências \cite{nestjs2023}.
-
-\subsection{Considerações sobre a Stack Tecnológica}
-
-A escolha das tecnologias empregadas no InLight reflete uma busca por modernidade, escalabilidade e manutenibilidade. O uso de TypeScript em toda a sua estrutura garante consistência e segurança de tipos. A arquitetura modular do NestJS facilita a adição de novas funcionalidades. React Native permite alcançar múltiplas plataformas com uma única base de código.
-Segundo \cite{pressman2016}, a seleção adequada de tecnologias é fundamental para o sucesso de projetos de software, devendo considerar fatores como maturidade, comunidade, documentação e alinhamento com objetivos do negócio. O InLight atende a esses critérios, utilizando tecnologias consolidadas e amplamente adotadas no mercado.
-
-\section{Sistemas de Informação e Integração}
-
-\subsection{Conceitos Fundamentais de Sistemas de Informação}
-
-Sistemas de Informação (SI) são conjuntos organizados de elementos que coletam, processam, armazenam e distribuem informações para apoiar a tomada de decisão, coordenação, controle, análise e visualização em uma organização \cite{laudon2020}. Segundo \cite{obrien2013}, um SI pode ser definido como uma combinação organizada de pessoas, hardware, software, redes de comunicação, recursos de dados e políticas e procedimentos que armazenam, recuperam, transformam e disseminam informações.
-
-Os componentes básicos de um SI incluem \cite{stair2018}:
-
-\begin{itemize}
-    \item \textbf{Hardware:} equipamentos físicos utilizados para entrada, processamento e saída de dados;
-    \item \textbf{Software:} programas e aplicações que controlam e coordenam o hardware;
-    \item \textbf{Dados:} fatos brutos que são processados para gerar informação útil;
-    \item \textbf{Procedimentos:} políticas e regras que governam a operação do sistema;
-    \item \textbf{Pessoas:} usuários, desenvolvedores e gestores que interagem com o sistema;
-    \item \textbf{Redes:} infraestrutura de comunicação que conecta componentes.
-\end{itemize}
-
-Para \cite{turban2010}, os SI são essenciais para o funcionamento de organizações modernas, pois transformam dados brutos em informações significativas que suportam decisões estratégicas, táticas e operacionais. A qualidade dessas decisões está diretamente relacionada à qualidade e à disponibilidade das informações fornecidas pelos SI.
-
-\subsection{Sistemas Legados e suas Limitações}
-
-Sistemas legados são aplicações de software antigas que continuam sendo críticas para as operações de uma organização, apesar de terem sido desenvolvidos com tecnologias ultrapassadas \cite{bennett1995}. Segundo \cite{brooke1998}, sistemas legados apresentam características particulares:
-
-\begin{itemize}
-    \item Foram desenvolvidos há décadas, utilizando linguagens e paradigmas de programação antigos;
-    \item Possuem documentação escassa ou desatualizada;
-    \item Dependem de hardware e software descontinuados;
-    \item Contêm regras de negócio críticas embutidas no código;
-    \item São difíceis de modificar devido à complexidade acumulada;
-    \item Apresentam alto custo de manutenção.
-\end{itemize}
-
-\cite{pressman2016} destaca que sistemas legados representam um dilema para as organizações: embora sejam essenciais para operações críticas, sua manutenção é cada vez mais cara e arriscada. Além disso, vale a pena ser ressaltado que a falta de integração entre sistemas legados e aplicações mais modernas cria dificuldade na comunicação da informação que decorrentemente prejudicam a eficiência organizacional.
-Abordando a área do setor elétrico, muitas empresas ainda operam com sistemas desenvolvidos nas décadas de 1980 e1990, quando a estrutura tecnológica e os métodos de integração eram limitados. Esses sistemas, frequentemente desenvolvidos em linguagens como COBOL, Clipper ou Visual Basic, não foram projetados para se comunicar com aplicações modernas, resultando em processos manuais de transferência de dados \cite{rezende2017}.
-
-\subsection{Fragmentação de Sistemas e seus Impactos}
-A fragmentação de sistemas ocorre quando uma organização utiliza múltiplas aplicações isoladas, cada uma gerenciando uma parte específica dos processos de negócio, sem integração adequada entre elas \cite{laudon2020}.
-Esse cenário, comum em empresas que cresceram através de fusões ou com a implementação de novas tecnologias sem a conexão adequada, acaba gerando diversos problemas.
-\subsubsection{Redundância e Inconsistência de Dados}
-
-Quando dados são armazenados em múltiplos sistemas sem sincronização, surgem problemas de redundância e inconsistência \cite{elmasri2016}. Por exemplo, informações sobre um mesmo contrato podem existir em diferentes versões em sistemas distintos, gerando conflitos sobre qual é a versão correta. Segundo \cite{davenport2018}, essa inconsistência compromete a confiabilidade das informações e dificulta a tomada de decisões baseada em dados.
-\subsubsection{Retrabalho e Perda de Produtividade}
-A ausência de integração obriga colaboradores a realizar tarefas manuais repetitivas, como entrada de dados em múltiplos sistemas, exportação e importação de planilhas e conciliação manual de informações \cite{stair2018}. Segundo estudo de \cite{mckinsey2018}, profissionais gastam em média 19% de seu tempo procurando e consolidando informações dispersas em diferentes sistemas.
-\subsubsection{Dificuldade na Tomada de Decisão}
-A fragmentação impede uma visão de um todo dos processos organizacionais. Gestores precisam coletar manualmente informações de diversos sistemas, consolidá-las em planilhas e então realizar análises, processo que além de demorado está sujeito a erros \cite{power2002}. Para \cite{sharda2014}, a integração de dados é fundamental para sistemas de apoio à decisão eficazes.
-\subsubsection{Aumento de Custos Operacionais}
-
-Manter múltiplos sistemas não integrados implica em custos elevados de infraestrutura, licenciamento, treinamento e suporte técnico \cite{turban2010}. Também vale ser mencionado que todo esse trabalho manual entre sistemas, acaba consumindo recursos humanos que poderiam ser alocados em atividades gerando mais valor e decorrentemente lucro para a empresa.
-\subsubsection{Riscos de Segurança e Conformidade}
-Sistemas fragmentados dificultam a implementação de políticas de segurança uniformes e o controle de acesso \cite{whitman2018}. Diferentes sistemas podem ter diferentes níveis de proteção, criando vulnerabilidades. Além disso, auditorias e demonstrações de conformidade com regulamentações tornam-se mais complexas quando dados estão dispersos \cite{siponen2010}.
-\subsection{Integração de Sistemas: Conceitos e Abordagens}
-A integração de sistemas refere-se ao processo de conectar diferentes aplicações de software para que funcionem como um sistema unificado, compartilhando dados e processos de negócio \cite{hohpe2003}. Segundo \cite{linthicum2000}, integração não significa necessariamente substituir sistemas existentes, mas sim criar pontes que permitam comunicação eficiente entre eles.
-
-\subsubsection{Níveis de Integração}
-
-\cite{ruh2000} identifica diferentes níveis de integração de sistemas:
-
-\begin{itemize}
-    \item \textbf{Integração de Dados:} compartilhamento de dados entre sistemas através de bancos de dados compartilhados ou mecanismos de sincronização;
-    \item \textbf{Integração de Aplicações:} sistemas comunicam-se através de APIs (Application Programming Interfaces), trocando mensagens e invocando funcionalidades remotamente;
-    \item \textbf{Integração de Processos:} orquestração de processos de negócio que atravessam múltiplos sistemas;
-    \item \textbf{Integração de Interface:} unificação da experiência do usuário através de portais ou dashboards que agregam funcionalidades de diversos sistemas.
-\end{itemize}
-
-\subsubsection{Padrões e Tecnologias de Integração}
-
-Diversos padrões e tecnologias foram desenvolvidos para facilitar a integração de sistemas \cite{hohpe2003}:
-
-\begin{itemize}
-    \item \textbf{APIs RESTful:} interfaces baseadas no protocolo HTTP que seguem princípios REST, amplamente utilizadas por sua simplicidade e escalabilidade \cite{fielding2000};
-    \item \textbf{Web Services:} serviços baseados em padrões como SOAP e WSDL, comuns em ambientes corporativos \cite{alonso2004};
-    \item \textbf{Message Queues:} sistemas de filas de mensagens (como RabbitMQ, Apache Kafka) que permitem comunicação assíncrona e desacoplada entre aplicações \cite{snyder2011};
-    \item \textbf{Enterprise Service Bus (ESB):} arquitetura que atua como barramento central para integração de múltiplos sistemas \cite{chappell2004};
-    \item \textbf{Microserviços:} arquitetura que decompõe aplicações em serviços pequenos e independentes que se comunicam via APIs \cite{newman2015}.
-\end{itemize}
-\subsection{Unificação de Sistemas: Conceito e Benefícios}
-Enquanto integração refere-se à conexão entre sistemas mantendo-os separados, unificação implica em consolidar funcionalidades dispersas em uma plataforma única ou em um conjunto coeso de sistemas fortemente integrados \cite{laudon2020}, como é o caso do aplicativo InLight. A unificação vai além da integração ao oferecer:
-\subsubsection{Interface Única e Consistente}
-
-Usuários interagem com uma única aplicação que agrega funcionalidades antes dispersas, eliminando necessidade de alternar entre sistemas e aprender múltiplas interfaces \cite{nielsen1993}. Segundo \cite{norman2013}, a consistência de interface reduz carga cognitiva e aumenta produtividade.
-
-\subsubsection{Modelo de Dados Unificado}
-
-Em vez de sincronizar dados entre sistemas distintos, a unificação estabelece um modelo de dados único e consistente, eliminando redundâncias e garantindo integridade referencial \cite{elmasri2016}. Para \cite{inmon2005}, a unificação de dados é essencial para criar uma "fonte única da verdade" (single source of truth) na organização.
-\subsubsection{Processos de Negócio Otimizados}
-
-A unificação permite redesenhar processos de negócio de forma holística, eliminando etapas desnecessárias e automatizando fluxos de trabalho que antes dependiam de intervenção manual \cite{davenport1993}. Segundo \cite{hammer2001}, a unificação tecnológica deve ser acompanhada de reengenharia de processos para maximizar benefícios.
-
-\subsubsection{Manutenção Simplificada}
-
-Manter uma única plataforma é mais eficiente do que gerenciar múltiplos sistemas, reduzindo custos de infraestrutura, licenciamento e equipe técnica \cite{pressman2016}. Além disso, atualizações e melhorias são implementadas uma única vez, beneficiando todos os módulos simultaneamente.
-\subsubsection{Agilidade e Inovação}
-
-Sistemas unificados, especialmente quando construídos com arquiteturas modernas e modulares, facilitam a adição de novas funcionalidades e a adaptação a mudanças de negócio \cite{ross2006}. Para \cite{westerman2014}, agilidade tecnológica é fator crítico de sucesso em ambientes de transformação digital.
-
-\subsection{Desafios na Unificação de Sistemas}
-
-Apesar dos benefícios evidentes, a unificação de sistemas apresenta desafios significativos \cite{linthicum2000}:
-
-\begin{itemize}
-    \item \textbf{Complexidade técnica:} migração de dados legados, mapeamento de regras de negócio e garantia de compatibilidade;
-    \item \textbf{Resistência organizacional:} usuários acostumados com sistemas antigos podem resistir a mudanças \cite{kotter1996};
-    \item \textbf{Custos e riscos:} investimento inicial elevado e riscos de falhas durante a transição \cite{laudon2020};
-    \item \textbf{Tempo de implementação:} projetos de unificação podem levar anos em organizações complexas;
-    \item \textbf{Dependência de fornecedores:} escolha da plataforma adequada é crítica e difícil de reverter.
-\end{itemize}
-
-Segundo \cite{markus2000}, o sucesso de projetos de unificação depende não apenas de escolhas tecnológicas adequadas, mas também de gestão eficaz de mudanças, envolvimento de stakeholders e alinhamento com estratégia organizacional.
-\section{Gestão de Processos e Workflows}
-
-\subsection{Conceitos de Processos de Negócio}
-
-Um processo de negócio é um conjunto estruturado de atividades inter-relacionadas que produzem um resultado de valor para o cliente ou organização \cite{davenport1993}. Segundo \cite{hammer2001}, processos atravessam fronteiras funcionais e representam a forma como o trabalho realmente acontece nas organizações, independentemente da estrutura hierárquica formal.
-
-\cite{vom2007} categoriza processos em três tipos:
-
-\begin{itemize}
-    \item \textbf{Processos primários:} agregam valor diretamente ao cliente (ex: atendimento, entrega de serviços);
-    \item \textbf{Processos de suporte:} apoiam processos primários (ex: TI, recursos humanos, finanças);
-    \item \textbf{Processos de gestão:} coordenam e controlam outros processos (ex: planejamento estratégico, governança).
-\end{itemize}
-A gestão de processos de negócio é uma abordagem projetada para identificar, desenhar, executar, documentar, medir, monitorar e controlar processos organizacionais para alcançar resultados consistentes e alinhados com objetivos estratégicos \cite{vom2013}.
-\subsection{Modelagem e Análise de Processos}
-A modelagem de processos envolve criar representações visuais que documentam como atividades são realizadas, quem as executa, quais sistemas são utilizados e quais informações são necessárias \cite{aguilarsaven2004}. Processos comuns incluem:
-\begin{itemize}
-    \item \textbf{BPMN (Business Process Model and Notation):} padrão internacional para modelagem de processos \cite{white2004};
-    \item \textbf{Fluxogramas:} diagramas simples que mostram sequência de atividades;
-    \item \textbf{EPC (Event-driven Process Chain):} método que enfatiza eventos que disparam atividades;
-    \item \textbf{UML Activity Diagrams:} diagramas da linguagem UML adaptados para processos.
-\end{itemize}
-Segundo \cite{sharp2009}, a modelagem permite identificar ineficiências, gargalos, redundâncias e oportunidades de melhoria antes de implementar mudanças. Análise de processos envolve examinar modelos para avaliar:
-
-\begin{itemize}
-    \item Tempo de ciclo (cycle time) de processos;
-    \item Identificação de atividades que não agregam valor;
-    \item Pontos de falha e retrabalho;
-    \item Utilização de recursos;
-    \item Conformidade com regulamentações.
-\end{itemize}
-
-\subsection{Reengenharia de Processos}
-
-Reengenharia de Processos de Negócio (Business Process Reengineering - BPR) é o repensar fundamental e redesenho radical de processos visando alcançar melhorias significativas em medidas críticas de desempenho \cite{hammer1993}. Diferentemente de melhoria contínua incremental, BPR busca transformações revolucionárias, ou seja, de grande impacto.
-\cite{davenport1993} identifica princípios fundamentais da reengenharia:
-\begin{itemize}
-    \item \textbf{Organizar em torno de resultados, não tarefas:} atribuir responsabilidade por processos completos a equipes;
-    \item \textbf{Fazer quem usa a informação processá-la:} eliminar intermediários desnecessários;
-    \item \textbf{Tratar recursos geograficamente dispersos como centralizados:} usar tecnologia para coordenar;
-    \item \textbf{Integrar atividades paralelas:} coordenar durante execução, não apenas no final;
-    \item \textbf{Colocar decisões onde o trabalho é executado:} empoderar trabalhadores da linha de frente;
-    \item \textbf{Capturar informação uma vez, na fonte:} eliminar reentrada de dados.
-\end{itemize}
-No contexto da unificação de sistemas, a reengenharia é essencial. Simplesmente automatizar processos ineficientes em novos sistemas não gera benefícios significativos \cite{hammer2001}. É necessário redesenhar processos aproveitando capacidades das novas tecnologias e o conceito de reengenharia e processos faz com que isso possa acontecer, de forma coesa e impactante.
-\subsection{Automação de Processos}
-
-Automação de processos refere-se ao uso de tecnologia para executar atividades repetitivas com mínima intervenção humana \cite{lacity2016}. Segundo \cite{vom2013}, benefícios da automação incluem:
-\begin{itemize}
-    \item \textbf{Redução de erros:} sistemas automatizados executam tarefas consistentemente;
-    \item \textbf{Maior velocidade:} atividades são concluídas mais rapidamente;
-    \item \textbf{Disponibilidade contínua:} processos automatizados operam 24/7;
-    \item \textbf{Melhor rastreabilidade:} sistemas registram cada etapa para auditoria;
-    \item \textbf{Liberação de recursos humanos:} colaboradores focam em atividades estratégicas.
-\end{itemize}
-
-\cite{vanderaalst2003} categoriza tipos de automação:
-
-\begin{itemize}
-    \item \textbf{Automação completa:} processo executado inteiramente por sistemas sem intervenção humana;
-    \item \textbf{Automação parcial:} algumas etapas automatizadas, outras requerem decisão humana;
-    \item \textbf{Automação assistida:} sistemas fornecem suporte mas humanos controlam execução.
-\end{itemize}
-
-Tecnologias modernas que suportam automação incluem:
-
-\begin{itemize}
-    \item \textbf{Workflow engines:} motores que orquestram sequência de atividades;
-    \item \textbf{RPA (Robotic Process Automation):} software que imita ações humanas em interfaces de sistemas \cite{lacity2016};
-    \item \textbf{Business Rules Engines:} sistemas que aplicam regras de negócio automaticamente;
-    \item \textbf{Inteligência Artificial:} algoritmos que aprendem e tomam decisões complexas \cite{russell2020}.
-\end{itemize}
-
-\subsection{Workflows e Gestão de Tarefas}
-
-Workflow é a automação de um processo de negócio, no todo ou em parte, durante a qual documentos, informações ou tarefas são passadas de um participante para outro de acordo com um conjunto definido de regras \cite{georgakopoulos1995}.
-
-Sistemas de workflow fornecem funcionalidades como:
-
-\begin{itemize}
-    \item Definição de sequência de atividades e suas dependências;
-    \item Atribuição automática de tarefas a usuários ou grupos;
-    \item Notificações e lembretes sobre prazos;
-    \item Dashboards de acompanhamento de status;
-    \item Histórico completo de execução para auditoria;
-    \item Escalação automática de tarefas atrasadas.
-\end{itemize}
-
-Segundo \cite{vanderaalst2003}, workflows bem projetados reduzem tempo de ciclo de processos, melhoram coordenação entre equipes e aumentam transparência operacional. No contexto do InLight, funcionalidades de gestão de metas e tarefas exemplificam implementação de workflows digitais.
-
-\subsection{Redução de Retrabalho}
-
-Retrabalho refere-se à necessidade de refazer atividades devido a erros, falta de informação ou falhas de comunicação \cite{lean2003}. Segundo \cite{mckinsey2018}, retrabalho consome em média 10-30% do tempo produtivo em organizações.
-
-Causas comuns de retrabalho em ambientes com sistemas fragmentados incluem:
-
-\begin{itemize}
-    \item \textbf{Entrada duplicada de dados:} mesma informação digitada em múltiplos sistemas;
-    \item \textbf{Erros de transcrição:} falhas ao copiar dados manualmente entre sistemas;
-    \item \textbf{Informações desatualizadas:} falta de sincronização causa uso de dados obsoletos;
-    \item \textbf{Falta de visibilidade:} desconhecimento do status atual gera atividades redundantes;
-    \item \textbf{Comunicação inadequada:} falhas na transmissão de informações entre equipes.
-\end{itemize}
-
-A unificação de sistemas reduz retrabalho através de \cite{davenport2018}:
-
-\begin{itemize}
-    \item \textbf{Fonte única de dados:} eliminação de entrada duplicada;
-    \item \textbf{Validações automáticas:} prevenção de erros na captura de dados;
-    \item \textbf{Visibilidade em tempo real:} acesso instantâneo a informações atualizadas;
-    \item \textbf{Workflows estruturados:} clareza sobre responsabilidades e prazos;
-    \item \textbf{Histórico completo:} rastreabilidade de todas as ações realizadas.
-\end{itemize}
-
-A medição de desempenho é fundamental para gestão eficaz de processos \cite{neely2005}. Indicadores-chave de desempenho (Key Performance Indicators - KPIs) comuns incluem:
-
-\begin{itemize}
-    \item \textbf{Tempo de ciclo:} duração total desde início até conclusão do processo;
-    \item \textbf{Throughput:} quantidade de processos concluídos por unidade de tempo;
-    \item \textbf{Taxa de erro:} percentual de processos com falhas ou não conformidades;
-    \item \textbf{Custo por processo:} recursos consumidos para executar uma instância;
-    \item \textbf{Tempo de retrabalho:} tempo gasto corrigindo erros;
-    \item \textbf{Satisfação do cliente:} percepção dos usuários sobre qualidade do serviço.
-\end{itemize}
-
-Segundo \cite{kaplan1996}, sistemas de medição equilibrados avaliam múltiplas dimensões (financeira, cliente, processos internos, aprendizado) fornecendo visão holística do desempenho organizacional.
-
-\section{Transformação Digital no Setor Elétrico}
-
-\subsection{Contexto do Setor Elétrico Brasileiro}
-
-O setor elétrico brasileiro é um dos maiores e mais complexos do mundo, em grande parte por sua territorialidade, as principais formas de energias utilizadas são hidráulica, eólica e nuclear. \cite{aneel2022}. Segundo \cite{tolmasquim2016}, o setor passou por profundas transformações nas últimas décadas:
-\begin{itemize}
-    \item \textbf{Década de 1990:} privatização e abertura do mercado;
-    \item \textbf{Anos 2000:} criação de novos marcos regulatórios após crise de 2001;
-    \item \textbf{Anos 2010:} expansão do mercado livre e fontes renováveis;
-    \item \textbf{Anos 2020:} digitalização e modernização da rede elétrica.
-\end{itemize}
-O setor é altamente regulado, com normas estabelecidas pela ANEEL (Agência Nacional de Energia Elétrica), operação coordenada pelo ONS (Operador Nacional do Sistema Elétrico) e comercialização regida pela CCEE \cite{ccee2023}.
-\subsection{CCEE - Câmara de Comercialização de Energia Elétrica}
-
-A CCEE é uma associação civil sem fins lucrativos que atua sob regulação e fiscalização da ANEEL, responsável por viabilizar a comercialização de energia elétrica no Sistema Interligado Nacional \cite{ccee2023}. Suas principais funções incluem:
-
-\begin{itemize}
-    \item \textbf{Contabilização:} apuração de diferenças entre energia contratada e consumida;
-    \item \textbf{Liquidação financeira:} cálculo e cobrança de débitos e créditos no mercado de curto prazo;
-    \item \textbf{Registro de contratos:} validação e armazenamento de contratos bilaterais;
-    \item \textbf{Medição:} coleta e validação de dados de medição de energia;
-    \item \textbf{Leilões:} suporte operacional a leilões de energia;
-    \item \textbf{Garantias financeiras:} gestão de garantias para mitigar risco de inadimplência.
-\end{itemize}
-\subsection{ACR e ACL: Ambientes de Contratação}
-
-O modelo brasileiro divide o mercado de energia em dois ambientes distintos \cite{aneel2022}:
-
-\subsubsection{ACR - Ambiente de Contratação Regulada}
-
-No ACR, distribuidoras adquirem energia por meio de leilões regulados pela ANEEL para atender consumidores cativos (residenciais, comerciais e industriais de pequeno porte). Características do ACR:
-
-\begin{itemize}
-    \item Contratos de longo prazo (15 a 30 anos);
-    \item Preços definidos em leilões públicos;
-    \item Garantia de suprimento para distribuidoras;
-    \item Tarifas reguladas pela ANEEL;
-    \item Menor exposição a volatilidade de preços.
-\end{itemize}
-
-\subsubsection{ACL - Ambiente de Contratação Livre}
-
-No ACL, consumidores livres e especiais negociam diretamente com geradores e comercializadores, estabelecendo volume, preço e prazo livremente \cite{ccee2023}. Características do ACL:
-
-\begin{itemize}
-    \item Flexibilidade na negociação de contratos;
-    \item Possibilidade de escolha do fornecedor;
-    \item Contratos customizados conforme necessidade;
-    \item Exposição a risco de preço no mercado de curto prazo;
-    \item Gestão mais complexa exigindo expertise especializado.
-\end{itemize}
-
-Segundo \cite{brito2018}, o ACL tem crescido significativamente, representando aproximadamente 30% do consumo nacional, tendência impulsionada pela redução dos requisitos para migração e busca por redução de custos.
-\subsection{Desafios de Gestão de Contratos}
-
-A gestão de contratos no setor elétrico apresenta complexidades específicas \cite{tolmasquim2016}:
-
-\begin{itemize}
-    \item \textbf{Volume de dados:} contratos envolvem medições horárias de múltiplos pontos;
-    \item \textbf{Sazonalidade:} variações de demanda e geração ao longo do ano;
-    \item \textbf{Reconciliação complexa:} necessidade de conciliar dados de medição, contabilização e faturamento;
-    \item \textbf{Penalidades:} descumprimento de obrigações pode resultar em multas significativas;
-    \item \textbf{Lastro e garantia física:} vendedores devem comprovar capacidade de geração;
-    \item \textbf{Múltiplos submercados:} diferenças regionais de preço exigem gestão granular.
-\end{itemize}
-
-Para \cite{castro2015}, empresas do setor necessitam de sistemas sofisticados capazes de integrar informações da CCEE, sistemas internos de medição, contratos comerciais e sistemas financeiros.
-
-\subsection{Obrigações e Prazos Regulatórios}
-
-Agentes do setor elétrico devem cumprir rigorosos prazos regulatórios estabelecidos pela ANEEL e CCEE \cite{aneel2022}:
-
-\begin{itemize}
-    \item Envio mensal de dados de medição;
-    \item Registro de contratos com antecedência mínima;
-    \item Prestação de garantias financeiras;
-    \item Pagamento de encargos setoriais;
-    \item Apresentação de demonstrativos contábeis;
-    \item Atendimento a auditorias regulatórias.
-\end{itemize}
-
-O não cumprimento desses prazos pode resultar em \cite{ccee2023}:
-
-\begin{itemize}
-    \item Multas regulatórias;
-    \item Suspensão temporária de operações;
-    \item Perda de garantias financeiras depositadas;
-    \item Impacto na reputação corporativa;
-    \item Dificuldades em contratações futuras.
-\end{itemize}
-
-Segundo \cite{brito2018}, a gestão eficaz de prazos é crítica e demanda sistemas que forneçam alertas automatizados e visibilidade sobre status de obrigações pendentes.
-
-\subsection{Transformação Digital no Setor}
-O setor elétrico brasileiro está passando por acelerada transformação digital, impulsionada por \cite{epe2020}:
-
-\begin{itemize}
-    \item \textbf{Smart Grids:} redes inteligentes com comunicação bidirecional;
-    \item \textbf{Medidores inteligentes:} dispositivos que transmitem dados em tempo real;
-    \item \textbf{IoT (Internet das Coisas):} sensores distribuídos pela rede;
-    \item \textbf{Big Data e Analytics:} análise de grandes volumes de dados operacionais;
-    \item \textbf{Inteligência Artificial:} previsão de demanda e manutenção preditiva;
-    \item \textbf{Blockchain:} registro descentralizado de transações energéticas;
-    \item \textbf{Computação em nuvem:} infraestrutura escalável e flexível.
-\end{itemize}
-
-Segundo \cite{schwab2016}, a Quarta Revolução Industrial está transformando o setor energético, exigindo que empresas adotem tecnologias digitais para permanecerem competitivas. Para \cite{westerman2014}, transformação digital não é apenas sobre tecnologia, mas sobre reimaginar processos e modelos de negócio.
-\subsection{Integração de Sistemas no Contexto Regulatório}
-
-A complexidade regulatória do setor elétrico demanda integração sofisticada entre sistemas internos e externos \cite{castro2015}. Empresas precisam integrar:
-
-\begin{itemize}
-    \item \textbf{Sistemas da CCEE:} para contabilização, liquidação e registro de contratos;
-    \item \textbf{Sistemas de medição:} coleta de dados de consumo e geração;
-    \item \textbf{ERP corporativo:} gestão financeira, contábil e administrativa;
-    \item \textbf{Sistemas de trading:} negociação e gestão de contratos;
-    \item \textbf{Sistemas de CRM:} relacionamento com clientes;
-    \item \textbf{Business Intelligence:} análise e reporting gerencial.
-\end{itemize}
-
-Segundo \cite{tolmasquim2016}, a falta de integração adequada resulta em processos manuais intensivos, retrabalho significativo e risco elevado de não conformidade regulatória. A unificação de sistemas, portanto, não é apenas desejável mas necessária para operação eficiente e conforme no setor elétrico brasileiro.
-
-\subsection{Casos de Sucesso e Benchmarks}
-
-Diversas empresas do setor elétrico brasileiro e internacional têm implementado projetos de unificação e modernização de sistemas com resultados positivos \cite{epe2020}:
-
-\begin{itemize}
-    \item \textbf{Redução de até 40\%} no tempo de processamento de obrigações regulatórias;
-    \item \textbf{Diminuição de 60\%} em erros de entrada de dados;
-    \item \textbf{Melhoria de 50\%} na acurácia de previsões de demanda;
-    \item \textbf{Redução de 30\%} em custos operacionais de TI;
-    \item \textbf{Aumento de 70\%} na satisfação dos usuários internos.
-\end{itemize}
-
-Esses resultados reforçam a importância estratégica da unificação tecnológica para empresas do setor, conforme argumentam \cite{laudon2020} e \cite{davenport2018}.

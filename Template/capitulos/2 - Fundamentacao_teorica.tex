@@ -1,609 +1,204 @@
 \chapter{Fundamentação Teórica}
 \label{sec:fundamentacao}
 
-Este capítulo tem como objetivo apresentar os conceitos, tencologias e práticas utilizadas no projeto. Irá ser abordado temas que se relacionam com o aplicativo InLight, com suas respectivas tecnologias, pontos positivos e negativos em práticas na implementação de unificação de sistemas e como deve ser realizado.
+Este capítulo apresenta os conceitos que sustentam a análise da unificação de sistemas proposta neste trabalho. O fluxo segue do geral para o específico: inicia-se com os conceitos de Sistemas de Informação e a forma como são avaliados, em seguida, é discutido os sistemas legados e os efeitos da fragmentação. depois, são apresentadas as abordagens de integração e de unificação, com seus benefícios e riscos. Na sequência, iremos tratar a gestão de processos de negócio e a aceitação de tecnologia pelos usuários, fatores que determinam se uma solução unificada gera, de fato, resultados. Por fim, contextualizaremos o setor elétrico brasileiro, em especial o Ambiente de Contratação Regulada, no qual se insere o caso estudado. A descrição do aplicativo InLight e das tecnologias empregadas em sua construção é apresentada no Capítulo~\ref{sec:proposta}.
 
-\section{InLight}
+\section{Sistemas de Informação nas Organizações}
+\label{sec:si}
 
-O InLight é um aplicativo de unificação de sistemas, desenvolvido em TypeScript, que oferece diversas aplicações, visto que agrupa as principais informações dos principais sistemas utilizados não somente  no BackOffice ACR, mas como na LIGHT como um todo. É uma aplicação especifica para o mercado regulado podendo ser ampliado para o mercado livre.
+\subsection{Conceito e Componentes}
 
-Criado e desenvolvido para tratar informações da CCEE, Thunders e informações que só eram armazenadas em planilhas.
+Sistemas de Informação (SI) são conjuntos de componentes inter-relacionados que coletam, processam, armazenam e distribuem informações para apoiar a tomada de decisão, a coordenação e o controle em uma organização \citep{laudon2020}. Em definição semelhante, \citet{obrien2013} descrevem o SI como uma combinação organizada de pessoas, hardware, software, redes de comunicação, recursos de dados, políticas e procedimentos que armazenam, recuperam, transformam e disseminam informações.
 
-Ele foi estruturado em 3 principais módulos:
-
-\begin{itemize}
-    \item Notas - agrupando contratos de quantidade, disponibilidade e cotas e todos os seus blocos, além de um contador na tela inicial para o próximo bloco.
-    \item Metas - de acordo com a nova demanda, se foi necessário criar uma tela para metas de uma forma bem dinâmica.
-    \item Obrigações - pagamentos chamados de especiais pelo modo que são tratados em seu pagamento.
-\end{itemize}
-
-\section{Tecnologias}
-Abordando o desenvolvimento do aplicativo InLight, foi construído com um base de tecnologias que garantem modernidade e uma maior facilidade em alterações futuras. A partir deste ponto, irá ser apresentado as principais tecnologias utilizadas, organizadas de acordo com as suas funcionalidade e propósitos dentro do aplicativo.
-
-\subsection{Arquitetura da Aplicação}
-O InLight foi construído com uma arquitetura cliente-servidor, realizando assim uma boa divisão da interface do usuário (front-end) e a estrutura lógica de negócio (back-end). De acordo com, \cite{pressman2016}, realizando essa estrutura irá promover uma maior facilidade na manutenção e na escalabilidade, além de facilitar que equipes diferentes trabalhem no projeto.
-\subsection{Front-end: React Native}
-
-\subsubsection{React Native e TypeScript}
-
-Falando sobre o front-end do InLight, ele foi desenvolvido em React Native, que é um Framework JavaScript mantido pelo Facebook (Meta), esta tecnologia permite o desenvolvimento de aplicações mobile para Android e iOS a partir de uma única base de código \cite{eisenman2015}. Partindo deste viés, a escolha do React Native se justifica por:
+Os componentes básicos de um SI são \citep{stair2018}:
 
 \begin{itemize}
-    \item \textbf{Desenvolvimento multiplataforma:} como não é necessário manter duas bases separadamente, reduz consideravelmente o tempo e custo de desenvolvimento
-    \item \textbf{Hot Reload:} permite visualizar atualizações no código em tempo real, assim tornando o processo de desenvolvimento mais rápido.
-    \item \textbf{Comunidade ativa:} Comunidade bastante engajada e boa diversidade de bibliotecas.
-\end{itemize}
-
-Ademais, o projeto foi desenvolvido em TypeScript,  que acrescenta a tipagem estática opcional, já que o JavaScript é uma linguagem de tipagem dinâmica. Seguindo essa filosofia, proporciona uma maior segurança no desenvolvimento e facilitará a manutenção no código como mencionado por \cite{bierman2014}.
- Seguindo a análise de, \cite{microsoft2020}, a utilização da tipagem estática reduz a chance de ocorrer erros durante a execução e melhora a experiência de desenvolvimento através autocompletar e refatoração.
-\subsubsection{Gerenciamento de Estado e Navegação}
-Para o gerenciamento de estado global, o InLight utiliza a Context API do React, este recurso permite compartilhar dados entre componentes sem necessidade de passar propriedades manualmente através das árvores de componentes \cite{react2023}. O contexto de autenticação (AuthContext) é responsável no código por gerenciar informações do usuário logado, tokens de acesso e estado de autenticação.
-Abordando a troca entre telas, foi utilizado a biblioteca React Navigation, falando mais especificamente foi utilizado o padrão Stack Navigator. Essa biblioteca oferece navegação nativa, transições suaves e gerenciamento de histórico de navegação \cite{reactnavigation2023}.
-Na parte de locação de dados, como por exemplo tokens de autenticação, foi utilizado AsyncStorage, que fornece um sistema de armazenamento chave-valor assíncrono e não criptografado \cite{reactnative2023}.
-\subsubsection{Componentes e Interface de Usuário}
-A interface do usuário foi desenvolvida utilizando os componentes básicos do React Native (View, Text, TouchableOpacity, FlatList, ScrollView), complementados por bibliotecas mais específicas:
-\begin{itemize}
-    \item \textbf{@react-native-community/slider:} componente de controle deslizante para ajuste de progresso de metas, sendo bem dinâmica em todas as telas;
-    \item \textbf{@react-native-picker/picker:} seletor de opções para escolha de papéis de usuário;
-    \item \textbf{expo-document-picker:} seleção de documentos do dispositivo para funcionalidade de upload, utilizado na parte de pendências.
-\end{itemize}
-\subsection{Back-end: NestJS e Node.js}
-
-\subsubsection{Framework NestJS}
-O back-end do InLight é desenvolvido em NestJS, um framework progressivo para construção de aplicações server-side eficientes e escaláveis \cite{nestjs2023}. O NestJS é construído em Node.js e utiliza Typescript como linguagem padrão, garantindo uma boa conexão com o front-end.
-As principais características do NestJS que justificam sua adoção incluem:
-\begin{itemize}
-    \item \textbf{Arquitetura modular:} organização do código em módulos independentes e reutilizáveis;
-    \item \textbf{Injeção de dependências:} padrão que facilita testes e manutenção do código;
-    \item \textbf{Suporte a TypeScript:} aproveitamento o máximo dos benefícios da tipagem estática;
-    \item \textbf{Decorators:} metaprogramação que torna o código mais declarativo e legível;
-    \item \textbf{Estrutura baseada em Angular:} familiaridade para desenvolvedores que conhecem frameworks modernos.
-\end{itemize}
-
-\subsubsection{Arquitetura em Camadas}
-O back-end segue uma arquitetura em três camadas bem definidas, conforme recomendado por \cite{fowler2002}:
-\begin{enumerate}
-    \item \textbf{Camada de Apresentação (Controllers):} responsável por receber requisições HTTP, validar entradas e retornar respostas adequadas. Utiliza em seu código decorators como por exemplo: @Controller, @Get, @Post, @Patch e @Delete para definir rotas e métodos HTTP;
-    
-    \item \textbf{Camada de Negócio (Services):} contém a lógica de negócio do aplicativo, implementando regras, validações e orquestrando operações entre diferentes entidades;
-    
-    \item \textbf{Camada de Dados (Repositories):} responsável pela comunicação com o banco de dados, abstraindo detalhes de persistência através do padrão Repository.
-\end{enumerate}
-Esta separação promove o princípio da responsabilidade única (Single Responsibility Principle) do SOLID \cite{martin2008}, facilitando manutenção, testes e evolução do sistema.
-\subsection{Banco de Dados e Persistência}
-
-\subsubsection{PostgreSQL}
-O InLight utiliza PostgreSQL como sistema gerenciador de banco de dados. Este banco dados é um open-source robusto, conhecido por sua confiabilidade, integridade de dados e conformidade com padrões SQL \cite{postgresql2023}. Segundo \cite{obe2017}, PostgreSQL oferece recursos avançados como:
-\begin{itemize}
-    \item Suporte completo a transações ACID (Atomicidade, Consistência, Isolamento, Durabilidade);
-    \item Tipos de dados complexos e extensíveis;
-    \item Índices avançados para otimização de consultas;
-    \item Suporte a JSON e dados semi-estruturados;
-    \item Replicação e alta disponibilidade.
-\end{itemize}
-\subsubsection{TypeORM}
-Para a comunicação entre a aplicação e o banco de dados, utiliza-se TypeORM, um Object-Relational Mapping (ORM) que permite trabalhar com entidades de banco de dados como objetos TypeScript \cite{typeorm2023}. O TypeORM oferece:
-
-\begin{itemize}
-    \item \textbf{Query Builder:} construção de consultas complexas de forma programática e type-safe;
-    \item \textbf{Migrations:} versionamento e controle de mudanças no schema do banco;
-    \item \textbf{Relacionamentos:} definição declarativa de relações entre entidades (OneToMany, ManyToOne, ManyToMany);
-    \item \textbf{Lazy Loading e Eager Loading:} estratégias de carregamento de relacionamentos.
-\end{itemize}
-O uso de ORM reduz significativamente a quantidade de código SQL escrito manualmente, previne vulnerabilidades como SQL Injection e facilita a portabilidade entre diferentes SGBDs \cite{ambler2003}.
-
-\subsection{Autenticação e Segurança}
-
-\subsubsection{JSON Web Tokens (JWT)}
-O sistema de autenticação do InLight baseia-se em JSON Web Tokens (JWT), um padrão aberto (RFC 7519) para transmissão segura de informações entre partes como um objeto JSON \cite{jones2015}. O fluxo de autenticação funciona da seguinte forma:
-\begin{enumerate}
-    \item Usuário envia credenciais (email e senha) para o endpoint de login;
-    \item Servidor valida as credenciais e, se válidas, gera um token JWT contendo informações do usuário;
-    \item Cliente armazena o token localmente e o envia no header Authorization de requisições subsequentes;
-    \item Servidor valida o token em cada requisição protegida.
-\end{enumerate}
-
-Os benefícios do JWT incluem:
-
-\begin{itemize}
-    \item \textbf{Stateless:} servidor não precisa armazenar sessões, facilitando escalabilidade;
-    \item \textbf{Autocontido:} token contém todas as informações necessárias para autenticação;
-    \item \textbf{Compacto:} pode ser transmitido via URL, POST ou HTTP header;
-    \item \textbf{Seguro:} pode ser assinado digitalmente garantindo integridade.
-\end{itemize}
-
-\subsubsection{Passport.js e Estratégias de Autenticação}
-A implementação da autenticação utiliza Passport.js, um middleware de autenticação flexível e modular para Node.js \cite{passport2023}.
-É aplicado passport-jwt para validação de tokens JWT. O NestJS integra o Passport através do modulo @nestjs/passport, fornecendo Guards que protegem rotas específicas.
-\subsubsection{Criptografia de Senhas}
-
-Para o armazenamento seguro de senhas, utiliza-se a biblioteca bcrypt, que implementa o algoritmo de hashing bcrypt baseado no Blowfish cipher \cite{provos1999}. Características importantes:
-
-\begin{itemize}
-    \item \textbf{Hash com salt:} cada senha recebe um salt único, prevenindo ataques de rainbow table;
-    \item \textbf{Função de custo adaptável:} permite aumentar a complexidade computacional ao longo do tempo;
-    \item \textbf{Resistente a ataques de força bruta:} custo computacional alto, porém dificulta quebrar senhas.
-\end{itemize}
-
-\subsubsection{Controle de Acesso Baseado em Papéis (RBAC)}
-
-O InLight implementa RBAC (Role-Based Access Control) com três níveis de acesso:
-
-\begin{itemize}
-    \item \textbf{Admin:} acesso total ao sistema, incluindo cadastro de usuários e importação de dados;
-    \item \textbf{Manager:} acesso intermediário com permissões de gestão;
-    \item \textbf{User:} acesso básico às funcionalidades essenciais.
-\end{itemize}
-
-Segundo \cite{ferraiolo2001}, RBAC simplifica a administração de permissões e garante conformidade com políticas de segurança organizacionais.
-
-\subsection{Validação e Tratamento de Dados}
-
-\subsubsection{Data Transfer Objects (DTOs)}
-No aplicativo InLight o padrão DTO é utilizado para transferência de dados entre camadas \cite{fowler2002}. DTOs são objetos simples que transportam dados, sem conter lógica de negócio, que é principalmente no service. No contexto do projeto, existem DTOs específicos para:
-
-\begin{itemize}
-    \item \textbf{CreateDTO:} dados necessários para criação de entidades;
-    \item \textbf{UpdateDTO:} dados para atualização (geralmente PartialType do CreateDTO);
-    \item \textbf{FilterDTO:} parâmetros de filtro para consultas;
-    \item \textbf{ResponseDTO:} formatação de respostas da API.
-\end{itemize}
-
-\subsubsection{Class-validator}
-A validação de dados de entrada é realizada através da biblioteca class-validator, que utiliza decorators TypeScript para definir regras de validação. Exemplos de decorators utilizados:
-\begin{itemize}
-    \item @IsNotEmpty: campo obrigatório;
-    \item @IsEmail: validação de formato de email;
-    \item @IsDateString: validação de formato de data;
-    \item @IsNumber: validação de tipo numérico;
-    \item @IsString: validação de tipo string.
-\end{itemize}
-\subsubsection{ValidationPipe}
-O NestJS fornece o recurso ValidationPipe, um pipe global que automaticamente valida payloads de requisições nos DTOs definidos. Configurado no arquivo main.ts com as opções:
-
-\begin{itemize}
-    \item \textbf{whitelist: true} - remove propriedades não definidas no DTO;
-    \item \textbf{forbidNonWhitelisted: true} - rejeita requisições com propriedades extras;
-    \item \textbf{transform: true} - converte automaticamente tipos primitivos.
-\end{itemize}
-Essa abordagem garante que apenas dados válidos cheguem às camadas de negócio e dados.
-\subsection{Interceptors e Exception Filters}
-
-\subsubsection{Response Interceptor}
-
-O ResponseInterceptor padroniza o formato de todas as respostas da API, encapsulando dados em uma estrutura consistente. Isso facilita o tratamento no front-end e melhora a experiência do desenvolvedor \cite{nestjs2023}.
-\subsubsection{HttpExceptionFilter}
-O HttpExceptionFilter customizado captura exceções HTTP e formata respostas de erro de maneira uniforme, incluindo:
-
-\begin{itemize}
-    \item Código de status HTTP apropriado;
-    \item Mensagem de erro descritiva;
-    \item Timestamp da ocorrência;
-    \item Path da requisição;
-    \item Detalhes adicionais quando apropriado.
-\end{itemize}
-
-Segundo \cite{pressman2016}, tratamento adequado de exceções é fundamental para robustez e manutenibilidade de sistemas.
-
-\subsection{Processamento de Arquivos Excel}
-Uma funcionalidade muito importante do InLight é a importação de através de arquivos Excel (.xlsx), especialmente para obrigações futuras. O processo inclui:
-
-\begin{itemize}
-    \item \textbf{Upload via FormData:} suporte a multipart/form-data;
-    \item \textbf{Conversão de datas seriais:} Excel armazena datas como números seriais desde 1900-01-01, exigindo conversão para formato padrão;
-    \item \textbf{Validação de dados:} verificação de formato e integridade antes de persistir;
-    \item \textbf{Feedback ao usuário:} notificação de sucesso ou erro detalhado.
-\end{itemize}
-
-\subsection{Comunicação HTTP e CORS}
-
-\subsubsection{RESTful API}
-
-A API do InLight segue os princípios REST (Representational State Transfer) definidos por \cite{fielding2000}:
-
-\begin{itemize}
-    \item \textbf{Cliente-Servidor:} separação clara de responsabilidades;
-    \item \textbf{Stateless:} cada requisição contém todas as informações necessárias;
-    \item \textbf{Cacheable:} respostas podem ser cacheadas quando apropriado;
-    \item \textbf{Interface uniforme:} uso consistente de métodos HTTP;
-    \item \textbf{Sistema em camadas:} arquitetura pode incluir intermediários.
-\end{itemize}
-
-\subsubsection{CORS (Cross-Origin Resource Sharing)}
-
-O back-end habilita CORS para permitir que o aplicativo mobile acesse a API. A configuração no main.ts especifica:
-
-\begin{itemize}
-    \item Origins permitidas;
-    \item Métodos HTTP aceitos (GET, POST, PATCH, DELETE);
-    \item Suporte a credenciais;
-\end{itemize}
-
-Essa configuração é essencial para comunicação segura entre diferentes origens \cite{w3c2014}.
-\subsection{Testes Automatizados}
-O aplicativo utiliza Jest como framework de testes, permitindo:
-
-\begin{itemize}
-    \item \textbf{Testes unitários:} validação de componentes isolados;
-    \item \textbf{Testes de integração:} verificação de interação entre módulos;
-    \item \textbf{Mocking:} simulação de dependências externas;
-    \item \textbf{Coverage reports:} análise de cobertura de código.
-\end{itemize}
-
-O NestJS fornece @nestjs/testing, que facilita a criação de módulos de teste com injeção de dependências \cite{nestjs2023}.
-
-\subsection{Considerações sobre a Stack Tecnológica}
-
-A escolha das tecnologias empregadas no InLight reflete uma busca por modernidade, escalabilidade e manutenibilidade. O uso de TypeScript em toda a sua estrutura garante consistência e segurança de tipos. A arquitetura modular do NestJS facilita a adição de novas funcionalidades. React Native permite alcançar múltiplas plataformas com uma única base de código.
-Segundo \cite{pressman2016}, a seleção adequada de tecnologias é fundamental para o sucesso de projetos de software, devendo considerar fatores como maturidade, comunidade, documentação e alinhamento com objetivos do negócio. O InLight atende a esses critérios, utilizando tecnologias consolidadas e amplamente adotadas no mercado.
-
-\section{Sistemas de Informação e Integração}
-
-\subsection{Conceitos Fundamentais de Sistemas de Informação}
-
-Sistemas de Informação (SI) são conjuntos organizados de elementos que coletam, processam, armazenam e distribuem informações para apoiar a tomada de decisão, coordenação, controle, análise e visualização em uma organização \cite{laudon2020}. Segundo \cite{obrien2013}, um SI pode ser definido como uma combinação organizada de pessoas, hardware, software, redes de comunicação, recursos de dados e políticas e procedimentos que armazenam, recuperam, transformam e disseminam informações.
-
-Os componentes básicos de um SI incluem \cite{stair2018}:
-
-\begin{itemize}
-    \item \textbf{Hardware:} equipamentos físicos utilizados para entrada, processamento e saída de dados;
-    \item \textbf{Software:} programas e aplicações que controlam e coordenam o hardware;
-    \item \textbf{Dados:} fatos brutos que são processados para gerar informação útil;
-    \item \textbf{Procedimentos:} políticas e regras que governam a operação do sistema;
+    \item \textbf{Hardware:} equipamentos utilizados na entrada, no processamento e na saída de dados;
+    \item \textbf{Software:} programas que controlam o hardware e executam as tarefas do sistema;
+    \item \textbf{Dados:} fatos brutos que, processados, tornam-se informação útil;
+    \item \textbf{Redes:} infraestrutura de comunicação que conecta os demais componentes;
     \item \textbf{Pessoas:} usuários, desenvolvedores e gestores que interagem com o sistema;
-    \item \textbf{Redes:} infraestrutura de comunicação que conecta componentes.
+    \item \textbf{Procedimentos:} políticas e regras que orientam a operação do sistema.
 \end{itemize}
 
-Para \cite{turban2010}, os SI são essenciais para o funcionamento de organizações modernas, pois transformam dados brutos em informações significativas que suportam decisões estratégicas, táticas e operacionais. A qualidade dessas decisões está diretamente relacionada à qualidade e à disponibilidade das informações fornecidas pelos SI.
+Essa visão evidencia que um SI não se resume à tecnologia: ele envolve pessoas e procedimentos, o que será retomado ao se discutir a adoção de sistemas unificados (Seção~\ref{sec:aceitacao}). Para \citet{turban2010}, os SI são essenciais às organizações modernas porque transformam dados brutos em informações que sustentam decisões estratégicas, táticas e operacionais. A qualidade dessas decisões depende diretamente da qualidade e da disponibilidade das informações fornecidas.
 
-\subsection{Sistemas Legados e suas Limitações}
+\subsection{Avaliação do Sucesso de Sistemas de Informação}
 
-Sistemas legados são aplicações de software antigas que continuam sendo críticas para as operações de uma organização, apesar de terem sido desenvolvidos com tecnologias ultrapassadas \cite{bennett1995}. Segundo \cite{brooke1998}, sistemas legados apresentam características particulares:
+Para analisar os impactos de um novo sistema, é necessário definir o que se entende por ``sucesso''. O modelo de \citet{delone2003}, um dos mais utilizados na área, organiza o sucesso de um SI em seis dimensões inter-relacionadas:
 
 \begin{itemize}
-    \item Foram desenvolvidos há décadas, utilizando linguagens e paradigmas de programação antigos;
-    \item Possuem documentação escassa ou desatualizada;
-    \item Dependem de hardware e software descontinuados;
-    \item Contêm regras de negócio críticas embutidas no código;
-    \item São difíceis de modificar devido à complexidade acumulada;
-    \item Apresentam alto custo de manutenção.
+    \item \textbf{Qualidade do sistema:} características técnicas, como facilidade de uso, confiabilidade e tempo de resposta;
+    \item \textbf{Qualidade da informação:} completude, precisão, atualidade e relevância das informações geradas;
+    \item \textbf{Qualidade do serviço:} suporte oferecido aos usuários pela equipe responsável pelo sistema;
+    \item \textbf{Uso (ou intenção de uso):} grau em que o sistema é efetivamente utilizado;
+    \item \textbf{Satisfação do usuário:} percepção dos usuários em relação ao sistema;
+    \item \textbf{Benefícios líquidos:} impactos positivos e negativos do sistema sobre indivíduos, grupos e a organização.
 \end{itemize}
 
-\cite{pressman2016} destaca que sistemas legados representam um dilema para as organizações: embora sejam essenciais para operações críticas, sua manutenção é cada vez mais cara e arriscada. Além disso, vale a pena ser ressaltado que a falta de integração entre sistemas legados e aplicações mais modernas cria dificuldade na comunicação da informação que decorrentemente prejudicam a eficiência organizacional.
-Abordando a área do setor elétrico, muitas empresas ainda operam com sistemas desenvolvidos nas décadas de 1980 e1990, quando a estrutura tecnológica e os métodos de integração eram limitados. Esses sistemas, frequentemente desenvolvidos em linguagens como COBOL, Clipper ou Visual Basic, não foram projetados para se comunicar com aplicações modernas, resultando em processos manuais de transferência de dados \cite{rezende2017}.
+Esse modelo oferece uma estrutura para observar e mensurar os benefícios e as limitações da unificação de sistemas, uma das questões de pesquisa deste trabalho, e será usado como referência na análise dos resultados.
+
+\section{Sistemas Legados e Fragmentação}
+\label{sec:legados}
+
+\subsection{Sistemas Legados}
+
+\citet{bennett1995} caracteriza os sistemas legados como sistemas de software de grande porte que continuam vitais para a organização, mas que ela não sabe mais como manter ou evoluir adequadamente. \citet{bisbal1999} os definem como sistemas de informação que resistem de forma significativa a modificações e à evolução. Em geral, foram desenvolvidos com tecnologias que se tornaram ultrapassadas, têm documentação escassa ou desatualizada e concentram regras de negócio críticas embutidas no código, o que torna sua manutenção cada vez mais cara e arriscada \citep{bisbal1999,pressman2016}.
+
+\citet{bisbal1999} observam que esses sistemas criam um dilema: substituí-los envolve alto risco, mas mantê-los limita a capacidade de a organização responder a novas necessidades. Os autores agrupam as alternativas em três estratégias: o \textbf{redesenvolvimento}, que reconstrói o sistema do zero; o \textbf{encapsulamento} (\textit{wrapping}), que oferece uma nova interface sobre o sistema existente; e a \textbf{migração}, que transfere o sistema para um ambiente mais flexível preservando seus dados e funcionalidades. Essa classificação é útil para situar o InLight, que não substitui os sistemas de origem, mas consolida suas informações em uma nova aplicação.
 
 \subsection{Fragmentação de Sistemas e seus Impactos}
-A fragmentação de sistemas ocorre quando uma organização utiliza múltiplas aplicações isoladas, cada uma gerenciando uma parte específica dos processos de negócio, sem integração adequada entre elas \cite{laudon2020}.
-Esse cenário, comum em empresas que cresceram através de fusões ou com a implementação de novas tecnologias sem a conexão adequada, acaba gerando diversos problemas.
+
+A fragmentação ocorre quando uma organização utiliza diversas aplicações isoladas, cada uma responsável por uma parte dos processos de negócio, sem integração adequada entre elas \citep{laudon2020}. Esse cenário é comum em empresas que adotaram novas tecnologias de forma incremental, sem uma arquitetura que as conectasse, e produz os efeitos descritos a seguir.
+
 \subsubsection{Redundância e Inconsistência de Dados}
 
-Quando dados são armazenados em múltiplos sistemas sem sincronização, surgem problemas de redundância e inconsistência \cite{elmasri2016}. Por exemplo, informações sobre um mesmo contrato podem existir em diferentes versões em sistemas distintos, gerando conflitos sobre qual é a versão correta. Segundo \cite{davenport2018}, essa inconsistência compromete a confiabilidade das informações e dificulta a tomada de decisões baseada em dados.
+Quando a mesma informação é armazenada em vários sistemas, cada um com seus próprios arquivos, surgem a redundância e o risco de inconsistência, pois uma atualização feita em um local pode não ser refletida nos demais \citep{elmasri2016}. Na prática, dados de um mesmo contrato podem existir em versões diferentes em sistemas distintos e em planilhas, gerando dúvidas sobre qual delas é a correta.
+
 \subsubsection{Retrabalho e Perda de Produtividade}
-A ausência de integração obriga colaboradores a realizar tarefas manuais repetitivas, como entrada de dados em múltiplos sistemas, exportação e importação de planilhas e conciliação manual de informações \cite{stair2018}. Segundo estudo de \cite{mckinsey2018}, profissionais gastam em média 19% de seu tempo procurando e consolidando informações dispersas em diferentes sistemas.
+
+A ausência de integração obriga os colaboradores a executar tarefas manuais repetitivas, como digitar os mesmos dados em mais de um sistema, exportar e importar planilhas e conciliar informações manualmente \citep{stair2018}. Além de consumir tempo, cada transcrição manual é uma oportunidade para erros.
+
 \subsubsection{Dificuldade na Tomada de Decisão}
-A fragmentação impede uma visão de um todo dos processos organizacionais. Gestores precisam coletar manualmente informações de diversos sistemas, consolidá-las em planilhas e então realizar análises, processo que além de demorado está sujeito a erros \cite{power2002}. Para \cite{sharda2014}, a integração de dados é fundamental para sistemas de apoio à decisão eficazes.
-\subsubsection{Aumento de Custos Operacionais}
 
-Manter múltiplos sistemas não integrados implica em custos elevados de infraestrutura, licenciamento, treinamento e suporte técnico \cite{turban2010}. Também vale ser mencionado que todo esse trabalho manual entre sistemas, acaba consumindo recursos humanos que poderiam ser alocados em atividades gerando mais valor e decorrentemente lucro para a empresa.
-\subsubsection{Riscos de Segurança e Conformidade}
-Sistemas fragmentados dificultam a implementação de políticas de segurança uniformes e o controle de acesso \cite{whitman2018}. Diferentes sistemas podem ter diferentes níveis de proteção, criando vulnerabilidades. Além disso, auditorias e demonstrações de conformidade com regulamentações tornam-se mais complexas quando dados estão dispersos \cite{siponen2010}.
-\subsection{Integração de Sistemas: Conceitos e Abordagens}
-A integração de sistemas refere-se ao processo de conectar diferentes aplicações de software para que funcionem como um sistema unificado, compartilhando dados e processos de negócio \cite{hohpe2003}. Segundo \cite{linthicum2000}, integração não significa necessariamente substituir sistemas existentes, mas sim criar pontes que permitam comunicação eficiente entre eles.
+A fragmentação impede uma visão consolidada dos processos. Os gestores precisam reunir manualmente informações de diversas fontes antes de analisá-las, um processo demorado e sujeito a erros \citep{power2002}. Para \citet{sharda2014}, a integração de dados é condição para que sistemas de apoio à decisão sejam eficazes.
 
-\subsubsection{Níveis de Integração}
+\subsubsection{Custos Operacionais e Riscos de Segurança}
 
-\cite{ruh2000} identifica diferentes níveis de integração de sistemas:
+Manter vários sistemas não integrados implica custos de infraestrutura, licenciamento, treinamento e suporte \citep{turban2010}. Além disso, ambientes fragmentados dificultam a aplicação de políticas de segurança e de controle de acesso uniformes, já que cada sistema pode ter mecanismos e níveis de proteção distintos \citep{whitman2018}.
 
-\begin{itemize}
-    \item \textbf{Integração de Dados:} compartilhamento de dados entre sistemas através de bancos de dados compartilhados ou mecanismos de sincronização;
-    \item \textbf{Integração de Aplicações:} sistemas comunicam-se através de APIs (Application Programming Interfaces), trocando mensagens e invocando funcionalidades remotamente;
-    \item \textbf{Integração de Processos:} orquestração de processos de negócio que atravessam múltiplos sistemas;
-    \item \textbf{Integração de Interface:} unificação da experiência do usuário através de portais ou dashboards que agregam funcionalidades de diversos sistemas.
-\end{itemize}
+\subsection{Custos e Benefícios da Integração de Dados}
 
-\subsubsection{Padrões e Tecnologias de Integração}
+Apesar dos problemas apontados, a integração não deve ser tratada como benéfica em qualquer circunstância. \citet{goodhue1992} questionam a suposição de que integrar dados sempre gera ganhos líquidos: a integração melhora a coordenação e a tomada de decisão em toda a organização, mas pode reduzir a autonomia e a flexibilidade das áreas locais, além de alterar os custos de projeto e implantação dos sistemas. Para esses autores, os benefícios superam os custos apenas em determinadas situações, e não necessariamente para todos os dados da organização. Essa ressalva orienta a análise deste trabalho: o objetivo não é presumir que a unificação é sempre vantajosa, mas identificar em quais processos ela gera valor.
 
-Diversos padrões e tecnologias foram desenvolvidos para facilitar a integração de sistemas \cite{hohpe2003}:
+\section{Integração e Unificação de Sistemas}
+\label{sec:integracao}
+
+\subsection{Integração de Sistemas}
+
+A integração de sistemas consiste em conectar aplicações distintas para que compartilhem dados e processos de negócio \citep{hohpe2003}. Segundo \citet{linthicum2000}, integrar não significa necessariamente substituir os sistemas existentes, mas criar mecanismos que permitam a comunicação entre eles. O autor distingue níveis de integração conforme o ponto em que as aplicações se conectam:
 
 \begin{itemize}
-    \item \textbf{APIs RESTful:} interfaces baseadas no protocolo HTTP que seguem princípios REST, amplamente utilizadas por sua simplicidade e escalabilidade \cite{fielding2000};
-    \item \textbf{Web Services:} serviços baseados em padrões como SOAP e WSDL, comuns em ambientes corporativos \cite{alonso2004};
-    \item \textbf{Message Queues:} sistemas de filas de mensagens (como RabbitMQ, Apache Kafka) que permitem comunicação assíncrona e desacoplada entre aplicações \cite{snyder2011};
-    \item \textbf{Enterprise Service Bus (ESB):} arquitetura que atua como barramento central para integração de múltiplos sistemas \cite{chappell2004};
-    \item \textbf{Microserviços:} arquitetura que decompõe aplicações em serviços pequenos e independentes que se comunicam via APIs \cite{newman2015}.
+    \item \textbf{Nível de dados:} movimentação de dados diretamente entre os bancos de dados das aplicações;
+    \item \textbf{Nível de interface de aplicação:} uso das interfaces de programação (APIs) que as aplicações expõem;
+    \item \textbf{Nível de método:} compartilhamento da lógica de negócio entre aplicações;
+    \item \textbf{Nível de interface de usuário:} uso da própria interface do usuário como ponto de integração, geralmente em sistemas legados que não oferecem outro acesso.
 \end{itemize}
-\subsection{Unificação de Sistemas: Conceito e Benefícios}
-Enquanto integração refere-se à conexão entre sistemas mantendo-os separados, unificação implica em consolidar funcionalidades dispersas em uma plataforma única ou em um conjunto coeso de sistemas fortemente integrados \cite{laudon2020}, como é o caso do aplicativo InLight. A unificação vai além da integração ao oferecer:
-\subsubsection{Interface Única e Consistente}
 
-Usuários interagem com uma única aplicação que agrega funcionalidades antes dispersas, eliminando necessidade de alternar entre sistemas e aprender múltiplas interfaces \cite{nielsen1993}. Segundo \cite{norman2013}, a consistência de interface reduz carga cognitiva e aumenta produtividade.
+\citet{hohpe2003} descrevem quatro estilos básicos de integração entre aplicações: \textbf{transferência de arquivos}, em que uma aplicação gera arquivos que outra consome; \textbf{banco de dados compartilhado}, em que várias aplicações leem e gravam na mesma base; \textbf{invocação remota de procedimentos}, em que uma aplicação chama funcionalidades de outra; e \textbf{mensageria}, em que as aplicações trocam mensagens de forma assíncrona. Sobre esses estilos foram construídas tecnologias como as APIs REST \citep{fielding2000}, os \textit{Web Services} baseados em SOAP \citep{alonso2004}, os barramentos de serviço corporativos (ESB) \citep{chappell2004} e as arquiteturas de microsserviços \citep{newman2015}.
 
-\subsubsection{Modelo de Dados Unificado}
+\subsection{Unificação de Sistemas}
 
-Em vez de sincronizar dados entre sistemas distintos, a unificação estabelece um modelo de dados único e consistente, eliminando redundâncias e garantindo integridade referencial \cite{elmasri2016}. Para \cite{inmon2005}, a unificação de dados é essencial para criar uma "fonte única da verdade" (single source of truth) na organização.
-\subsubsection{Processos de Negócio Otimizados}
+Enquanto a integração conecta sistemas que continuam separados, a unificação consolida funcionalidades e informações dispersas em uma plataforma única ou em um conjunto coeso de sistemas \citep{laudon2020}. O exemplo mais conhecido são os sistemas integrados de gestão (ERP), que, segundo \citet{davenport1998}, prometem integrar as informações que circulam pela empresa por meio de uma base de dados comum, atualizada em tempo real e acessada por diferentes áreas.
 
-A unificação permite redesenhar processos de negócio de forma holística, eliminando etapas desnecessárias e automatizando fluxos de trabalho que antes dependiam de intervenção manual \cite{davenport1993}. Segundo \cite{hammer2001}, a unificação tecnológica deve ser acompanhada de reengenharia de processos para maximizar benefícios.
-
-\subsubsection{Manutenção Simplificada}
-
-Manter uma única plataforma é mais eficiente do que gerenciar múltiplos sistemas, reduzindo custos de infraestrutura, licenciamento e equipe técnica \cite{pressman2016}. Além disso, atualizações e melhorias são implementadas uma única vez, beneficiando todos os módulos simultaneamente.
-\subsubsection{Agilidade e Inovação}
-
-Sistemas unificados, especialmente quando construídos com arquiteturas modernas e modulares, facilitam a adição de novas funcionalidades e a adaptação a mudanças de negócio \cite{ross2006}. Para \cite{westerman2014}, agilidade tecnológica é fator crítico de sucesso em ambientes de transformação digital.
-
-\subsection{Desafios na Unificação de Sistemas}
-
-Apesar dos benefícios evidentes, a unificação de sistemas apresenta desafios significativos \cite{linthicum2000}:
+Em comparação com a integração pontual, a unificação oferece:
 
 \begin{itemize}
-    \item \textbf{Complexidade técnica:} migração de dados legados, mapeamento de regras de negócio e garantia de compatibilidade;
-    \item \textbf{Resistência organizacional:} usuários acostumados com sistemas antigos podem resistir a mudanças \cite{kotter1996};
-    \item \textbf{Custos e riscos:} investimento inicial elevado e riscos de falhas durante a transição \cite{laudon2020};
-    \item \textbf{Tempo de implementação:} projetos de unificação podem levar anos em organizações complexas;
-    \item \textbf{Dependência de fornecedores:} escolha da plataforma adequada é crítica e difícil de reverter.
+    \item \textbf{Interface única e consistente:} o usuário passa a trabalhar em uma só aplicação, sem alternar entre sistemas com lógicas diferentes; a consistência da interface é um dos princípios centrais de usabilidade \citep{nielsen1993,norman2013};
+    \item \textbf{Base de dados comum:} os dados passam a ter uma origem única, o que reduz a redundância e os conflitos de versão \citep{elmasri2016};
+    \item \textbf{Manutenção concentrada:} melhorias e correções são aplicadas em um só lugar \citep{pressman2016};
+    \item \textbf{Base para a evolução:} plataformas modulares facilitam a inclusão de novas funcionalidades e a adaptação a mudanças no negócio \citep{ross2006}.
 \end{itemize}
 
-Segundo \cite{markus2000}, o sucesso de projetos de unificação depende não apenas de escolhas tecnológicas adequadas, mas também de gestão eficaz de mudanças, envolvimento de stakeholders e alinhamento com estratégia organizacional.
-\section{Gestão de Processos e Workflows}
+\subsection{Benefícios Esperados}
 
-\subsection{Conceitos de Processos de Negócio}
-
-Um processo de negócio é um conjunto estruturado de atividades inter-relacionadas que produzem um resultado de valor para o cliente ou organização \cite{davenport1993}. Segundo \cite{hammer2001}, processos atravessam fronteiras funcionais e representam a forma como o trabalho realmente acontece nas organizações, independentemente da estrutura hierárquica formal.
-
-\cite{vom2007} categoriza processos em três tipos:
+Para classificar os benefícios de sistemas corporativos integrados, \citet{shang2002} propõem um modelo com cinco dimensões, construído a partir de casos reais de implantação:
 
 \begin{itemize}
-    \item \textbf{Processos primários:} agregam valor diretamente ao cliente (ex: atendimento, entrega de serviços);
-    \item \textbf{Processos de suporte:} apoiam processos primários (ex: TI, recursos humanos, finanças);
-    \item \textbf{Processos de gestão:} coordenam e controlam outros processos (ex: planejamento estratégico, governança).
+    \item \textbf{Operacionais:} redução de custos e de tempo de ciclo, aumento de produtividade e melhoria da qualidade;
+    \item \textbf{Gerenciais:} melhor gestão de recursos, melhor tomada de decisão e melhor controle do desempenho;
+    \item \textbf{Estratégicos:} apoio ao crescimento do negócio e a novas iniciativas;
+    \item \textbf{De infraestrutura de TI:} maior flexibilidade, redução de custos de TI e ampliação da capacidade da infraestrutura;
+    \item \textbf{Organizacionais:} mudanças nos padrões de trabalho, aprendizado organizacional e foco comum entre as áreas.
 \end{itemize}
-A gestão de processos de negócio é uma abordagem projetada para identificar, desenhar, executar, documentar, medir, monitorar e controlar processos organizacionais para alcançar resultados consistentes e alinhados com objetivos estratégicos \cite{vom2013}.
-\subsection{Modelagem e Análise de Processos}
-A modelagem de processos envolve criar representações visuais que documentam como atividades são realizadas, quem as executa, quais sistemas são utilizados e quais informações são necessárias \cite{aguilarsaven2004}. Processos comuns incluem:
-\begin{itemize}
-    \item \textbf{BPMN (Business Process Model and Notation):} padrão internacional para modelagem de processos \cite{white2004};
-    \item \textbf{Fluxogramas:} diagramas simples que mostram sequência de atividades;
-    \item \textbf{EPC (Event-driven Process Chain):} método que enfatiza eventos que disparam atividades;
-    \item \textbf{UML Activity Diagrams:} diagramas da linguagem UML adaptados para processos.
-\end{itemize}
-Segundo \cite{sharp2009}, a modelagem permite identificar ineficiências, gargalos, redundâncias e oportunidades de melhoria antes de implementar mudanças. Análise de processos envolve examinar modelos para avaliar:
+
+Esse modelo complementa o de \citet{delone2003}: enquanto este define as dimensões do sucesso de um SI, aquele detalha os tipos de benefício que se pode esperar de um sistema integrado. Ambos serão utilizados para organizar a análise dos impactos do InLight.
+
+\subsection{Desafios e Fatores Críticos de Sucesso}
+
+A unificação também envolve riscos. \citet{davenport1998} observa que muitos projetos de sistemas integrados fracassam por razões de negócio, e não técnicas: as organizações não conciliam as exigências da tecnologia com suas próprias necessidades. Entre os principais desafios estão:
 
 \begin{itemize}
-    \item Tempo de ciclo (cycle time) de processos;
-    \item Identificação de atividades que não agregam valor;
-    \item Pontos de falha e retrabalho;
-    \item Utilização de recursos;
-    \item Conformidade com regulamentações.
+    \item \textbf{Complexidade técnica:} migração de dados legados, mapeamento de regras de negócio e compatibilidade com sistemas existentes \citep{bisbal1999};
+    \item \textbf{Resistência à mudança:} usuários habituados aos sistemas antigos tendem a resistir a novos modos de trabalho \citep{kotter1996};
+    \item \textbf{Custos e riscos de transição:} investimento inicial e possibilidade de falhas durante a implantação \citep{laudon2020};
+    \item \textbf{Perda de autonomia local:} áreas acostumadas a controlar os próprios dados podem perder flexibilidade \citep{goodhue1992}.
 \end{itemize}
 
-\subsection{Reengenharia de Processos}
+\citet{nah2001} identificaram onze fatores críticos para o sucesso na implantação de sistemas integrados, entre eles: apoio da alta direção, composição da equipe do projeto, programa de gestão da mudança, plano e visão de negócio, redesenho de processos com mínima customização, gestão do projeto, monitoramento e avaliação de desempenho, comunicação eficaz e tratamento adequado dos sistemas legados. Esses fatores mostram que o resultado depende tanto da tecnologia quanto da forma como a organização conduz a mudança.
 
-Reengenharia de Processos de Negócio (Business Process Reengineering - BPR) é o repensar fundamental e redesenho radical de processos visando alcançar melhorias significativas em medidas críticas de desempenho \cite{hammer1993}. Diferentemente de melhoria contínua incremental, BPR busca transformações revolucionárias, ou seja, de grande impacto.
-\cite{davenport1993} identifica princípios fundamentais da reengenharia:
-\begin{itemize}
-    \item \textbf{Organizar em torno de resultados, não tarefas:} atribuir responsabilidade por processos completos a equipes;
-    \item \textbf{Fazer quem usa a informação processá-la:} eliminar intermediários desnecessários;
-    \item \textbf{Tratar recursos geograficamente dispersos como centralizados:} usar tecnologia para coordenar;
-    \item \textbf{Integrar atividades paralelas:} coordenar durante execução, não apenas no final;
-    \item \textbf{Colocar decisões onde o trabalho é executado:} empoderar trabalhadores da linha de frente;
-    \item \textbf{Capturar informação uma vez, na fonte:} eliminar reentrada de dados.
-\end{itemize}
-No contexto da unificação de sistemas, a reengenharia é essencial. Simplesmente automatizar processos ineficientes em novos sistemas não gera benefícios significativos \cite{hammer2001}. É necessário redesenhar processos aproveitando capacidades das novas tecnologias e o conceito de reengenharia e processos faz com que isso possa acontecer, de forma coesa e impactante.
-\subsection{Automação de Processos}
+\section{Processos de Negócio e Automação}
+\label{sec:processos}
 
-Automação de processos refere-se ao uso de tecnologia para executar atividades repetitivas com mínima intervenção humana \cite{lacity2016}. Segundo \cite{vom2013}, benefícios da automação incluem:
-\begin{itemize}
-    \item \textbf{Redução de erros:} sistemas automatizados executam tarefas consistentemente;
-    \item \textbf{Maior velocidade:} atividades são concluídas mais rapidamente;
-    \item \textbf{Disponibilidade contínua:} processos automatizados operam 24/7;
-    \item \textbf{Melhor rastreabilidade:} sistemas registram cada etapa para auditoria;
-    \item \textbf{Liberação de recursos humanos:} colaboradores focam em atividades estratégicas.
-\end{itemize}
+\subsection{Processos de Negócio e sua Gestão}
 
-\cite{vanderaalst2003} categoriza tipos de automação:
+Um processo de negócio é um conjunto estruturado de atividades, com início e fim definidos, que produz um resultado de valor para um cliente ou mercado \citep{davenport1993}. A Gestão de Processos de Negócio (BPM, do inglês \textit{Business Process Management}) é a disciplina que supervisiona como o trabalho é executado para garantir resultados consistentes e aproveitar oportunidades de melhoria \citep{dumas2018}. \citet{dumas2018} organizam essa disciplina em um ciclo de vida composto pelas etapas de identificação, descoberta (modelagem do processo atual), análise, redesenho, implementação e monitoramento dos processos.
 
-\begin{itemize}
-    \item \textbf{Automação completa:} processo executado inteiramente por sistemas sem intervenção humana;
-    \item \textbf{Automação parcial:} algumas etapas automatizadas, outras requerem decisão humana;
-    \item \textbf{Automação assistida:} sistemas fornecem suporte mas humanos controlam execução.
-\end{itemize}
+Para representar processos, a notação mais difundida é a BPMN (\textit{Business Process Model and Notation}), padrão mantido pelo \textit{Object Management Group} \citep{dumas2018}. A modelagem permite identificar ineficiências, gargalos, redundâncias e oportunidades de melhoria antes de implementar mudanças \citep{aguilarsaven2004,sharp2009}.
 
-Tecnologias modernas que suportam automação incluem:
+\subsection{Reengenharia: Redesenhar antes de Automatizar}
 
-\begin{itemize}
-    \item \textbf{Workflow engines:} motores que orquestram sequência de atividades;
-    \item \textbf{RPA (Robotic Process Automation):} software que imita ações humanas em interfaces de sistemas \cite{lacity2016};
-    \item \textbf{Business Rules Engines:} sistemas que aplicam regras de negócio automaticamente;
-    \item \textbf{Inteligência Artificial:} algoritmos que aprendem e tomam decisões complexas \cite{russell2020}.
-\end{itemize}
+\citet{hammerchampy1993} definem a reengenharia como o repensar fundamental e o redesenho radical dos processos de negócio para alcançar melhorias expressivas em medidas críticas de desempenho, como custo, qualidade, serviço e velocidade. Antes disso, \citet{hammer1990} já alertava que usar a tecnologia apenas para acelerar processos existentes não resolve suas deficiências; o ganho surge quando os processos são repensados a partir das possibilidades da tecnologia. Entre os princípios propostos pelo autor está o de capturar a informação uma única vez, na fonte, eliminando a reentrada de dados.
 
-\subsection{Workflows e Gestão de Tarefas}
+Esse princípio é diretamente relevante para a unificação de sistemas: transferir para um novo aplicativo os mesmos passos manuais de antes traria ganhos limitados. O benefício depende de eliminar etapas redundantes, como a digitação repetida de dados em sistemas e planilhas diferentes.
 
-Workflow é a automação de um processo de negócio, no todo ou em parte, durante a qual documentos, informações ou tarefas são passadas de um participante para outro de acordo com um conjunto definido de regras \cite{georgakopoulos1995}.
+\subsection{Automação de Processos e Workflows}
 
-Sistemas de workflow fornecem funcionalidades como:
+Um \textit{workflow} pode ser entendido como um conjunto de tarefas organizadas para realizar um processo de negócio, executadas por pessoas ou por sistemas \citep{georgakopoulos1995}. Sistemas de \textit{workflow} coordenam a sequência de atividades, atribuem tarefas, controlam prazos e registram o histórico de execução \citep{vanderaalst2003}.
+
+Uma forma mais recente de automação é a \textit{Robotic Process Automation} (RPA), em que robôs de software reproduzem as ações que um usuário executaria na interface dos sistemas \citep{vanderaalst2018}. A RPA é indicada para tarefas repetitivas e de alto volume e, por não exigir mudanças nos sistemas existentes, é uma alternativa à integração em ambientes com sistemas legados \citep{lacity2016,vanderaalst2018}. Ela não elimina, porém, a fragmentação dos dados, apenas automatiza a passagem de informações entre sistemas que continuam separados.
+
+\subsection{Medição de Desempenho}
+
+Para verificar se uma mudança gerou melhoria, é preciso medir o desempenho dos processos. \citet{dumas2018} propõem quatro dimensões de desempenho: \textbf{tempo} (por exemplo, o tempo de ciclo do processo), \textbf{custo}, \textbf{qualidade} (incluindo a taxa de erros e de retrabalho) e \textbf{flexibilidade}. Os autores ressaltam que essas dimensões costumam competir entre si: melhorar uma delas pode piorar outra. Em nível organizacional, o \textit{Balanced Scorecard} de \citet{kaplan1996} recomenda avaliar o desempenho sob quatro perspectivas, financeira, de clientes, de processos internos e de aprendizado e crescimento, evitando uma visão limitada a indicadores financeiros.
+
+\section{Aceitação de Tecnologia pelos Usuários}
+\label{sec:aceitacao}
+
+Um sistema só gera benefícios se for efetivamente utilizado. O Modelo de Aceitação de Tecnologia (TAM, do inglês \textit{Technology Acceptance Model}), proposto por \citet{davis1989}, explica a adoção de uma tecnologia por dois fatores principais: a \textbf{utilidade percebida}, que é o grau em que a pessoa acredita que o sistema melhora seu desempenho no trabalho, e a \textbf{facilidade de uso percebida}, que é o grau em que acredita que usá-lo exigirá pouco esforço. Os estudos do autor indicaram que a utilidade percebida tem relação mais forte com o uso do sistema e que a facilidade de uso atua, em grande parte, aumentando a utilidade percebida.
+
+\citet{venkatesh2003} ampliaram essa abordagem com a Teoria Unificada de Aceitação e Uso de Tecnologia (UTAUT), que reúne oito modelos anteriores em quatro determinantes:
 
 \begin{itemize}
-    \item Definição de sequência de atividades e suas dependências;
-    \item Atribuição automática de tarefas a usuários ou grupos;
-    \item Notificações e lembretes sobre prazos;
-    \item Dashboards de acompanhamento de status;
-    \item Histórico completo de execução para auditoria;
-    \item Escalação automática de tarefas atrasadas.
+    \item \textbf{Expectativa de desempenho:} crença de que o sistema ajudará a obter ganhos no trabalho;
+    \item \textbf{Expectativa de esforço:} facilidade associada ao uso do sistema;
+    \item \textbf{Influência social:} percepção de que pessoas importantes, como gestores e colegas, esperam que o sistema seja usado;
+    \item \textbf{Condições facilitadoras:} existência de infraestrutura técnica e organizacional para apoiar o uso.
 \end{itemize}
 
-Segundo \cite{vanderaalst2003}, workflows bem projetados reduzem tempo de ciclo de processos, melhoram coordenação entre equipes e aumentam transparência operacional. No contexto do InLight, funcionalidades de gestão de metas e tarefas exemplificam implementação de workflows digitais.
+Esses modelos fundamentam a questão de pesquisa sobre como a visão de usuários e gestores influencia a adoção de sistemas unificados. No caso do InLight, indicam que a adoção dependerá de os usuários do BackOffice perceberem ganhos concretos em relação às planilhas e aos sistemas atuais, e do apoio dos gestores à mudança.
 
-\subsection{Redução de Retrabalho}
+\section{O Setor Elétrico Brasileiro e a Comercialização de Energia}
+\label{sec:setor}
 
-Retrabalho refere-se à necessidade de refazer atividades devido a erros, falta de informação ou falhas de comunicação \cite{lean2003}. Segundo \cite{mckinsey2018}, retrabalho consome em média 10-30% do tempo produtivo em organizações.
+\subsection{Ambientes de Contratação: ACR e ACL}
 
-Causas comuns de retrabalho em ambientes com sistemas fragmentados incluem:
+O modelo vigente de comercialização de energia elétrica no Brasil foi instituído pela Lei nº 10.848/2004 \citep{brasil2004lei} e regulamentado pelo Decreto nº 5.163/2004 \citep{brasil2004decreto}. Esse marco divide a comercialização em dois ambientes:
 
 \begin{itemize}
-    \item \textbf{Entrada duplicada de dados:} mesma informação digitada em múltiplos sistemas;
-    \item \textbf{Erros de transcrição:} falhas ao copiar dados manualmente entre sistemas;
-    \item \textbf{Informações desatualizadas:} falta de sincronização causa uso de dados obsoletos;
-    \item \textbf{Falta de visibilidade:} desconhecimento do status atual gera atividades redundantes;
-    \item \textbf{Comunicação inadequada:} falhas na transmissão de informações entre equipes.
+    \item \textbf{Ambiente de Contratação Regulada (ACR):} reúne as compras de energia das distribuidoras para atender seus consumidores cativos. As contratações são feitas, em regra, por meio de leilões regulados pela ANEEL e operacionalizados pela CCEE \citep{brasil2004lei};
+    \item \textbf{Ambiente de Contratação Livre (ACL):} reúne as operações de compra e venda de energia por meio de contratos bilaterais livremente negociados entre geradores, comercializadores e consumidores livres \citep{brasil2004decreto}.
 \end{itemize}
 
-A unificação de sistemas reduz retrabalho através de \cite{davenport2018}:
+A mesma lei autorizou a criação da Câmara de Comercialização de Energia Elétrica (CCEE), responsável, entre outras atribuições, pelo registro dos contratos, pela contabilização da energia e pela liquidação financeira das operações no mercado de curto prazo \citep{brasil2004lei,ccee2023}.
+
+\subsection{Contratos do Ambiente Regulado}
+
+No ACR, os contratos firmados entre vendedores e distribuidoras a partir dos leilões são denominados Contratos de Comercialização de Energia Elétrica no Ambiente Regulado (CCEAR). O Decreto nº 5.163/2004 prevê duas modalidades \citep{brasil2004decreto}:
 
 \begin{itemize}
-    \item \textbf{Fonte única de dados:} eliminação de entrada duplicada;
-    \item \textbf{Validações automáticas:} prevenção de erros na captura de dados;
-    \item \textbf{Visibilidade em tempo real:} acesso instantâneo a informações atualizadas;
-    \item \textbf{Workflows estruturados:} clareza sobre responsabilidades e prazos;
-    \item \textbf{Histórico completo:} rastreabilidade de todas as ações realizadas.
+    \item \textbf{CCEAR por quantidade de energia:} o vendedor se compromete a entregar uma quantidade de energia, assumindo os riscos hidrológicos;
+    \item \textbf{CCEAR por disponibilidade de energia:} o vendedor disponibiliza a capacidade de geração, e os riscos hidrológicos são assumidos pelo comprador, com repasse aos consumidores.
 \end{itemize}
 
-A medição de desempenho é fundamental para gestão eficaz de processos \cite{neely2005}. Indicadores-chave de desempenho (Key Performance Indicators - KPIs) comuns incluem:
+Além dessas modalidades, a Lei nº 12.783/2013 estabeleceu o regime de \textbf{cotas de garantia física}, pelo qual a energia de usinas hidrelétricas com concessões prorrogadas é alocada às distribuidoras na forma de cotas definidas pela ANEEL \citep{brasil2013lei}. Contratos de quantidade, de disponibilidade e de cotas correspondem às categorias tratadas pelo aplicativo estudado neste trabalho (Seção~\ref{sec:inlight}).
 
-\begin{itemize}
-    \item \textbf{Tempo de ciclo:} duração total desde início até conclusão do processo;
-    \item \textbf{Throughput:} quantidade de processos concluídos por unidade de tempo;
-    \item \textbf{Taxa de erro:} percentual de processos com falhas ou não conformidades;
-    \item \textbf{Custo por processo:} recursos consumidos para executar uma instância;
-    \item \textbf{Tempo de retrabalho:} tempo gasto corrigindo erros;
-    \item \textbf{Satisfação do cliente:} percepção dos usuários sobre qualidade do serviço.
-\end{itemize}
+Cada um desses contratos envolve dados de origens diferentes, como os registros da CCEE, os sistemas internos da distribuidora e controles paralelos em planilhas, além de prazos regulatórios para registro, contabilização e liquidação. Esse cenário reúne as condições descritas na Seção~\ref{sec:legados}: informações dispersas, conciliação manual e risco de inconsistência.
 
-Segundo \cite{kaplan1996}, sistemas de medição equilibrados avaliam múltiplas dimensões (financeira, cliente, processos internos, aprendizado) fornecendo visão holística do desempenho organizacional.
+\subsection{Transformação Digital no Setor Elétrico}
 
-\section{Transformação Digital no Setor Elétrico}
+O setor elétrico passa por uma transformação impulsionada pelas redes inteligentes (\textit{smart grids}), pela medição digital e pelo uso intensivo de dados. \citet{farhangi2010} aponta que o aumento do custo da energia, a eletrificação crescente e as mudanças climáticas são os principais vetores dessa transformação, que exige das empresas sistemas capazes de tratar volumes crescentes de informação. Para \citet{westerman2014}, porém, a transformação digital não se limita à tecnologia: ela exige repensar processos e modelos de negócio, o que reforça a relação entre unificação de sistemas e redesenho de processos discutida na Seção~\ref{sec:processos}.
 
-\subsection{Contexto do Setor Elétrico Brasileiro}
+\section{Considerações sobre o Capítulo}
 
-O setor elétrico brasileiro é um dos maiores e mais complexos do mundo, em grande parte por sua territorialidade, as principais formas de energias utilizadas são hidráulica, eólica e nuclear. \cite{aneel2022}. Segundo \cite{tolmasquim2016}, o setor passou por profundas transformações nas últimas décadas:
-\begin{itemize}
-    \item \textbf{Década de 1990:} privatização e abertura do mercado;
-    \item \textbf{Anos 2000:} criação de novos marcos regulatórios após crise de 2001;
-    \item \textbf{Anos 2010:} expansão do mercado livre e fontes renováveis;
-    \item \textbf{Anos 2020:} digitalização e modernização da rede elétrica.
-\end{itemize}
-O setor é altamente regulado, com normas estabelecidas pela ANEEL (Agência Nacional de Energia Elétrica), operação coordenada pelo ONS (Operador Nacional do Sistema Elétrico) e comercialização regida pela CCEE \cite{ccee2023}.
-\subsection{CCEE - Câmara de Comercialização de Energia Elétrica}
-
-A CCEE é uma associação civil sem fins lucrativos que atua sob regulação e fiscalização da ANEEL, responsável por viabilizar a comercialização de energia elétrica no Sistema Interligado Nacional \cite{ccee2023}. Suas principais funções incluem:
-
-\begin{itemize}
-    \item \textbf{Contabilização:} apuração de diferenças entre energia contratada e consumida;
-    \item \textbf{Liquidação financeira:} cálculo e cobrança de débitos e créditos no mercado de curto prazo;
-    \item \textbf{Registro de contratos:} validação e armazenamento de contratos bilaterais;
-    \item \textbf{Medição:} coleta e validação de dados de medição de energia;
-    \item \textbf{Leilões:} suporte operacional a leilões de energia;
-    \item \textbf{Garantias financeiras:} gestão de garantias para mitigar risco de inadimplência.
-\end{itemize}
-\subsection{ACR e ACL: Ambientes de Contratação}
-
-O modelo brasileiro divide o mercado de energia em dois ambientes distintos \cite{aneel2022}:
-
-\subsubsection{ACR - Ambiente de Contratação Regulada}
-
-No ACR, distribuidoras adquirem energia por meio de leilões regulados pela ANEEL para atender consumidores cativos (residenciais, comerciais e industriais de pequeno porte). Características do ACR:
-
-\begin{itemize}
-    \item Contratos de longo prazo (15 a 30 anos);
-    \item Preços definidos em leilões públicos;
-    \item Garantia de suprimento para distribuidoras;
-    \item Tarifas reguladas pela ANEEL;
-    \item Menor exposição a volatilidade de preços.
-\end{itemize}
-
-\subsubsection{ACL - Ambiente de Contratação Livre}
-
-No ACL, consumidores livres e especiais negociam diretamente com geradores e comercializadores, estabelecendo volume, preço e prazo livremente \cite{ccee2023}. Características do ACL:
-
-\begin{itemize}
-    \item Flexibilidade na negociação de contratos;
-    \item Possibilidade de escolha do fornecedor;
-    \item Contratos customizados conforme necessidade;
-    \item Exposição a risco de preço no mercado de curto prazo;
-    \item Gestão mais complexa exigindo expertise especializado.
-\end{itemize}
-
-Segundo \cite{brito2018}, o ACL tem crescido significativamente, representando aproximadamente 30% do consumo nacional, tendência impulsionada pela redução dos requisitos para migração e busca por redução de custos.
-\subsection{Desafios de Gestão de Contratos}
-
-A gestão de contratos no setor elétrico apresenta complexidades específicas \cite{tolmasquim2016}:
-
-\begin{itemize}
-    \item \textbf{Volume de dados:} contratos envolvem medições horárias de múltiplos pontos;
-    \item \textbf{Sazonalidade:} variações de demanda e geração ao longo do ano;
-    \item \textbf{Reconciliação complexa:} necessidade de conciliar dados de medição, contabilização e faturamento;
-    \item \textbf{Penalidades:} descumprimento de obrigações pode resultar em multas significativas;
-    \item \textbf{Lastro e garantia física:} vendedores devem comprovar capacidade de geração;
-    \item \textbf{Múltiplos submercados:} diferenças regionais de preço exigem gestão granular.
-\end{itemize}
-
-Para \cite{castro2015}, empresas do setor necessitam de sistemas sofisticados capazes de integrar informações da CCEE, sistemas internos de medição, contratos comerciais e sistemas financeiros.
-
-\subsection{Obrigações e Prazos Regulatórios}
-
-Agentes do setor elétrico devem cumprir rigorosos prazos regulatórios estabelecidos pela ANEEL e CCEE \cite{aneel2022}:
-
-\begin{itemize}
-    \item Envio mensal de dados de medição;
-    \item Registro de contratos com antecedência mínima;
-    \item Prestação de garantias financeiras;
-    \item Pagamento de encargos setoriais;
-    \item Apresentação de demonstrativos contábeis;
-    \item Atendimento a auditorias regulatórias.
-\end{itemize}
-
-O não cumprimento desses prazos pode resultar em \cite{ccee2023}:
-
-\begin{itemize}
-    \item Multas regulatórias;
-    \item Suspensão temporária de operações;
-    \item Perda de garantias financeiras depositadas;
-    \item Impacto na reputação corporativa;
-    \item Dificuldades em contratações futuras.
-\end{itemize}
-
-Segundo \cite{brito2018}, a gestão eficaz de prazos é crítica e demanda sistemas que forneçam alertas automatizados e visibilidade sobre status de obrigações pendentes.
-
-\subsection{Transformação Digital no Setor}
-O setor elétrico brasileiro está passando por acelerada transformação digital, impulsionada por \cite{epe2020}:
-
-\begin{itemize}
-    \item \textbf{Smart Grids:} redes inteligentes com comunicação bidirecional;
-    \item \textbf{Medidores inteligentes:} dispositivos que transmitem dados em tempo real;
-    \item \textbf{IoT (Internet das Coisas):} sensores distribuídos pela rede;
-    \item \textbf{Big Data e Analytics:} análise de grandes volumes de dados operacionais;
-    \item \textbf{Inteligência Artificial:} previsão de demanda e manutenção preditiva;
-    \item \textbf{Blockchain:} registro descentralizado de transações energéticas;
-    \item \textbf{Computação em nuvem:} infraestrutura escalável e flexível.
-\end{itemize}
-
-Segundo \cite{schwab2016}, a Quarta Revolução Industrial está transformando o setor energético, exigindo que empresas adotem tecnologias digitais para permanecerem competitivas. Para \cite{westerman2014}, transformação digital não é apenas sobre tecnologia, mas sobre reimaginar processos e modelos de negócio.
-\subsection{Integração de Sistemas no Contexto Regulatório}
-
-A complexidade regulatória do setor elétrico demanda integração sofisticada entre sistemas internos e externos \cite{castro2015}. Empresas precisam integrar:
-
-\begin{itemize}
-    \item \textbf{Sistemas da CCEE:} para contabilização, liquidação e registro de contratos;
-    \item \textbf{Sistemas de medição:} coleta de dados de consumo e geração;
-    \item \textbf{ERP corporativo:} gestão financeira, contábil e administrativa;
-    \item \textbf{Sistemas de trading:} negociação e gestão de contratos;
-    \item \textbf{Sistemas de CRM:} relacionamento com clientes;
-    \item \textbf{Business Intelligence:} análise e reporting gerencial.
-\end{itemize}
-
-Segundo \cite{tolmasquim2016}, a falta de integração adequada resulta em processos manuais intensivos, retrabalho significativo e risco elevado de não conformidade regulatória. A unificação de sistemas, portanto, não é apenas desejável mas necessária para operação eficiente e conforme no setor elétrico brasileiro.
-
-\subsection{Casos de Sucesso e Benchmarks}
-
-Diversas empresas do setor elétrico brasileiro e internacional têm implementado projetos de unificação e modernização de sistemas com resultados positivos \cite{epe2020}:
-
-\begin{itemize}
-    \item \textbf{Redução de até 40\%} no tempo de processamento de obrigações regulatórias;
-    \item \textbf{Diminuição de 60\%} em erros de entrada de dados;
-    \item \textbf{Melhoria de 50\%} na acurácia de previsões de demanda;
-    \item \textbf{Redução de 30\%} em custos operacionais de TI;
-    \item \textbf{Aumento de 70\%} na satisfação dos usuários internos.
-\end{itemize}
-
-Esses resultados reforçam a importância estratégica da unificação tecnológica para empresas do setor, conforme argumentam \cite{laudon2020} e \cite{davenport2018}.
+Os conceitos apresentados formam a base para a análise dos capítulos seguintes. A literatura mostra que a fragmentação de sistemas gera redundância, retrabalho e dificuldade de decisão \citep{laudon2020,elmasri2016}, mas também que a integração tem custos e não é benéfica em todas as situações \citep{goodhue1992}. Os benefícios da unificação podem ser classificados com o modelo de \citet{shang2002} e avaliados com as dimensões de \citet{delone2003}; sua concretização depende do redesenho dos processos \citep{hammer1990,dumas2018}, da gestão da mudança \citep{nah2001} e da aceitação pelos usuários \citep{davis1989,venkatesh2003}. No setor elétrico, a variedade de contratos do ACR e a dependência de informações externas, como as da CCEE, tornam esses fatores especialmente relevantes. O Capítulo~\ref{sec:revisao} examina como estudos empíricos trataram essas questões, e o Capítulo~\ref{sec:proposta} aplica esses conceitos ao caso do aplicativo InLight.

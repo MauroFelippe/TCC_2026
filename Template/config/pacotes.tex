@@ -5,7 +5,7 @@
 \usepackage[pt-BR]{datetime2}
 \usepackage{url}
 \usepackage{tikz}
-\usetikzlibrary{automata, positioning, arrows}
+\usetikzlibrary{automata, positioning, arrows, arrows.meta, shapes.geometric, fit, calc}
 
 
 
@@ -13,8 +13,34 @@
 \usepackage{listings}
 \usepackage{minted}
 
+% Citações (NBR 10520:2023) e referências (NBR 6023:2018), alinhadas à esquerda.
+% natbib=true mantém \citet (narrativa) e \citep (entre parênteses);
+% \cite é usado no texto sempre de forma narrativa.
+% O csquotes vem depois do minted (fvextra), como esse pacote recomenda.
+\usepackage{csquotes}
+\usepackage[style=abnt,backend=biber,natbib=true,uniquelist=false]{biblatex}
+\let\cite\textcite
+\addbibresource{references.bib}
+% URLs na mesma fonte do texto; permite quebrar URLs longas sem espaçar os caracteres
+\urlstyle{same}
+\setcounter{biburlnumpenalty}{9000}
+\setcounter{biburllcpenalty}{7000}
+\setcounter{biburlucpenalty}{8000}
+
 \usepackage{graphicx}
 \usepackage{tabularx}
+% Compatibilidade: o colortbl (2024+) usa \insert@pcolumn, que não existe no
+% pacote array de 2023 instalado no MiKTeX local. Sem efeito em versões novas.
+\makeatletter
+\providecommand\insert@pcolumn{\insert@column}
+\makeatother
+% Colunas de tabela alinhadas à esquerda (evita espaços esticados em colunas estreitas).
+% O nome P evita conflito com a coluna L já definida em tcc.cls.
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}p{#1}}
+% Ajustes finos de tipografia e folga extra na quebra de linhas
+\usepackage[nopatch=footnote]{microtype}
+\setlength{\emergencystretch}{2em}
 \usepackage{blindtext}
 \usepackage{lipsum}
 \usepackage{float}
