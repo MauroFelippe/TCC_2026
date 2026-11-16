@@ -17,30 +17,68 @@ A revisão foi guiada pela seguinte questão: \textit{quais benefícios, dificul
 \begin{tabularx}{\textwidth}{lXX}
 \toprule
 \textbf{Elemento} & \textbf{Definição} & \textbf{Termos de busca} \\ \midrule
-População & Organizações que utilizam sistemas de informação corporativos & \textit{organization*}, \textit{firm*}, \textit{utilit*} \\ \midrule
-Intervenção & Integração ou unificação de sistemas & \textit{system integration}, \textit{enterprise system*}, \textit{ERP}, \textit{legacy modernization} \\ \midrule
+População & Organizações que utilizam sistemas de informação corporativos & --- (implícita nos termos de intervenção) \\ \midrule
+Intervenção & Integração ou unificação de sistemas corporativos e avaliação de seu sucesso e aceitação & \textit{enterprise system*}, \textit{enterprise resource planning}, \textit{ERP system*}, \textit{ERP implementation*}, \textit{ERP adoption}, \textit{ERP project*}, \textit{system* integration}, \textit{legacy modernization}, \textit{information system* success}, \textit{technology acceptance}, \textit{user satisfaction} \\ \midrule
 Comparação & Sistemas fragmentados ou legados (opcional) & --- \\ \midrule
-Resultado & Benefícios, desempenho, fatores de sucesso e aceitação & \textit{benefit*}, \textit{performance}, \textit{success}, \textit{adoption} \\ \midrule
-Contexto & Ambiente corporativo, com interesse especial no setor elétrico & \textit{electricity}, \textit{energy} \\ \bottomrule
+Resultado & Benefícios, desempenho, fatores de sucesso e aceitação & \textit{benefit*}, \textit{performance}, \textit{success}, \textit{adoption}, \textit{acceptance}, \textit{implementation}, \textit{business value}, \textit{interoperability} \\ \midrule
+Contexto & Ambiente corporativo, com interesse especial no setor elétrico e em rotinas de \textit{back-office} & \textit{robotic process automation}, \textit{common information model} \\ \bottomrule
 \end{tabularx}
 
 \vspace{0.2cm}
 {\footnotesize Fonte: elaborado pelo autor.}
 \end{table}
 
-A partir desses elementos, foi definida a seguinte \textit{string} de busca, no formato aceito pela base Scopus:
+A partir desses elementos, foi definida a \textit{string} de busca, no formato aceito pela base Scopus. Ela combina três partes: os termos de busca, aplicados ao título e ao resumo, a restrição às fontes, aplicada pelo ISSN de cada periódico e os filtros de período, tipo de documento, idioma e estágio de publicação:
 
 \begin{quote}
 \shorthandoff{"}\raggedright\small\ttfamily
-TITLE-ABS-KEY(\\
-\quad ("system integration" OR "enterprise system*" OR "ERP" OR "legacy modernization")\\
-\quad AND ("benefit*" OR "performance" OR "success" OR "adoption")\\
-\quad AND ("organization*" OR "firm*" OR "utilit*" OR "electricity"))
+TITLE-ABS(\\
+\quad (("enterprise system*" OR "enterprise resource planning" OR "ERP system*" OR "ERP implementation*" OR "ERP adoption" OR "ERP project*" OR "system* integration" OR "legacy modernization" OR "information system* success" OR "technology acceptance" OR "user satisfaction")\\
+\quad AND ("benefit*" OR "performance" OR "success" OR "adoption" OR "acceptance" OR "implementation" OR "business value" OR "interoperability")\\
+\quad AND ("case stud*" OR "survey*" OR "empirical*" OR "field stud*" OR "longitudinal" OR "sample" OR "literature review" OR "systematic review" OR "review of" OR "meta-analys*"))\\
+\quad OR "robotic process automation" OR "common information model")\\
+AND ISSN(fontes da Tabela~\ref{tab:fontes})\\
+AND PUBYEAR > 1999 AND PUBYEAR < 2026\\
+AND DOCTYPE(artigo ou revisão) AND LANGUAGE(inglês) AND PUBSTAGE(final)
 \end{quote}
+
+Os dois primeiros grupos de termos correspondem à intervenção e ao resultado do PICOC. O terceiro restringe a busca a estudos empíricos e revisões, conforme o critério I1 (Tabela~\ref{tab:criterios}) e os termos \textit{robotic process automation} e \textit{common information model} representam o contexto de \textit{back-office} e do setor elétrico. A \textit{string} completa, tal como aplicada na base, está no Apêndice~\ref{ap:string}.
 
 \subsection{Fontes, Critérios e Processo de Seleção}
 
-As buscas foram realizadas de forma exploratória em mecanismos de busca acadêmica e nas bibliotecas digitais. Os critérios adotados estão na Tabela~\ref{tab:criterios}.
+A busca foi realizada na base Scopus em 15 de novembro de 2026, considerando título e resumo, artigos e revisões publicados entre 2000 e 2025, em inglês e em versão final. Durante a busca foi priorizado periódicos de referência na área de Sistemas de Informação e Operações, como MIS Quarterly, Information Systems Research, Journal of Management Information Systems, European Journal of Information Systems e Journal of Operations Management. As fontes e seus ISSN estão na Tabela~\ref{tab:fontes}.
+
+\begin{table}[H]
+\centering
+\caption{Fontes consideradas na busca}
+\label{tab:fontes}
+\footnotesize
+\begin{tabularx}{\textwidth}{Xll}
+\toprule
+\textbf{Periódico} & \textbf{ISSN} & \textbf{Origem} \\ \midrule
+\textit{Decision Support Systems} & 0167-9236 & Lista AIS \\ \midrule
+\textit{European Journal of Information Systems} & 0960-085X & Lista AIS \\ \midrule
+\textit{Information \& Management} & 0378-7206 & Lista AIS \\ \midrule
+\textit{Information and Organization} & 1471-7727 & Lista AIS \\ \midrule
+\textit{Information Systems Journal} & 1350-1917 & Lista AIS \\ \midrule
+\textit{Information Systems Research} & 1047-7047 & Lista AIS \\ \midrule
+\textit{Journal of the Association for Information Systems} & 1536-9323 & Lista AIS \\ \midrule
+\textit{Journal of Information Technology} & 0268-3962 & Lista AIS \\ \midrule
+\textit{Journal of Management Information Systems} & 0742-1222 & Lista AIS \\ \midrule
+\textit{Journal of Strategic Information Systems} & 0963-8687 & Lista AIS \\ \midrule
+\textit{MIS Quarterly} & 0276-7783 & Lista AIS \\ \midrule
+\textit{Journal of Operations Management} & 0272-6963 & Estudos de referência \\ \midrule
+\textit{Business Process Management Journal} & 1463-7154 & Estudos de referência \\ \midrule
+\textit{ACM Computing Surveys} & 0360-0300 & Estudos de referência \\ \midrule
+\textit{MIS Quarterly Executive} & 1540-1960 & Estudos de referência \\ \midrule
+\textit{Power Systems} (série de livros) & 1860-4676 & Estudos de referência \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor com base em \citet{ais2023}, nos periódicos dos estudos de referência e nos ISSN registrados na base Scopus.}
+\end{table}
+
+Os critérios de inclusão e exclusão adotados estão na Tabela~\ref{tab:criterios}.
 
 
 \begin{table}[H]
@@ -52,7 +90,7 @@ As buscas foram realizadas de forma exploratória em mecanismos de busca acadêm
 \textbf{Tipo} & \textbf{Critério} \\ \midrule
 Inclusão & I1: Estudo empírico (caso, levantamento ou análise de dados) ou revisão sistemática sobre integração, unificação ou implantação de sistemas corporativos. \\ \midrule
 Inclusão & I2: Estudo que relate benefícios, dificuldades, fatores de sucesso ou formas de avaliação desses sistemas. \\ \midrule
-Inclusão & I3: Publicação em periódico revisado por pares, anais de conferência ou livro acadêmico. \\ \midrule
+Inclusão & I3: Artigo ou revisão publicado em periódico revisado por pares ou em série de livros acadêmicos. \\ \midrule
 Exclusão & E1: Trabalho exclusivamente técnico, sem análise de impactos organizacionais. \\ \midrule
 Exclusão & E2: Texto sem acesso ao conteúdo completo ou sem revisão por pares (por exemplo, material publicitário de fornecedores). \\ \midrule
 Exclusão & E3: Trabalho duplicado ou versão preliminar de estudo já incluído. \\ \bottomrule
@@ -62,7 +100,7 @@ Exclusão & E3: Trabalho duplicado ou versão preliminar de estudo já incluído
 {\footnotesize Fonte: elaborado pelo autor.}
 \end{table}
 
-Como critério de qualidade, priorizaram-se periódicos de referência na área de Sistemas de Informação e Operações, como \textit{MIS Quarterly}, \textit{Information Systems Research}, \textit{Journal of Management Information Systems}, \textit{European Journal of Information Systems} e \textit{Journal of Operations Management}. A seleção seguiu as etapas apresentadas na Figura~\ref{fig:protocolo}: leitura dos títulos, leitura dos resumos e leitura completa dos trabalhos restantes, que foram então sintetizados.
+A seleção seguiu as etapas apresentadas na Figura~\ref{fig:protocolo}: remoção de duplicados, triagem por título e seleção da amostra para a síntese.
 
 \begin{figure}[H]
 \centering
@@ -75,23 +113,43 @@ Como critério de qualidade, priorizaram-se periódicos de referência na área 
     seta/.style={-{Stealth[length=2.5mm]}, thick}
 ]
 \node[etapa] (picoc) {Definição do\\PICOC e da \textit{string}};
-\node[etapa, right=of picoc] (busca) {Busca nas fontes selecionadas};
-\node[etapa, right=of busca] (titulos) {Triagem por título (I1--I3, E1--E3)};
-\node[etapa, below=0.9cm of titulos] (resumos) {Triagem por resumo};
-\node[etapa, left=of resumos] (leitura) {Leitura completa};
-\node[etapa, left=of leitura] (sintese) {Extração e síntese dos resultados};
+\node[etapa, right=of picoc] (busca) {Busca na Scopus\\(n = 376)};
+\node[etapa, right=of busca] (duplicados) {Remoção de duplicados\\(n = 374)};
+\node[etapa, below=0.9cm of duplicados] (titulos) {Triagem por título\\(n = 233)};
+\node[etapa, left=of titulos] (amostra) {Seleção da amostra\\(n = 11)};
+\node[etapa, left=of amostra] (sintese) {Extração e síntese dos resultados};
 \draw[seta] (picoc) -- (busca);
-\draw[seta] (busca) -- (titulos);
-\draw[seta] (titulos) -- (resumos);
-\draw[seta] (resumos) -- (leitura);
-\draw[seta] (leitura) -- (sintese);
+\draw[seta] (busca) -- (duplicados);
+\draw[seta] (duplicados) -- (titulos);
+\draw[seta] (titulos) -- (amostra);
+\draw[seta] (amostra) -- (sintese);
 \end{tikzpicture}
 
 \vspace{0.2cm}
 {\footnotesize Fonte: elaborado pelo autor.}
 \end{figure}
 
-Ao final do processo, foram selecionados os onze trabalhos sintetizados na próxima seção.
+A busca retornou 376 registros. Após a remoção de 2 duplicados, os títulos dos 374 registros restantes foram triados segundo os critérios da Tabela~\ref{tab:criterios}, resultando em 233 estudos. A Tabela~\ref{tab:triagem} apresenta a quantidade de registros em cada etapa.
+
+\begin{table}[H]
+\centering
+\caption{Quantidade de registros em cada etapa da seleção}
+\label{tab:triagem}
+\footnotesize
+\begin{tabularx}{\textwidth}{Xcc}
+\toprule
+\textbf{Etapa} & \textbf{Excluídos} & \textbf{Restantes} \\ \midrule
+Registros recuperados na Scopus (15/11/2026) & --- & 376 \\ \midrule
+Remoção de duplicados (E3) & 2 & 374 \\ \midrule
+Triagem por título (I1--I2: 134; E1: 7) & 141 & 233 \\ \midrule
+Seleção da amostra para a síntese & 222 & 11 \\ \bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{table}
+
+Dentre os 233 estudos resultantes da triagem, foram selecionados 11 estudos de forma representativa das dimensões deste trabalho --- benefícios, implantação, usuários, setor elétrico e \textit{back-office} ---, de modo que cada dimensão fosse coberta por ao menos um estudo e a síntese reunisse diferentes autores e perspectivas. Esses trabalhos são sintetizados na próxima seção.
 
 \section{Síntese dos Trabalhos Selecionados}
 \label{sec:rev-sintese}
@@ -111,7 +169,7 @@ Os trabalhos foram agrupados em quatro temas: (i) impactos de sistemas integrado
 \citet{hendricks2007} & Análise do desempenho financeiro e do retorno das ações de empresas que implantaram ERP, SCM e CRM & Evidência de aumento da lucratividade das empresas que adotaram ERP, mas não do retorno de suas ações; adotantes de CRM não apresentaram ganhos. \\ \midrule
 \citet{gattiker2005} & Levantamento com 111 plantas industriais & O ERP é mais adequado quando a interdependência entre as unidades é alta e a diferenciação entre elas é baixa; customização e tempo desde a implantação influenciam os resultados. \\ \midrule
 \multicolumn{3}{l}{\textit{Tema (ii): implantação e fatores críticos de sucesso}} \\ \midrule
-\citet{markus2000learning} & Estudo dos problemas e resultados de projetos de ERP em empresas adotantes & O sucesso depende do momento em que é medido; as empresas enfrentaram problemas em todas as fases do ciclo de vida do sistema. \\ \midrule
+\citet{tong2015} & Levantamento em duas etapas com 329 usuários de um sistema corporativo recém-introduzido & Logo após a introdução do sistema, os usuários sofrem queda de desempenho; a gestão dessa fase inicial, com estruturas de suporte adequadas, é decisiva para o sucesso posterior. \\ \midrule
 \citet{robey2002} & Estudo de caso comparativo com 13 empresas industriais & Identificou duas abordagens de implantação: incremental, com foco inicial na tecnologia, e conjunta, com mudanças de tecnologia e processos ao mesmo tempo. \\ \midrule
 \citet{finney2007} & Revisão de 45 artigos com análise de conteúdo & Gestão da mudança é um dos fatores mais citados, mas com pouca definição de táticas; falta pesquisa sob a perspectiva dos diferentes \textit{stakeholders}. \\ \midrule
 \citet{shaul2013} & Revisão da literatura da década anterior & Organiza os fatores críticos de sucesso ao longo de todo o ciclo de vida do ERP, da seleção ao uso. \\ \midrule
@@ -129,13 +187,13 @@ Os trabalhos foram agrupados em quatro temas: (i) impactos de sistemas integrado
 
 \subsection{Impactos de Sistemas Integrados no Desempenho}
 
-Os estudos quantitativos indicam que sistemas integrados tendem a gerar ganhos, mas não de forma imediata nem uniforme. \citet{hitt2002} observarou que empresas que investiram em ERP apresentaram desempenho superior em diversos indicadores financeiros, embora tenham registrado queda de desempenho e de produtividade logo após a implantação. \citet{hendricks2007} encontraram evidências de aumento da lucratividade entre adotantes de ERP, mas não do retorno de suas ações, e nenhum ganho entre adotantes de CRM, o que mostra que o tipo de sistema e o contexto importam.
+Os estudos quantitativos indicam que sistemas integrados tendem a gerar ganhos, mas não de forma imediata nem uniforme. \citet{hitt2002} observou que empresas que investiram em ERP apresentaram desempenho superior em diversos indicadores financeiros, embora tenham registrado queda de desempenho e de produtividade logo após a implantação. \citet{hendricks2007} encontraram evidências de aumento da lucratividade entre adotantes de ERP, mas não do retorno de suas ações, e nenhum ganho entre adotantes de CRM, o que mostra que o tipo de sistema e o contexto importam.
 
 \citet{gattiker2005} explicam parte dessa variação: os benefícios do ERP são maiores quando as unidades da organização dependem fortemente umas das outras e quando suas necessidades são parecidas. Esse resultado é coerente com o argumento de \citet{goodhue1992}, apresentado no Capítulo~\ref{sec:fundamentacao}, de que a integração compensa apenas em determinadas situações.
 
 \subsection{Implantação e Fatores Críticos de Sucesso}
 
-Os estudos sobre implantação mostram que os resultados dependem tanto do processo quanto da tecnologia. \citet{markus2000learning} verificaram que o sucesso de um projeto de ERP depende do momento em que é avaliado: um projeto bem-sucedido na entrega pode não gerar resultados no uso, e vice-versa. \citet{robey2002} mostraram que as empresas precisam superar barreiras de conhecimento tanto na configuração do sistema quanto na assimilação dos novos processos de trabalho. As revisões de \citet{finney2007} e \citet{shaul2013} consolidam os fatores críticos de sucesso e confirmam a importância da gestão da mudança, já destacada por \citet{nah2001}, embora apontem que a literatura descreve pouco como essa gestão deve ser feita na prática.
+Os estudos sobre implantação mostram que os resultados dependem tanto do processo quanto da tecnologia. \citet{tong2015} mostraram que, logo após a introdução de um sistema corporativo, os usuários passam por uma queda de desempenho, e que a condução dessa fase inicial influencia o sucesso posterior do sistema. \citet{robey2002} mostraram que as empresas precisam superar barreiras de conhecimento tanto na configuração do sistema quanto na assimilação dos novos processos de trabalho. As revisões de \citet{finney2007} e \citet{shaul2013} consolidam os fatores críticos de sucesso e confirmam a importância da gestão da mudança, já destacada por \citet{nah2001}, embora apontem que a literatura descreve pouco como essa gestão deve ser feita na prática.
 
 \subsection{Avaliação do Sucesso e Aceitação pelos Usuários}
 
@@ -160,7 +218,7 @@ A Tabela~\ref{tab:rev-questoes} relaciona as contribuições da literatura às q
 \textbf{Questão de pesquisa} & \textbf{O que a literatura indica} \\ \midrule
 Como sistemas fragmentados impactam a eficiência operacional? & A integração tende a melhorar o desempenho \citep{hitt2002,hendricks2007}, sobretudo quando as áreas são interdependentes \citep{gattiker2005}. \\ \midrule
 De que forma a unificação contribui para a integração de processos e o fluxo de informações? & Os ganhos dependem de mudar os processos junto com a tecnologia \citep{robey2002}; a automação de rotinas de \textit{back-office} aumenta velocidade e precisão \citep{lacity2016}. \\ \midrule
-Como observar e mensurar benefícios e limitações? & As dimensões de DeLone e McLean contam com medidas já testadas \citep{petter2008}; o momento da medição altera o resultado \citep{markus2000learning}, e há queda temporária de desempenho após a implantação \citep{hitt2002}. \\ \midrule
+Como observar e mensurar benefícios e limitações? & As dimensões de DeLone e McLean contam com medidas já testadas \citep{petter2008}; o desempenho medido logo após a introdução do sistema difere do sucesso posterior \citep{tong2015}, e há queda temporária de desempenho após a implantação \citep{hitt2002}. \\ \midrule
 Como a visão de usuários e gestores influencia a adoção? & Características do sistema afetam a intenção de uso por meio da utilidade e da facilidade percebidas \citep{wixom2005}; gestão da mudança e envolvimento dos \textit{stakeholders} são fatores críticos \citep{finney2007,shaul2013}. \\ \bottomrule
 \end{tabularx}
 
@@ -168,7 +226,7 @@ Como a visão de usuários e gestores influencia a adoção? & Características 
 {\footnotesize Fonte: elaborado pelo autor.}
 \end{table}
 
-Duas implicações orientam o restante deste trabalho. Primeiro, a avaliação do InLight não deve se limitar a um único momento: como os benefícios podem surgir apenas após um período de adaptação \citep{hitt2002,markus2000learning}, resultados obtidos logo após a implantação devem ser interpretados com cautela. Segundo, a avaliação deve combinar indicadores de processo com a percepção dos usuários \citep{petter2008,wixom2005}.
+Duas implicações orientam o restante deste trabalho. Primeiro, a avaliação do InLight não deve se limitar a um único momento: como os benefícios podem surgir apenas após um período de adaptação \citep{hitt2002,tong2015}, resultados obtidos logo após a implantação devem ser interpretados com cautela. Segundo, a avaliação deve combinar indicadores de processo com a percepção dos usuários \citep{petter2008,wixom2005}.
 
 \section{Posicionamento deste Trabalho}
 \label{sec:rev-posicionamento}
@@ -187,7 +245,7 @@ A Tabela~\ref{tab:comparativo} compara os trabalhos selecionados com este estudo
 \citet{hitt2002} & X & & & & \\ \midrule
 \citet{hendricks2007} & X & & & & \\ \midrule
 \citet{gattiker2005} & X & X & & & \\ \midrule
-\citet{markus2000learning} & X & X & & & \\ \midrule
+\citet{tong2015} & & X & X & & \\ \midrule
 \citet{robey2002} & & X & & & \\ \midrule
 \citet{finney2007} & & X & & & \\ \midrule
 \citet{shaul2013} & & X & & & \\ \midrule
